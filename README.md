@@ -31,6 +31,8 @@ This repository is a living catalogue of **fingerprints, queries, exposure patte
 
 ```
 .
+├── reference/                      # Tool-agnostic reference material
+│   └── ports.md                    # Common AI/LLM infrastructure ports
 ├── shodan/                         # Shodan query reference
 │   ├── Shodan_AI_Reference.pdf     # Original PDF (downloadable artifact)
 │   └── queries/                    # Per-category markdown sources
@@ -49,6 +51,7 @@ This repository is a living catalogue of **fingerprints, queries, exposure patte
 
 **Browse by category:**
 - [Shodan Query Index](shodan/README.md)
+- [Common AI/LLM Ports Reference](reference/ports.md)
 - [Download the polished PDF reference](shodan/Shodan_AI_Reference.pdf)
 
 **Search across all queries:**
@@ -61,6 +64,7 @@ grep -r "qdrant" shodan/queries/
 ## Roadmap
 
 - [x] Shodan reference (v1) — 9 categories, ~120 queries
+- [x] Common AI/LLM ports reference
 - [ ] Censys query equivalents
 - [ ] FOFA / ZoomEye / Hunter.how queries
 - [ ] GitHub dorks for leaked AI keys (`OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `HF_TOKEN`)
