@@ -1,0 +1,25 @@
+# Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local notes / scratch (use scratch/ for anything you don't want pushed)
+scratch/
+*.local.md
+notes.local/
+
+# Python (in case future tooling lands here)
+__pycache__/
+*.py[cod]
+*.egg-info/
+.venv/
+venv/
+
+# Node
+node_modules/
