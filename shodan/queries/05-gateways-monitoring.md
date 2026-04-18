@@ -1,31 +1,35 @@
 # 5. AI Gateways, Proxies & Monitoring
 
+_Section verified: April 2026_
+
 The control and observability plane between applications and LLM providers. Gateways centralize provider API keys; observability platforms log every prompt and response — when exposed, they reveal both the secrets and the conversational data flowing through them.
+
+> Tier legend: **T1** unauthenticated by default · **T2** auth often misconfigured / known bypasses · **T3** recon / fingerprint only.
 
 ## AI Gateway / Proxy
 
-| Shodan Query | Notes |
-|---|---|
-| `"LiteLLM" "proxy" port:4000` | |
-| `"AI Gateway" port:8787 "Cloudflare"` | |
-| `"Kong" "ai-proxy" port:8000` | |
-| `"Portkey" port:8787` | |
-| `"Helicone" port:8080` | |
+| Shodan Query | Tier | Notes |
+|---|---|---|
+| `"LiteLLM" "proxy" port:4000` | T2 | Master key in env — check section 11 |
+| `"AI Gateway" port:8787 "Cloudflare"` | T3 | |
+| `"Kong" "ai-proxy" port:8000` | T2 | |
+| `"Portkey" port:8787` | T3 | |
+| `"Helicone" port:8080` | T2 | |
 
 ## LLM Observability / Monitoring
 
-| Shodan Query | Notes |
-|---|---|
-| `"Langfuse" port:3000` | Logs every prompt/response |
-| `"Langsmith" port:1984` | |
-| `"Phoenix" "Arize" port:6006` | Traces |
-| `"Prometheus" "/metrics" "llm"` | |
+| Shodan Query | Tier | Notes |
+|---|---|---|
+| `"Langfuse" port:3000` | T2 | Logs every prompt/response — high-value PII leak |
+| `"Langsmith" port:1984` | T2 | |
+| `"Phoenix" "Arize" port:6006` | T2 | Trace data, often contains prompt history |
+| `"Prometheus" "/metrics" "llm"` | T2 | |
 
 ## Document Loaders / Parsers
 
-| Shodan Query | Notes |
-|---|---|
-| `"Unstructured" port:8000 "/general/v0"` | |
-| `"Apache Tika" port:9998` | |
-| `"Docling" port:8000` | |
-| `"LlamaParse" port:8000` | |
+| Shodan Query | Tier | Notes |
+|---|---|---|
+| `"Unstructured" port:8000 "/general/v0"` | T2 | |
+| `"Apache Tika" port:9998` | T2 | SSRF history |
+| `"Docling" port:8000` | T3 | |
+| `"LlamaParse" port:8000` | T3 | |
