@@ -14,10 +14,12 @@ Tooling for model training, hyperparameter sweeps, dataset annotation, and exper
 | `"unsloth" port:7860` | T2 | |
 | `"OpenLLM" port:3000 "bentoml"` | T2 | |
 | `"BentoML" port:3000 "/models"` | T2 | |
+| `"bentoml"` | T3 | Bare-string form — catches BentoML regardless of port |
 | `"Ray" "dashboard" port:8265` | T1 | ShadowRay — CVE-2023-48022, unauth RCE, tens of thousands unpatched |
 | `"Ray Serve" port:8000 "deployments"` | T1 | Same cluster = same RCE surface |
 | `"Determined AI" port:8080 "experiments"` | T2 | |
 | `"ClearML" port:8008 "projects"` | T2 | |
+| `"clearml"` | T3 | Bare-string form — catches any ClearML banner regardless of port |
 | `"SageMaker" "notebook" port:8443` | T2 | |
 | `"Lightning AI" port:7501` | T3 | |
 | `"LLaMA-Factory" port:7860` | T2 | WebUI fine-tuning, often public |
@@ -34,7 +36,13 @@ Tooling for model training, hyperparameter sweeps, dataset annotation, and exper
 | `"MLflow" "registered-models" port:5000` | T1 | Model registry write access |
 | `"mlflow" "artifacts" port:5000` | T1 | Artifact store — trained models + experiment outputs |
 | `"Kubeflow" port:8080 "pipeline"` | T2 | |
+| `http.title:"Kubeflow Central Dashboard"` | T2 | Tighter title fingerprint — catches non-default ports |
+| `"kubernetes" "ml-pipeline"` | T2 | Kubeflow Pipelines API surface on k8s — same class as Kubeflow dashboard |
+| `"ml-pipeline"` | T3 | Bare-string form — catches Kubeflow Pipelines API containers on any port |
 | `"Airflow" "DAG" port:8080` | T2 | RCE via DAG authoring if write access |
+| `"Dagster" port:3000` | T2 | Dagster data/ML pipeline orchestrator — asset lineage + exec |
+| `http.title:"Weights & Biases" -site:wandb.ai` | T2 | Self-hosted W&B — training runs, artifacts, secrets |
+| `"wandb-local" port:8080` | T2 | W&B local container (often on-prem trial installs) |
 | `"Jupyter" port:8888 "notebook"` | T1 | Token-based auth, frequently empty |
 | `"Gradio" port:7860` | T2 | Often public by design — authority depends on app |
 | `"Streamlit" port:8501` | T2 | Frequently internal dashboards left public |
@@ -44,6 +52,12 @@ Tooling for model training, hyperparameter sweeps, dataset annotation, and exper
 | Shodan Query | Tier | Notes |
 |---|---|---|
 | `"Argilla" port:6900` | T2 | |
+| `"argilla"` | T3 | Bare-string form — catches Argilla regardless of port |
 | `"Label Studio" port:8080 "label"` | T2 | Labeled datasets often sensitive |
+| `http.title:"Label Studio"` | T2 | Title-only form — catches stripped banners / reverse-proxied deploys |
+| `http.title:"CVAT"` | T2 | CVAT computer-vision annotation — proprietary imagery + labels |
+| `http.title:"Doccano"` | T2 | Doccano text/NLP annotation — labeled corpora leak |
 | `"Promptfoo" port:3000` | T3 | |
+| `"promptfoo" http.html:"evaluation"` | T3 | HTML-body form — finds Promptfoo eval dashboards on non-default ports |
 | `"DeepEval" port:8000` | T3 | |
+| `"humanloop" -site:humanloop.com` | T2 | Self-hosted Humanloop — prompt eval/ops + API keys |

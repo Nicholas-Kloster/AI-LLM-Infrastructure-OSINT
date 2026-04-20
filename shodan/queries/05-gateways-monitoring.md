@@ -11,9 +11,14 @@ The control and observability plane between applications and LLM providers. Gate
 | Shodan Query | Tier | Notes |
 |---|---|---|
 | `"LiteLLM" "proxy" port:4000` | T2 | Master key in env — check section 11 |
+| `http.html:"litellm" "/chat/completions"` | T2 | LiteLLM on non-default ports / behind reverse proxies |
 | `"AI Gateway" port:8787 "Cloudflare"` | T3 | |
 | `"Kong" "ai-proxy" port:8000` | T2 | |
+| `"kong" http.html:"ai-proxy" OR "ai-prompt"` | T2 | Kong AI plugins — proxies provider keys + prompt templates |
+| `"tyk" http.html:"ai-"` | T2 | Tyk API gateway with AI middleware plugin |
+| `"unify" "router"` | T3 | Unify AI router — multi-provider fallback, keys in config |
 | `"Portkey" port:8787` | T3 | |
+| `"portkey" "gateway"` | T3 | Portkey gateway generic form |
 | `"Helicone" port:8080` | T2 | |
 
 ## LLM Observability / Monitoring
@@ -24,6 +29,7 @@ The control and observability plane between applications and LLM providers. Gate
 | `"Langsmith" port:1984` | T2 | |
 | `"Phoenix" "Arize" port:6006` | T2 | Trace data, often contains prompt history |
 | `"Prometheus" "/metrics" "llm"` | T2 | |
+| `http.title:"PromptLayer"` | T2 | PromptLayer observability — logs every prompt/response with keys |
 
 ## Document Loaders / Parsers
 

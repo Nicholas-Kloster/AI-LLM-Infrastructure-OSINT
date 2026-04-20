@@ -11,6 +11,7 @@ Model Context Protocol servers expose tool surfaces — filesystem read, shell, 
 | `"modelcontextprotocol" port:3000` | T1 | MCP SSE transport, no auth default |
 | `"mcp" "/sse" "message" port:3000` | T1 | MCP server over SSE |
 | `"mcp" "tools/list" port:8080` | T1 | JSON-RPC MCP transport |
+| `"jsonrpc" "2.0" "tools/list"` | T1 | Transport-agnostic MCP handshake — catches servers that stripped the "mcp" literal |
 | `"server-filesystem" "mcp"` | T1 | Filesystem MCP exposed — host file access |
 | `"mcp-server-" "sse" port:8000` | T2 | |
 | `"FastMCP" "uvicorn" port:8000` | T2 | Python MCP server framework |

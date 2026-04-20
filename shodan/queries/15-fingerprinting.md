@@ -24,6 +24,7 @@ Favicon hashes drift with version bumps. Hashes here were valid in April 2026; f
 |---|---|---|
 | `"Server: uvicorn" "/docs" "FastAPI"` | T3 | Any FastAPI ML service |
 | `"/v1/chat/completions" port:8000` | T1 | OpenAI-compatible endpoint |
+| `"/chat/completions"` | T1 | Unscoped form — catches OpenAI-compat APIs on non-standard paths/ports |
 | `"/v1/embeddings" port:8000` | T1 | |
 | `"model" "temperature" "max_tokens" port:8000` | T2 | OpenAI-style request schema |
 | `"LM Studio" OR "lmstudio" port:1234` | T1 | LM Studio desktop server exposure |

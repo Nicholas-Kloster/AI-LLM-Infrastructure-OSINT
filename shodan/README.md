@@ -2,7 +2,7 @@
 
 Living catalogue of Shodan dorks for fingerprinting exposed AI/ML control-plane infrastructure.
 
-**Polished PDF reference:** [Shodan_AI_Reference.pdf](Shodan_AI_Reference.pdf) — _v2.1, April 2026_
+**Polished PDF reference:** [Shodan_AI_Reference.pdf](Shodan_AI_Reference.pdf) — _v2.1, April 2026 (markdown ahead at v2.2)_
 **Living markdown source:** see [`queries/`](queries/) — these are the files to PR against.
 
 ## How to Read the Tables
@@ -59,3 +59,4 @@ The PDF reference is regenerated periodically from the markdown sources. Check t
 **Current PDF:** v2.1 · April 2026
 - v2.0 added four new sections (RAG Stacks, Image Generation, AI Code Assistants, MCP Servers), expanded Container/Orchestration to cover k8s/kubelet/etcd/Docker Registry v2, tagged every query with an exposure tier, and added Appendix A.
 - v2.1 folds in a new Object Storage & Artifact Stores subsection under Vector Databases (MinIO, Harbor, image registries where AI models, vectors, and snapshots live), adds ClickHouse / Cassandra / txtai / Feast / Tecton entries, introduces GPT4All / NVIDIA NIM / AutoGen coverage, and ships a [terminology primer](../reference/terminology.md) for readers newer to the stack.
+- v2.2 adds Audio/Speech/Vision inference (whisper.cpp, faster-whisper, Coqui, Piper, Bark, Vocode, PaddleOCR) + SGLang / LMDeploy / Aphrodite / Seldon under §3; Dagster, Weights & Biases self-hosted, wandb-local, CVAT, Doccano, Humanloop, Kubeflow Pipelines under §4; PromptLayer, Kong/Tyk AI plugins, Unify router under §5; OpenHands and AutoGPT-Next-Web under §6; a transport-agnostic MCP `jsonrpc`/`tools/list` fingerprint under §10; and Mistral / DeepSeek / raw `sk-ant-` key leaks plus `.claude/settings.json` exposure under §11.

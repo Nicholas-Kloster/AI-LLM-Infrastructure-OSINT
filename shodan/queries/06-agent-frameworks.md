@@ -11,10 +11,15 @@ Autonomous agent runtimes — software that decides what to do, then executes to
 | Shodan Query | Tier | Notes |
 |---|---|---|
 | `"SuperAGI" port:3000` | T2 | |
+| `http.title:"SuperAGI"` | T2 | Title fingerprint — catches relocated/proxied deployments |
 | `"AgentGPT" port:3000` | T2 | |
+| `http.title:"AgentGPT"` | T2 | Title fingerprint |
 | `"BabyAGI" port:8080` | T2 | |
 | `"MetaGPT" port:8000` | T2 | |
 | `"OpenDevin" port:3000` | T2 | Full dev environment — shell/file/git access |
+| `http.title:"OpenDevin"` | T2 | Title fingerprint |
+| `http.title:"OpenHands"` | T2 | OpenDevin renamed to OpenHands — same shell/browser/file authority |
+| `"autogpt-next-web" port:3000` | T2 | AutoGPT-Next-Web UI — exposed backend = agent + key leak |
 | `"SWE-agent" port:8000` | T2 | |
 | `"Devika" port:1337` | T2 | |
 | `"GPT Researcher" port:8000` | T3 | |
