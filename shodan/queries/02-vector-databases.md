@@ -86,13 +86,32 @@ What a T1 Chroma heartbeat response looks like. No auth, full API reachable.
 
 | Shodan Query | Tier | Notes |
 |---|---|---|
-| `"milvus" port:19530` | T1 | gRPC API, auth optional |
-| `"milvus" port:9091 "/api/v1/health"` | T3 | |
-| `"milvus" port:9091 "/metrics"` | T2 | Prometheus metrics leak |
-| `"milvus" "Attu" port:8000` | T1 | Milvus admin GUI |
-| `http.title:"Attu" "Milvus"` | T1 | |
-| `"milvus" port:2379 "etcd"` | T2 | Metadata store exposed |
-| `"milvus" "MinIO" port:9000` | T2 | Object storage — raw vectors |
+| `"Attu"` | T1 | 2,071 hits — admin GUI banner, unique to Milvus |
+| `"milvus"` | T1 | 1,617 hits — banner match |
+| `http.html:"milvus"` | T1 | 1,571 hits — canonical HTML fingerprint |
+| `http.html:"Attu"` | T1 | 1,497 hits — admin GUI HTML |
+| `http.title:"Attu"` | T1 | 1,492 hits — admin GUI title |
+| `product:"Milvus"` | T1 | 1,486 hits — Shodan product facet |
+| `http.title:"Attu" "Milvus"` | T1 | 1,483 hits — highest-confidence admin GUI |
+| `"milvus" "Attu" port:8000` | T1 | 751 hits — Attu on port 8000 with Milvus banner |
+| `"milvus" port:8000` | T1 | 751 hits — Milvus banner on 8000 |
+| `http.title:"Attu" port:3000` | T1 | 301 hits — Attu on its own default port 3000 |
+| `"milvus" http.status:200` | T2 | 57 hits — Milvus banner with 200 response |
+| `"milvus" "MinIO"` | T2 | 50 hits — Milvus + object-storage backend co-located |
+| `http.title:"Milvus"` | T3 | 36 hits — Milvus in title |
+| `"milvus" "etcd"` | T2 | 31 hits — Milvus + metadata store |
+| `"milvus" port:9000` | T2 | 11 hits — MinIO port |
+| `"milvus" "metrics"` | T3 | 8 hits — metrics term in banner |
+| `"milvus" port:2379 "etcd"` | T2 | 6 hits — etcd metadata store exposed |
+| `"milvus" port:9091` | T3 | 1 hit — legacy HTTP proxy port |
+
+**gRPC blind spot (important):** Milvus's primary API runs on port 19530 over gRPC (HTTP/2 + protobuf binary framing). Shodan's banner grab cannot read the "milvus" string from a gRPC banner — it's not HTTP text. `port:19530` returns 522 baseline hits that *likely* include Milvus, but `"milvus" port:19530` returns **0**. These 522 hits cannot be confirmed as Milvus from Shodan alone; live probing via a gRPC reflection request or a `milvus.proto.milvus.MilvusService/DescribeCollection` RPC is required.
+
+**Path indexing:** Original queries using `/api/v1/health` and `/metrics` on port 9091 all returned 0 (same Shodan crawl-path limitation documented in Chroma and Qdrant sections).
+
+**Component visibility ranking:** In this catalogue's data, the **Attu admin UI is more exposed than the Milvus core itself** (2,071 Attu banner hits vs ~1,500 Milvus HTML hits). Attu is a React SPA with full read/write access to any Milvus it connects to, typically via a connection dropdown with no auth checks in the UI layer. A reachable Attu is a reachable database.
+
+**Side-service exposure:** When Milvus is deployed with its full stack, the etcd metadata store (port 2379) and MinIO object backend (port 9000) often ride alongside — etcd exposes the entire schema and collection topology; MinIO holds the raw vector files. Check `"milvus" "etcd"` and `"milvus" "MinIO"` results for colocated trifectas.
 
 ## Object Storage & Artifact Stores
 
