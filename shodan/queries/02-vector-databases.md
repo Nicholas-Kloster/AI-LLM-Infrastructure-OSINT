@@ -4,27 +4,25 @@ _Section verified: April 22, 2026 11:21_
 
 The storage layer for RAG, embeddings, and long-term LLM memory. Many of these ship without authentication enabled by default — exposed instances often disclose collection names, schema, embedding model, and the LLM provider keys used to generate vectors.
 
-> Tier legend: 🟥 **T1** unauthenticated by default · 🟧 **T2** auth often misconfigured / known bypasses · 🟨 **T3** recon / fingerprint only.
-
 ## ChromaDB
 
-| Shodan Query | Tier | Notes |
-|---|---|---|
-| `"chroma"` | 🟨 | 2,311 hits — ⚠️ noisy; "chroma" collides with chroma-subsampling, color-correction UIs, Razer Chroma; use as last resort |
-| `product:"Chroma"` | 🟥 | 1,838 hits — canonical product facet; sampled hits on 8000/8100 confirm vector DB |
-| `product:"Chroma" port:8000` | 🟥 | 1,139 hits — traditional default port |
-| `product:"Chroma" "uvicorn"` | 🟥 | 353 hits — highest-confidence: Chroma ASGI server + product facet |
-| `"chroma" "uvicorn" port:8000` | 🟥 | 230 hits — same intent, no product-facet dependency |
-| `http.title:"Chroma"` | 🟧 | 94 hits — title match, some non-DB Chroma products mixed in |
-| `http.html:"chromadb"` | 🟧 | 76 hits — name-specific HTML body match |
-| `"chromadb"` | 🟧 | 47 hits — name-specific banner match |
-| `http.html:"/api/v1/heartbeat"` | 🟥 | 22 hits — heartbeat path leaked into HTML response |
-| `"chroma" port:8100` | 🟨 | 13 hits — post-0.5 default port |
-| `product:"Chroma" port:8100` | 🟨 | 13 hits — product facet on new default |
-| `"chroma" "0.6"` | 🟨 | 12 hits — current version era |
-| `"chromadb" port:8000` | 🟨 | 5 hits — narrow |
-| `"chroma" "0.5"` | 🟨 | 2 hits — transitional auth-optional era |
-| `"chroma" "0.4"` | 🟨 | 1 hit — pre-auth legacy era, nearly extinct |
+| Shodan Query | Notes |
+|---|---|
+| `"chroma"` | 2,311 hits — ⚠️ noisy; "chroma" collides with chroma-subsampling, color-correction UIs, Razer Chroma; use as last resort |
+| `product:"Chroma"` | 1,838 hits — canonical product facet; sampled hits on 8000/8100 confirm vector DB |
+| `product:"Chroma" port:8000` | 1,139 hits — traditional default port |
+| `product:"Chroma" "uvicorn"` | 353 hits — highest-confidence: Chroma ASGI server + product facet |
+| `"chroma" "uvicorn" port:8000` | 230 hits — same intent, no product-facet dependency |
+| `http.title:"Chroma"` | 94 hits — title match, some non-DB Chroma products mixed in |
+| `http.html:"chromadb"` | 76 hits — name-specific HTML body match |
+| `"chromadb"` | 47 hits — name-specific banner match |
+| `http.html:"/api/v1/heartbeat"` | 22 hits — heartbeat path leaked into HTML response |
+| `"chroma" port:8100` | 13 hits — post-0.5 default port |
+| `product:"Chroma" port:8100` | 13 hits — product facet on new default |
+| `"chroma" "0.6"` | 12 hits — current version era |
+| `"chromadb" port:8000` | 5 hits — narrow |
+| `"chroma" "0.5"` | 2 hits — transitional auth-optional era |
+| `"chroma" "0.4"` | 1 hit — pre-auth legacy era, nearly extinct |
 
 **Fingerprint note:** Shodan does **not** index arbitrary HTTP endpoint paths (`/api/v1/heartbeat`, `/api/v1/collections`, `/openapi.json`) in the root banner — it crawls `/` and headers only. Path-based fingerprints only work when the path string appears inside HTML response bodies (see `http.html:"/api/v1/heartbeat"` above). This is a general lesson applicable across the catalogue.
 
@@ -37,20 +35,20 @@ What a T1 Chroma heartbeat response looks like. No auth, full API reachable.
 
 ## Qdrant
 
-| Shodan Query | Tier | Notes |
-|---|---|---|
-| `http.html:"qdrant"` | 🟥 | 949 hits — canonical fingerprint; HTML-body match catches what banner doesn't |
-| `http.html:"qdrant" port:443` | 🟥 | 331 hits — TLS-fronted deployments (proxy or native) |
-| `http.html:"qdrant" port:80` | 🟥 | 221 hits — plaintext proxy-fronted |
-| `"qdrant"` | 🟧 | 189 hits — banner-level match, narrower subset |
-| `"qdrant" "vector"` | 🟧 | 31 hits — banner + domain term |
-| `http.html:"qdrant" port:6333` | 🟥 | 27 hits — **direct default-port exposure; highest-risk subset, no proxy auth layer** |
-| `"qdrant" "dashboard"` | 🟥 | 17 hits — web dashboard accessible, full read/write |
-| `http.title:"Qdrant"` | 🟨 | 13 hits — title match |
-| `http.html:"Qdrant Web UI"` | 🟧 | 6 hits — dashboard UI marker |
-| `http.html:"Qdrant Dashboard"` | 🟥 | 3 hits — specific dashboard HTML |
-| `"qdrant" "collections"` | 🟨 | 1 hit — banner + API term |
-| `http.html:"qdrant-version"` | 🟨 | 1 hit — response header string leaked into HTML |
+| Shodan Query | Notes |
+|---|---|
+| `http.html:"qdrant"` | 949 hits — canonical fingerprint; HTML-body match catches what banner doesn't |
+| `http.html:"qdrant" port:443` | 331 hits — TLS-fronted deployments (proxy or native) |
+| `http.html:"qdrant" port:80` | 221 hits — plaintext proxy-fronted |
+| `"qdrant"` | 189 hits — banner-level match, narrower subset |
+| `"qdrant" "vector"` | 31 hits — banner + domain term |
+| `http.html:"qdrant" port:6333` | 27 hits — **direct default-port exposure; highest-risk subset, no proxy auth layer** |
+| `"qdrant" "dashboard"` | 17 hits — web dashboard accessible, full read/write |
+| `http.title:"Qdrant"` | 13 hits — title match |
+| `http.html:"Qdrant Web UI"` | 6 hits — dashboard UI marker |
+| `http.html:"Qdrant Dashboard"` | 3 hits — specific dashboard HTML |
+| `"qdrant" "collections"` | 1 hit — banner + API term |
+| `http.html:"qdrant-version"` | 1 hit — response header string leaked into HTML |
 
 **Fingerprint field lesson (generalizable):** `"qdrant"` bare returns 189 hits but `"qdrant" port:6333` returns **0** — not a bug. Bare `"<term>"` matches Shodan's banner text (headers + initial response). On port 6333, Qdrant's REST root returns JSON without the literal word "qdrant" in headers, so banner match misses. The `http.html:` field parses response bodies and does catch it. Always try both `"<term>"` and `http.html:"<term>"`.
 
@@ -60,19 +58,19 @@ What a T1 Chroma heartbeat response looks like. No auth, full API reachable.
 
 ## Weaviate
 
-| Shodan Query | Tier | Notes |
-|---|---|---|
-| `http.html:"weaviate"` | 🟥 | 1,647 hits — canonical fingerprint |
-| `"weaviate"` | 🟥 | 1,326 hits — banner match, anonymous access by default |
-| `http.html:"weaviate" port:8080` | 🟥 | **899 hits** — ~55% of instances still on default port; direct unauth access likely |
-| `"weaviate" port:8080` | 🟥 | 564 hits — banner + default port |
-| `"weaviate" port:80` | 🟧 | 206 hits — plaintext proxy-fronted |
-| `"weaviate" port:443` | 🟧 | 118 hits — TLS-fronted |
-| `"weaviate" "meta"` | 🟧 | 19 hits — meta endpoint term in banner |
-| `http.title:"Weaviate"` | 🟨 | 10 hits — title match |
-| `http.title:"Weaviate Console"` | 🟨 | 3 hits — console UI title |
-| `http.html:"Weaviate Console"` | 🟨 | 3 hits — console UI HTML |
-| `"weaviate" "schema"` | 🟨 | 1 hit — schema term in banner |
+| Shodan Query | Notes |
+|---|---|
+| `http.html:"weaviate"` | 1,647 hits — canonical fingerprint |
+| `"weaviate"` | 1,326 hits — banner match, anonymous access by default |
+| `http.html:"weaviate" port:8080` | **899 hits** — ~55% of instances still on default port; direct unauth access likely |
+| `"weaviate" port:8080` | 564 hits — banner + default port |
+| `"weaviate" port:80` | 206 hits — plaintext proxy-fronted |
+| `"weaviate" port:443` | 118 hits — TLS-fronted |
+| `"weaviate" "meta"` | 19 hits — meta endpoint term in banner |
+| `http.title:"Weaviate"` | 10 hits — title match |
+| `http.title:"Weaviate Console"` | 3 hits — console UI title |
+| `http.html:"Weaviate Console"` | 3 hits — console UI HTML |
+| `"weaviate" "schema"` | 1 hit — schema term in banner |
 
 **Deployment anomaly:** Weaviate is the only vector DB verified so far that **did not** mass-migrate off its default port. 899 of 1,647 instances (~55%) remain directly exposed on 8080, vs Qdrant (3% on 6333) and Flowise (~0% on 3000). Likely explanation: Weaviate is more often run behind application backends rather than user-facing reverse proxies — the embedding service sits between an app and the data, not between a user and a UI. The practical impact: direct 8080 hits are higher-confidence "this is a real Weaviate API, no auth layer in front" signals.
 
@@ -84,26 +82,26 @@ What a T1 Chroma heartbeat response looks like. No auth, full API reachable.
 
 ## Milvus
 
-| Shodan Query | Tier | Notes |
-|---|---|---|
-| `"Attu"` | 🟥 | 2,071 hits — admin GUI banner, unique to Milvus |
-| `"milvus"` | 🟥 | 1,617 hits — banner match |
-| `http.html:"milvus"` | 🟥 | 1,571 hits — canonical HTML fingerprint |
-| `http.html:"Attu"` | 🟥 | 1,497 hits — admin GUI HTML |
-| `http.title:"Attu"` | 🟥 | 1,492 hits — admin GUI title |
-| `product:"Milvus"` | 🟥 | 1,486 hits — Shodan product facet |
-| `http.title:"Attu" "Milvus"` | 🟥 | 1,483 hits — highest-confidence admin GUI |
-| `"milvus" "Attu" port:8000` | 🟥 | 751 hits — Attu on port 8000 with Milvus banner |
-| `"milvus" port:8000` | 🟥 | 751 hits — Milvus banner on 8000 |
-| `http.title:"Attu" port:3000` | 🟥 | 301 hits — Attu on its own default port 3000 |
-| `"milvus" http.status:200` | 🟧 | 57 hits — Milvus banner with 200 response |
-| `"milvus" "MinIO"` | 🟧 | 50 hits — Milvus + object-storage backend co-located |
-| `http.title:"Milvus"` | 🟨 | 36 hits — Milvus in title |
-| `"milvus" "etcd"` | 🟧 | 31 hits — Milvus + metadata store |
-| `"milvus" port:9000` | 🟧 | 11 hits — MinIO port |
-| `"milvus" "metrics"` | 🟨 | 8 hits — metrics term in banner |
-| `"milvus" port:2379 "etcd"` | 🟧 | 6 hits — etcd metadata store exposed |
-| `"milvus" port:9091` | 🟨 | 1 hit — legacy HTTP proxy port |
+| Shodan Query | Notes |
+|---|---|
+| `"Attu"` | 2,071 hits — admin GUI banner, unique to Milvus |
+| `"milvus"` | 1,617 hits — banner match |
+| `http.html:"milvus"` | 1,571 hits — canonical HTML fingerprint |
+| `http.html:"Attu"` | 1,497 hits — admin GUI HTML |
+| `http.title:"Attu"` | 1,492 hits — admin GUI title |
+| `product:"Milvus"` | 1,486 hits — Shodan product facet |
+| `http.title:"Attu" "Milvus"` | 1,483 hits — highest-confidence admin GUI |
+| `"milvus" "Attu" port:8000` | 751 hits — Attu on port 8000 with Milvus banner |
+| `"milvus" port:8000` | 751 hits — Milvus banner on 8000 |
+| `http.title:"Attu" port:3000` | 301 hits — Attu on its own default port 3000 |
+| `"milvus" http.status:200` | 57 hits — Milvus banner with 200 response |
+| `"milvus" "MinIO"` | 50 hits — Milvus + object-storage backend co-located |
+| `http.title:"Milvus"` | 36 hits — Milvus in title |
+| `"milvus" "etcd"` | 31 hits — Milvus + metadata store |
+| `"milvus" port:9000` | 11 hits — MinIO port |
+| `"milvus" "metrics"` | 8 hits — metrics term in banner |
+| `"milvus" port:2379 "etcd"` | 6 hits — etcd metadata store exposed |
+| `"milvus" port:9091` | 1 hit — legacy HTTP proxy port |
 
 **gRPC blind spot (important):** Milvus's primary API runs on port 19530 over gRPC (HTTP/2 + protobuf binary framing). Shodan's banner grab cannot read the "milvus" string from a gRPC banner — it's not HTTP text. `port:19530` returns 522 baseline hits that *likely* include Milvus, but `"milvus" port:19530` returns **0**. These 522 hits cannot be confirmed as Milvus from Shodan alone; live probing via a gRPC reflection request or a `milvus.proto.milvus.MilvusService/DescribeCollection` RPC is required.
 
@@ -119,46 +117,46 @@ Vector databases are the search layer. Object storage is where the models, embed
 
 ### MinIO
 
-| Shodan Query | Tier | Notes |
-|---|---|---|
-| `"MinIO Console" port:9001` | 🟥 | **49,984 hits** — admin console on default port; largest exposure in this catalogue |
-| `"MinIO" port:9000` | 🟥 | 43,775 hits — S3-compatible data port; default backing for Milvus/Weaviate/RAG |
-| `"Server: MinIO" port:9000` | 🟥 | 42,799 hits — Server header leak, near-total overlap with above |
-| `http.title:"MinIO Browser" port:9000` | 🟥 | 2,711 hits — legacy browser UI (pre-console split) |
-| `"MinIO" ("bucket" OR "objects") port:9000` | 🟥 | 1,444 hits — bucket listing keywords in banner |
+| Shodan Query | Notes |
+|---|---|
+| `"MinIO Console" port:9001` | **49,984 hits** — admin console on default port; largest exposure in this catalogue |
+| `"MinIO" port:9000` | 43,775 hits — S3-compatible data port; default backing for Milvus/Weaviate/RAG |
+| `"Server: MinIO" port:9000` | 42,799 hits — Server header leak, near-total overlap with above |
+| `http.title:"MinIO Browser" port:9000` | 2,711 hits — legacy browser UI (pre-console split) |
+| `"MinIO" ("bucket" OR "objects") port:9000` | 1,444 hits — bucket listing keywords in banner |
 
 **MinIO reality check:** The previously-listed `"MinIO" port:9000 -"auth"` is not a useful auth filter — `-"auth"` matches ~identical counts (43,778 vs 43,775) because "auth" is not a banner token for MinIO either way. Query dropped. Distinguishing authenticated vs open buckets requires live probing `/probe-bucket-sign/` or attempting anonymous `ListBuckets`.
 
 ### Docker Registry
 
-| Shodan Query | Tier | Notes |
-|---|---|---|
-| `product:"Docker Registry"` | 🟥 | 15,656 hits — Shodan product facet, canonical fingerprint |
-| `"Docker Registry"` | 🟥 | 14,843 hits — banner-level match |
-| `"Docker Registry" -"unauthorized"` | 🟥 | **9,161 hits** — registries NOT returning 401 at root; anonymous-readable subset |
-| `"Docker Registry" "unauthorized"` | 🟧 | 5,683 hits — auth-enabled subset (returns 401 at root) |
-| `"Docker-Distribution-Api-Version"` | 🟥 | 1,679 hits — HTTP response header leak (highly specific) |
-| `"registry/2.0"` | 🟥 | 1,675 hits — `www-authenticate` realm token leak |
-| `"registry/2.0" "unauthorized"` | 🟧 | 1,030 hits — registry realm with 401 enforced |
-| `"Docker Registry" port:443` | 🟥 | 873 hits — TLS-fronted registries |
-| `"registry/2.0" -"unauthorized"` | 🟥 | 646 hits — realm token + no 401 = anonymous read candidate |
-| `"Docker Registry" port:51000` | 🟥 | 397 hits — non-default port, same exposure class |
-| `"Docker Registry" port:55000` | 🟥 | 291 hits — non-default port, same exposure class |
-| `"Docker Registry" port:5001` | 🟥 | 273 hits — alternate registry port |
-| `"Docker Registry" "/v2/" port:5000` | 🟥 | 131 hits — default port + v2 API token |
-| `"Docker Registry" port:80` | 🟧 | 100 hits — plaintext registries |
-| `http.html:"_catalog"` | 🟨 | 32 hits — catalog path leaked into HTML body |
-| `"registry/2.0" port:5000` | 🟥 | 29 hits — realm token + default port |
-| `"_catalog"` | 🟨 | 20 hits — catalog token in banner |
-| `http.html:"/v2/_catalog"` | 🟨 | 14 hits — exact catalog path in HTML |
-| `"/v2/_catalog"` | 🟨 | 2 hits — literal path in banner (rare) |
+| Shodan Query | Notes |
+|---|---|
+| `product:"Docker Registry"` | 15,656 hits — Shodan product facet, canonical fingerprint |
+| `"Docker Registry"` | 14,843 hits — banner-level match |
+| `"Docker Registry" -"unauthorized"` | **9,161 hits** — registries NOT returning 401 at root; anonymous-readable subset |
+| `"Docker Registry" "unauthorized"` | 5,683 hits — auth-enabled subset (returns 401 at root) |
+| `"Docker-Distribution-Api-Version"` | 1,679 hits — HTTP response header leak (highly specific) |
+| `"registry/2.0"` | 1,675 hits — `www-authenticate` realm token leak |
+| `"registry/2.0" "unauthorized"` | 1,030 hits — registry realm with 401 enforced |
+| `"Docker Registry" port:443` | 873 hits — TLS-fronted registries |
+| `"registry/2.0" -"unauthorized"` | 646 hits — realm token + no 401 = anonymous read candidate |
+| `"Docker Registry" port:51000` | 397 hits — non-default port, same exposure class |
+| `"Docker Registry" port:55000` | 291 hits — non-default port, same exposure class |
+| `"Docker Registry" port:5001` | 273 hits — alternate registry port |
+| `"Docker Registry" "/v2/" port:5000` | 131 hits — default port + v2 API token |
+| `"Docker Registry" port:80` | 100 hits — plaintext registries |
+| `http.html:"_catalog"` | 32 hits — catalog path leaked into HTML body |
+| `"registry/2.0" port:5000` | 29 hits — realm token + default port |
+| `"_catalog"` | 20 hits — catalog token in banner |
+| `http.html:"/v2/_catalog"` | 14 hits — exact catalog path in HTML |
+| `"/v2/_catalog"` | 2 hits — literal path in banner (rare) |
 
 ### Harbor
 
-| Shodan Query | Tier | Notes |
-|---|---|---|
-| `http.title:"Harbor"` | 🟧 | 22,555 hits — enterprise registry title |
-| `"harbor" (port:80 OR port:443)` | 🟧 | 14,607 hits — banner match with grouped OR (unparenthesized version silently breaks) |
+| Shodan Query | Notes |
+|---|---|
+| `http.title:"Harbor"` | 22,555 hits — enterprise registry title |
+| `"harbor" (port:80 OR port:443)` | 14,607 hits — banner match with grouped OR (unparenthesized version silently breaks) |
 
 **Triage note:** Anonymous `/v2/_catalog` read ≠ anonymous push. But anonymous pull of internal images leaks entire codebases, build-time secrets in layer history, and the full supply chain of whatever ships from that registry. Rate severity on _read vs. push_ separately before escalating. See §12 for Docker daemon and container runtime exposure (distinct from the artifact store).
 
@@ -168,36 +166,36 @@ Vector databases are the search layer. Object storage is where the models, embed
 
 ### Elasticsearch
 
-| Shodan Query | Tier | Notes |
-|---|---|---|
-| `product:"Elastic"` | 🟥 | **92,587 hits** — Shodan product facet; note Shodan uses "Elastic", not "Elasticsearch" |
-| `"elasticsearch"` | 🟥 | 77,771 hits — banner-level match |
-| `"elasticsearch" "lucene_version"` | 🟥 | 60,294 hits — JSON root response leak (highly specific) |
-| `"elasticsearch" port:9200` | 🟥 | 7,075 hits — banner + default HTTP port |
-| `"elasticsearch" "8."` | 🟧 | 3,728 hits — v8.x subset, has native dense_vector support |
-| `"elasticsearch" port:9200 "cluster_name"` | 🟥 | 109 hits — cluster_name JSON field leaked |
-| `"elasticsearch" port:9200 "You Know, for Search"` | 🟥 | 94 hits — official tagline leak |
-| `http.html:"/_cluster/health"` | 🟨 | 3 hits — cluster health path in HTML (rare) |
+| Shodan Query | Notes |
+|---|---|
+| `product:"Elastic"` | **92,587 hits** — Shodan product facet; note Shodan uses "Elastic", not "Elasticsearch" |
+| `"elasticsearch"` | 77,771 hits — banner-level match |
+| `"elasticsearch" "lucene_version"` | 60,294 hits — JSON root response leak (highly specific) |
+| `"elasticsearch" port:9200` | 7,075 hits — banner + default HTTP port |
+| `"elasticsearch" "8."` | 3,728 hits — v8.x subset, has native dense_vector support |
+| `"elasticsearch" port:9200 "cluster_name"` | 109 hits — cluster_name JSON field leaked |
+| `"elasticsearch" port:9200 "You Know, for Search"` | 94 hits — official tagline leak |
+| `http.html:"/_cluster/health"` | 3 hits — cluster health path in HTML (rare) |
 
 ### Kibana
 
-| Shodan Query | Tier | Notes |
-|---|---|---|
-| `"kibana"` | 🟧 | 17,368 hits — banner match |
-| `"kibana" port:5601` | 🟧 | 5,253 hits — Kibana default port |
-| `http.title:"Kibana"` | 🟧 | 2,230 hits — UI title |
-| `"kibana" "server is not ready"` | 🟨 | 3 hits — bootstrap state, often unauth window |
+| Shodan Query | Notes |
+|---|---|
+| `"kibana"` | 17,368 hits — banner match |
+| `"kibana" port:5601` | 5,253 hits — Kibana default port |
+| `http.title:"Kibana"` | 2,230 hits — UI title |
+| `"kibana" "server is not ready"` | 3 hits — bootstrap state, often unauth window |
 
 ### OpenSearch
 
-| Shodan Query | Tier | Notes |
-|---|---|---|
-| `"opensearch"` | 🟥 | 63,832 hits — banner match; browser-plugin pollution tested as minimal |
-| `http.html:"opensearch"` | 🟥 | 22,846 hits — HTML body match |
-| `http.title:"OpenSearch Dashboards"` | 🟧 | 7,843 hits — dashboards UI title (clean) |
-| `"opensearch" port:9200` | 🟥 | 934 hits — data node default port |
-| `"opensearch-dashboards"` | 🟧 | 269 hits — dashboards banner |
-| `"opensearch-dashboards" port:5601` | 🟧 | 78 hits — dashboards default port |
+| Shodan Query | Notes |
+|---|---|
+| `"opensearch"` | 63,832 hits — banner match; browser-plugin pollution tested as minimal |
+| `http.html:"opensearch"` | 22,846 hits — HTML body match |
+| `http.title:"OpenSearch Dashboards"` | 7,843 hits — dashboards UI title (clean) |
+| `"opensearch" port:9200` | 934 hits — data node default port |
+| `"opensearch-dashboards"` | 269 hits — dashboards banner |
+| `"opensearch-dashboards" port:5601` | 78 hits — dashboards default port |
 
 **AI-extension blind spot (important):** The vector-search features that make Elasticsearch/OpenSearch relevant to AI (dense_vector field, knn plugin, embeddings, number_of_shards, index mappings) are **invisible to Shodan**. Every query containing `"dense_vector"`, `"knn"`, `"embeddings"`, or `"number_of_shards"` returns 0 — even alone, even in html fields. These tokens live in per-index API responses (`/_mapping`, `/_cat/indices`), which Shodan does not crawl. You cannot distinguish "ES running a RAG vector store" from "ES storing web logs" via Shodan alone — requires live probing.
 
@@ -211,51 +209,51 @@ Vector databases are the search layer. Object storage is where the models, embed
 
 ### PostgreSQL base platform
 
-| Shodan Query | Tier | Notes |
-|---|---|---|
-| `"PostgreSQL"` | 🟨 | 603,878 hits — banner match; largest base platform in catalogue. Most auth-gated on the wire protocol, not exploitable from Shodan banner alone |
-| `product:"PostgreSQL"` | 🟨 | 602,991 hits — Shodan product facet (near-total overlap with banner) |
+| Shodan Query | Notes |
+|---|---|
+| `"PostgreSQL"` | 603,878 hits — banner match; largest base platform in catalogue. Most auth-gated on the wire protocol, not exploitable from Shodan banner alone |
+| `product:"PostgreSQL"` | 602,991 hits — Shodan product facet (near-total overlap with banner) |
 
 ### pgvector
 
-| Shodan Query | Tier | Notes |
-|---|---|---|
-| `"pgvector"` | 🟧 | 125 hits — banner match; vanishingly small subset of PG instances fingerprint as vector DBs |
-| `http.html:"pgvector"` | 🟧 | 103 hits — pgvector mentioned in HTML body (dashboards, docs, admin UIs) |
+| Shodan Query | Notes |
+|---|---|
+| `"pgvector"` | 125 hits — banner match; vanishingly small subset of PG instances fingerprint as vector DBs |
+| `http.html:"pgvector"` | 103 hits — pgvector mentioned in HTML body (dashboards, docs, admin UIs) |
 
 ### Supabase
 
-| Shodan Query | Tier | Notes |
-|---|---|---|
-| `http.html:"supabase"` | 🟥 | **45,784 hits** — Supabase ships with pgvector by default; each of these is a candidate RAG backend |
-| `"supabase"` | 🟧 | 3,276 hits — banner-level match |
-| `"Supabase" port:8000` | 🟥 | 56 hits — Supabase Studio/API on default port, direct-exposure subset |
-| `http.title:"Supabase Studio"` | 🟥 | 1 hit — Studio admin UI title |
+| Shodan Query | Notes |
+|---|---|
+| `http.html:"supabase"` | **45,784 hits** — Supabase ships with pgvector by default; each of these is a candidate RAG backend |
+| `"supabase"` | 3,276 hits — banner-level match |
+| `"Supabase" port:8000` | 56 hits — Supabase Studio/API on default port, direct-exposure subset |
+| `http.title:"Supabase Studio"` | 1 hit — Studio admin UI title |
 
 ### pgAdmin
 
-| Shodan Query | Tier | Notes |
-|---|---|---|
-| `http.html:"pgAdmin"` | 🟥 | 6,899 hits — HTML body match (largest admin-surface count) |
-| `http.title:"pgAdmin"` | 🟥 | 6,704 hits — admin UI title; default creds historically common |
-| `"pgAdmin" port:80` | 🟥 | 100 hits — plaintext-exposed admin UI |
-| `"pgAdmin"` | 🟧 | 892 hits — banner-level match |
-| `"pgAdmin" port:443` | 🟥 | 59 hits — TLS-fronted admin UI |
+| Shodan Query | Notes |
+|---|---|
+| `http.html:"pgAdmin"` | 6,899 hits — HTML body match (largest admin-surface count) |
+| `http.title:"pgAdmin"` | 6,704 hits — admin UI title; default creds historically common |
+| `"pgAdmin" port:80` | 100 hits — plaintext-exposed admin UI |
+| `"pgAdmin"` | 892 hits — banner-level match |
+| `"pgAdmin" port:443` | 59 hits — TLS-fronted admin UI |
 
 ### Timescale
 
-| Shodan Query | Tier | Notes |
-|---|---|---|
-| `"Timescale"` | 🟨 | 63 hits — banner-level match |
-| `http.html:"timescaledb"` | 🟨 | 56 hits — TimescaleDB mentioned in HTML; vector support via pgvector compatibility |
+| Shodan Query | Notes |
+|---|---|
+| `"Timescale"` | 63 hits — banner-level match |
+| `http.html:"timescaledb"` | 56 hits — TimescaleDB mentioned in HTML; vector support via pgvector compatibility |
 
 ### Neon
 
-| Shodan Query | Tier | Notes |
-|---|---|---|
-| `"neon.tech"` | 🟨 | 139 hits — Neon hostname in banner/TLS cert |
-| `http.html:"neon.tech"` | 🟨 | 7 hits — Neon domain in HTML body |
-| `"Neon" "postgres"` | 🟨 | 3 hits — Neon word collision is high; filter tightly |
+| Shodan Query | Notes |
+|---|---|
+| `"neon.tech"` | 139 hits — Neon hostname in banner/TLS cert |
+| `http.html:"neon.tech"` | 7 hits — Neon domain in HTML body |
+| `"Neon" "postgres"` | 3 hits — Neon word collision is high; filter tightly |
 
 **Scale reality:** PostgreSQL at 603k+ is the largest base-platform count in this catalogue, but the vast majority are not AI-adjacent. The pgvector subset is 125 banner-match hits — three orders of magnitude smaller. **Supabase is the signal-to-noise winner here**: 45,784 Supabase HTML hits vs 125 raw pgvector hits, and Supabase ships pgvector by default. A reachable Supabase backend with open anon keys is a pgvector-backed RAG store with higher probability than probing a random `"PostgreSQL"` host.
 
@@ -265,71 +263,71 @@ Vector databases are the search layer. Object storage is where the models, embed
 
 ## Redis Vector Search
 
-| Shodan Query | Tier | Notes |
-|---|---|---|
-| `product:"Redis"` | 🟧 | **245,566 hits** — Shodan product facet, canonical Redis fingerprint |
-| `"Redis" port:6379 -"AUTH" -"NOAUTH"` | 🟥 | 67,934 hits — no password set (filter narrows from 245k → 68k, meaningful) |
-| `"Redis Stack"` | 🟨 | 754 hits — Redis Stack bundle (includes RediSearch for vectors) |
-| `"Redis Stack" port:6379` | 🟨 | 726 hits — Redis Stack on default port |
-| `http.title:"RedisInsight"` | 🟧 | 295 hits — Redis GUI title |
-| `"RedisInsight"` | 🟧 | 57 hits — GUI banner match |
-| `"Redis" "FT.SEARCH"` | 🟨 | 1 hit — vector-search command in banner (extremely rare) |
+| Shodan Query | Notes |
+|---|---|
+| `product:"Redis"` | **245,566 hits** — Shodan product facet, canonical Redis fingerprint |
+| `"Redis" port:6379 -"AUTH" -"NOAUTH"` | 67,934 hits — no password set (filter narrows from 245k → 68k, meaningful) |
+| `"Redis Stack"` | 754 hits — Redis Stack bundle (includes RediSearch for vectors) |
+| `"Redis Stack" port:6379` | 726 hits — Redis Stack on default port |
+| `http.title:"RedisInsight"` | 295 hits — Redis GUI title |
+| `"RedisInsight"` | 57 hits — GUI banner match |
+| `"Redis" "FT.SEARCH"` | 1 hit — vector-search command in banner (extremely rare) |
 
 ## MongoDB
 
-| Shodan Query | Tier | Notes |
-|---|---|---|
-| `port:27017 -"unauthorized"` | 🟥 | **568,835 hits** — broad MongoDB-port candidates not returning 401; not all are MongoDB but the default Mongo port dominates |
-| `product:"MongoDB"` | 🟧 | 197,308 hits — Shodan product facet |
-| `"MongoDB"` | 🟧 | 107,071 hits — banner-level match |
-| `"MongoDB" port:27017 -"auth"` | 🟥 | 89,942 hits — unauth-candidate subset (filter narrows ~17%) |
-| `"MongoDB" port:27017 "vector"` | 🟨 ⚠️ | 59,996 hits — "vector" likely pollutes; Atlas Vector Search is the AI feature but this token appears in more MongoDB banners than expected, sample before trusting |
-| `"mongo-express" port:8081` | 🟧 | 187 hits — web admin, default creds common |
+| Shodan Query | Notes |
+|---|---|
+| `port:27017 -"unauthorized"` | **568,835 hits** — broad MongoDB-port candidates not returning 401; not all are MongoDB but the default Mongo port dominates |
+| `product:"MongoDB"` | 197,308 hits — Shodan product facet |
+| `"MongoDB"` | 107,071 hits — banner-level match |
+| `"MongoDB" port:27017 -"auth"` | 89,942 hits — unauth-candidate subset (filter narrows ~17%) |
+| `"MongoDB" port:27017 "vector"` | ⚠️ 59,996 hits — "vector" likely pollutes; Atlas Vector Search is the AI feature but this token appears in more MongoDB banners than expected, sample before trusting |
+| `"mongo-express" port:8081` | 187 hits — web admin, default creds common |
 
 ## ClickHouse
 
-| Shodan Query | Tier | Notes |
-|---|---|---|
-| `"clickhouse"` | 🟧 | 35,023 hits — banner |
-| `product:"ClickHouse"` | 🟧 | 32,152 hits — Shodan product facet |
-| `"clickhouse" port:8123 ("vector" OR "similarity")` | 🟨 | 1 hit — OLAP + vector hybrid in banner (rare, live-probe required) |
+| Shodan Query | Notes |
+|---|---|
+| `"clickhouse"` | 35,023 hits — banner |
+| `product:"ClickHouse"` | 32,152 hits — Shodan product facet |
+| `"clickhouse" port:8123 ("vector" OR "similarity")` | 1 hit — OLAP + vector hybrid in banner (rare, live-probe required) |
 
 ## Other Vector DBs
 
-| Shodan Query | Tier | Notes |
-|---|---|---|
-| `"arangodb"` | 🟧 | 641 hits — banner match |
-| `http.html:"arangodb"` | 🟧 | 555 hits — HTML body |
-| `http.title:"ArangoDB"` | 🟧 | 551 hits — broader than "ArangoDB Web Interface" |
-| `http.title:"ArangoDB Web Interface"` | 🟧 | 550 hits — specific admin UI title |
-| `"surrealdb"` | 🟧 | 480 hits — banner |
-| `"typesense"` | 🟨 | 341 hits — banner |
-| `http.html:"lancedb"` | 🟨 | 334 hits — HTML body (bare `"lancedb"` banner = 0) |
-| `"cassandra"` | 🟨 | 267 hits — banner; vector extensions in 5.x+ invisible to Shodan |
-| `http.html:"vespa"` | 🟨 | 238 hits — Vespa HTML |
-| `"Vespa"` | 🟨 | 232 hits — banner |
-| `http.html:"typesense"` | 🟨 | 202 hits — HTML body |
-| `"Vespa" "document"` | 🟨 | 67 hits — Vespa + document term (narrower) |
-| `http.html:"surrealdb"` | 🟨 | 12 hits — HTML body |
-| `"Zilliz"` | 🟨 | 8 hits — Milvus's hosted variant, sparse banner presence |
-| `"marqo"` | 🟨 | 7 hits — banner |
-| `"txtai"` | 🟨 | 3 hits — banner |
+| Shodan Query | Notes |
+|---|---|
+| `"arangodb"` | 641 hits — banner match |
+| `http.html:"arangodb"` | 555 hits — HTML body |
+| `http.title:"ArangoDB"` | 551 hits — broader than "ArangoDB Web Interface" |
+| `http.title:"ArangoDB Web Interface"` | 550 hits — specific admin UI title |
+| `"surrealdb"` | 480 hits — banner |
+| `"typesense"` | 341 hits — banner |
+| `http.html:"lancedb"` | 334 hits — HTML body (bare `"lancedb"` banner = 0) |
+| `"cassandra"` | 267 hits — banner; vector extensions in 5.x+ invisible to Shodan |
+| `http.html:"vespa"` | 238 hits — Vespa HTML |
+| `"Vespa"` | 232 hits — banner |
+| `http.html:"typesense"` | 202 hits — HTML body |
+| `"Vespa" "document"` | 67 hits — Vespa + document term (narrower) |
+| `http.html:"surrealdb"` | 12 hits — HTML body |
+| `"Zilliz"` | 8 hits — Milvus's hosted variant, sparse banner presence |
+| `"marqo"` | 7 hits — banner |
+| `"txtai"` | 3 hits — banner |
 
 **No product facet** on Shodan (verified 0) for: SurrealDB, ArangoDB, Marqo, LanceDB, Typesense, Vespa, Zilliz, Cassandra, txtai. Use banner/HTML variants.
 
 ## Graph Databases / Memory
 
-| Shodan Query | Tier | Notes |
-|---|---|---|
-| `product:"Neo4j"` | 🟧 | 9,743 hits — Shodan product facet |
-| `"Neo4j"` | 🟧 | 6,101 hits — banner match |
-| `"Neo4j" port:7474 "browser"` | 🟧 | 5,225 hits — Neo4j Browser UI, default creds neo4j/neo4j historically common |
-| `"Dgraph"` | 🟧 | 185 hits — banner (case-insensitive) |
-| `"Mem0"` | 🟨 | 140 hits — AI memory store |
-| `http.title:"Ratel"` | 🟨 | 73 hits — Dgraph Ratel UI (cleaner than bare `"ratel"` which returns 156k of unrelated noise) |
-| `"memgraph"` | 🟨 | 51 hits — in-memory graph DB, agent memory workloads |
-| `"Memgraph Lab"` | 🟨 | 10 hits — Memgraph web UI |
-| `"Mem0" port:8000` | 🟨 | 9 hits — Mem0 on default port |
+| Shodan Query | Notes |
+|---|---|
+| `product:"Neo4j"` | 9,743 hits — Shodan product facet |
+| `"Neo4j"` | 6,101 hits — banner match |
+| `"Neo4j" port:7474 "browser"` | 5,225 hits — Neo4j Browser UI, default creds neo4j/neo4j historically common |
+| `"Dgraph"` | 185 hits — banner (case-insensitive) |
+| `"Mem0"` | 140 hits — AI memory store |
+| `http.title:"Ratel"` | 73 hits — Dgraph Ratel UI (cleaner than bare `"ratel"` which returns 156k of unrelated noise) |
+| `"memgraph"` | 51 hits — in-memory graph DB, agent memory workloads |
+| `"Memgraph Lab"` | 10 hits — Memgraph web UI |
+| `"Mem0" port:8000` | 9 hits — Mem0 on default port |
 
 **Ratel noise warning:** `"ratel"` bare returns 156,554 hits due to unrelated projects/products sharing the name. `http.title:"Ratel"` (73) is the clean version for Dgraph's UI specifically.
 
