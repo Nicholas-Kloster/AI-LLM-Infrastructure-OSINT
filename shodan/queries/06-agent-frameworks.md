@@ -184,18 +184,17 @@ Devika is an open-source agentic AI software engineer with a web UI. The bare `"
 | Shodan Query | Notes |
 |---|---|
 | `http.html:"devika"` | 19 hits — ⚠️ pollution likely; "devika" appears in unrelated South Asian web content |
-| `http.title:"Devika"` | 4 hits — title match; lower noise than HTML body |
+| `http.html:"devika" http.status:200` | 19 hits — status:200 filter has no narrowing effect; pollution is 200-OK content, not auth-gated noise |
+| `http.html:"devika" -"profile" -"wedding" -"name"` | 19 hits — three-token pollution strip has zero effect; personal-name context uses different co-occurring terms than guessed |
+| `http.title:"Devika"` | 4 hits — title match; lower noise than HTML body, most trustworthy signal |
 | `"Devika"` | 3 hits — ⚠️ banner match, origin uncertain |
+| `"Devika" -http.title:"Login" -http.title:"Sign In"` | 3 hits — login-page exclusion matches the same 3 bare banner hits; negation has no effect |
 | `"Devika" "agent"` | 0 hits — narrowing attempt returns zero; no confirmed agent deployments |
 | `http.html:"devikaai"` | 0 hits — concatenated brand form, dead |
 | `product:"Devika"` | 0 hits — no Shodan product facet |
 | `"Devika" port:1337` | 0 hits — original default port, dead |
-
-| `http.html:"devika" http.status:200` | 19 hits — status:200 filter has no narrowing effect; all existing html hits return 200 (pollution is 200-OK content, not auth-gated noise) |
-| `"Devika" -http.title:"Login" -http.title:"Sign In"` | 3 hits — negation chain matches the same 3 bare banner hits; login-page exclusion doesn't narrow |
-| `http.html:"devika" -"profile" -"wedding" -"name"` | 19 hits — three-token pollution strip has zero effect; personal-name context uses different terms than expected |
-| `http.html:"stitionai"` | 0 hits — GitHub org fingerprint dead; stitionai org reference does not surface in any indexed HTTP content |
-| `http.html:"devika" http.component:"React"` | 0 hits — React component co-occurrence returns zero; framework uses React but Shodan's component detection isn't matching |
+| `http.html:"stitionai"` | 0 hits — GitHub org-name fingerprint; org references do not surface in indexed HTTP content |
+| `http.html:"devika" http.component:"React"` | 0 hits — React component co-occurrence returns zero despite framework using React |
 
 **Fingerprint note:** Until `http.title:"Devika"` is confirmed against live samples, treat all Devika counts as upper bounds. The 4-hit title match is the most trustworthy of the available signals. The `http.html:"stitionai"` GitHub-org pivot returned zero — the stitionai org name does not appear in any Shodan-indexed HTTP responses, confirming the org-name approach fails for this project. Personal-name pollution in the html:"devika" population is resistant to standard negation chains (profile/wedding/name tokens don't appear in the polluting content).
 
@@ -209,18 +208,17 @@ Phidata was renamed to **agno** in early 2025. Both names appear in the wild —
 |---|---|
 | `"agno"` | 262 hits — ⚠️ severely polluted; Philippine geography + generic abbreviation collisions |
 | `http.html:"agno"` | 70 hits — ⚠️ still polluted; sample before trusting |
-| `http.title:"Agno"` | 11 hits — cleanest available fingerprint; sample recommended |
+| `http.html:"agno-agents"` | 21 hits — **canonical fingerprint**; package/import name `agno-agents` embeds cleanly in frontend build artifacts; multiple hits show `http.title:"Agent UI"` (Agno's default UI title) returning HTTP 200 |
+| `http.title:"Agno"` | 11 hits — title-level fingerprint; secondary since package-name query wins |
+| `ssl.cert.subject.cn:"*.agno.com"` | 6 hits — wildcard cert for agno.com; identifies vendor infrastructure (AWS 3.x/54.x/34.x), not third-party deployments |
+| `ssl:"agno.com"` | 6 hits — identical population to cert subject query; same vendor infrastructure |
 | `"Phidata"` | 2 hits — old brand, declining |
-| `http.html:"phidata"` | 0 hits — HTML fingerprint gone post-rename |
-| `http.title:"Phidata"` | 0 hits — title fingerprint gone post-rename |
-| `product:"Phidata"` | 0 hits — no Shodan product facet |
 | `"agno" "llm"` | 1 hit — narrowed with LLM term; near-zero confirms thin deployment surface |
 | `"agno" "phi"` | 0 hits — original brand paired with new, dead |
-
-| `http.html:"agno-agents"` | 21 hits — package/import name fingerprint; surfaces Agno deployments via the Python package name embedded in HTML/JS bundles; multiple hits show `http.title:"Agent UI"` (Agno's default UI title) and return HTTP 200 |
-| `ssl.cert.subject.cn:"*.agno.com"` | 6 hits — wildcard cert for agno.com domain; identifies vendor infrastructure nodes (AWS IPs: 3.x, 54.x, 34.x), not third-party deployments |
-| `ssl:"agno.com"` | 6 hits — identical population to cert subject query above; same vendor infrastructure |
+| `http.html:"phidata"` | 0 hits — HTML fingerprint gone post-rename |
 | `http.html:"phidata" http.status:200` | 0 hits — old brand gone even with status filter; complete post-rename disappearance confirmed |
+| `http.title:"Phidata"` | 0 hits — title fingerprint gone post-rename |
+| `product:"Phidata"` | 0 hits — no Shodan product facet |
 | `http.securitytxt:"phidata"` | 0 hits — no security.txt references to old brand |
 | `http.securitytxt:"agno"` | 0 hits — no security.txt references to new brand |
 | `http.securitytxt:"agno.com"` | 0 hits — no security.txt policy references |
@@ -237,20 +235,19 @@ Microsoft AutoGen (now AutoGen 0.4+, also called "AG2" in some forks) is a multi
 | Shodan Query | Notes |
 |---|---|
 | `http.html:"autogen"` | 715 hits — ⚠️ severely polluted; "autogen" = common codegen term across all stacks |
+| `ssl:"autogen"` | 103 hits — ⚠️ polluted; full-text cert search matches "autogen" in unrelated cert fields; sample shows blank CNs, not AutoGen framework infrastructure |
 | `"autogen" "microsoft"` | 48 hits — Microsoft-scoped narrowing; best available banner query |
 | `http.html:"autogen" "microsoft"` | 33 hits — HTML body + Microsoft co-occurrence |
-| `http.html:"autogen" "agent"` | 10 hits — "agent" co-occurrence; still broad but more focused |
 | `("AutoGen" OR "microsoft autogen")` | 16 hits — OR query, grouped as required |
+| `"X-Powered-By:" "AutoGen"` | 14 hits — custom HTTP header fingerprint; middleware self-identifying via response header; requires live sampling to confirm vs coincidental header collisions |
+| `http.html:"autogen" "agent"` | 10 hits — "agent" co-occurrence; broader but more focused than bare html |
 | `"AutoGen Studio"` | 3 hits — Studio-specific banner match |
 | `product:"AutoGen"` | 0 hits — no Shodan product facet |
 | `http.title:"AutoGen Studio"` | 0 hits — Studio UI title, no matches found |
-| `http.html:"autogen-studio"` | 0 hits — hyphenated Studio variant, dead |
-| `("AutoGen" OR "microsoft autogen") port:8000` | 0 hits — default port tested, dead |
-
-| `"X-Powered-By:" "AutoGen"` | 14 hits — custom HTTP header fingerprint; confirms middleware self-identifying via response header; ⚠️ requires live sampling to confirm these are AutoGen vs. coincidental header collisions |
-| `ssl:"autogen"` | 103 hits — ⚠️ polluted; full-text cert search matches "autogen" in unrelated cert fields (generic servers, code-gen tools); sample shows blank CNs, not AutoGen framework infrastructure |
-| `http.html:"autogen-studio" http.status:200` | 0 hits — Studio UI with status filter, no open deployments |
 | `http.html:"AutoGen Studio"` | 0 hits — mixed-case Studio UI string, dead |
+| `http.html:"autogen-studio"` | 0 hits — hyphenated Studio variant, dead |
+| `http.html:"autogen-studio" http.status:200` | 0 hits — Studio UI with status filter, no open deployments |
+| `("AutoGen" OR "microsoft autogen") port:8000` | 0 hits — default port tested, dead |
 | `"autogen" "multi-agent"` | 0 hits — paired-token pivot, dead |
 | `"autogen" "conversation"` | 0 hits — paired-token pivot, dead |
 | `http.securitytxt:"microsoft" http.html:"autogen"` | 0 hits — security.txt + Microsoft co-occurrence, dead |
@@ -260,3 +257,15 @@ Microsoft AutoGen (now AutoGen 0.4+, also called "AG2" in some forks) is a multi
 ---
 
 **Agent framework exposure is a different class of finding.** A reachable agent is not just data disclosure — it is a delegated-authority system acting on behalf of its operator. OpenClaw, OpenDevin, and similar frameworks have shell, browser, email, and calendar primitives. An unauthenticated hit is the operator's hands on your keyboard.
+
+**Quantified — agent frameworks deploy without HTTP auth as the default.** Across every confirmed-exposure population in this section, `http.status:200` matches 100% of the fingerprint count with zero `http.status:401` hits:
+
+| Framework | Fingerprint hits | HTTP 200 | HTTP 401 |
+|---|---|---|---|
+| OpenHands (`http.title:"OpenHands"`) | 215 | 215 | 0 |
+| Clawdbot Control (`http.title:"Clawdbot Control"`) | 1,770 | 1,770 | 0 |
+| AgentGPT (`http.html:"agentgpt"`) | 12 | 12 | 0 |
+| GPT Researcher (`http.html:"gpt-researcher" port:8000`) | 27 | 27 | 0 |
+| SuperAGI (`http.html:"superagi"`) | 10 | 6 | ~4 (only framework with any HTTP-layer auth friction) |
+
+The "delegated authority" framing above is not theoretical — ~2,000+ reachable instances catalogued here are fully open at the HTTP layer. Auth posture, if present, lives inside the application itself (session cookies, token prompts) rather than as a proxy gate. Live probing is required to distinguish "app-level auth enabled" from "fully anonymous access," but the absence of a 401 response means no reverse proxy or gateway is enforcing auth before the app receives the request.
