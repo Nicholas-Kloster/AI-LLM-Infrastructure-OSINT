@@ -1,6 +1,6 @@
 # 3. Model Serving & Inference
 
-_Section verified: April 22, 2026 11:21_
+_Section verified: April 22, 2026 11:38_
 
 The runtime layer that exposes models over HTTP. Most modern serving stacks emulate the OpenAI API surface (`/v1/chat/completions`, `/v1/models`, `/v1/embeddings`), making them trivially fingerprintable — and often trivially abusable as free compute (LLMjacking).
 

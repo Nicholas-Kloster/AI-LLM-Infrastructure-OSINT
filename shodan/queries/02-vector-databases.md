@@ -1,6 +1,6 @@
 # 2. Vector Databases
 
-_Section verified: April 22, 2026 11:21_
+_Section verified: April 22, 2026 11:38_
 
 The storage layer for RAG, embeddings, and long-term LLM memory. Many of these ship without authentication enabled by default — exposed instances often disclose collection names, schema, embedding model, and the LLM provider keys used to generate vectors.
 
