@@ -39,12 +39,24 @@ What a T1 Chroma heartbeat response looks like. No auth, full API reachable.
 
 | Shodan Query | Tier | Notes |
 |---|---|---|
-| `"qdrant" port:6333 "/collections"` | T1 | No auth by default |
-| `"qdrant" port:6333 "/dashboard"` | T1 | Web dashboard, full read/write |
-| `"qdrant" "/telemetry" port:6333` | T2 | Version + config disclosure |
-| `"qdrant" "points" "vectors" port:6333` | T1 | |
-| `"qdrant" "snapshots" port:6333` | T1 | Downloadable full-DB backups |
-| `http.title:"Qdrant Dashboard"` | T3 | |
+| `http.html:"qdrant"` | T1 | 949 hits — canonical fingerprint; HTML-body match catches what banner doesn't |
+| `http.html:"qdrant" port:443` | T1 | 331 hits — TLS-fronted deployments (proxy or native) |
+| `http.html:"qdrant" port:80` | T1 | 221 hits — plaintext proxy-fronted |
+| `"qdrant"` | T2 | 189 hits — banner-level match, narrower subset |
+| `"qdrant" "vector"` | T2 | 31 hits — banner + domain term |
+| `http.html:"qdrant" port:6333` | T1 | 27 hits — **direct default-port exposure; highest-risk subset, no proxy auth layer** |
+| `"qdrant" "dashboard"` | T1 | 17 hits — web dashboard accessible, full read/write |
+| `http.title:"Qdrant"` | T3 | 13 hits — title match |
+| `http.html:"Qdrant Web UI"` | T2 | 6 hits — dashboard UI marker |
+| `http.html:"Qdrant Dashboard"` | T1 | 3 hits — specific dashboard HTML |
+| `"qdrant" "collections"` | T3 | 1 hit — banner + API term |
+| `http.html:"qdrant-version"` | T3 | 1 hit — response header string leaked into HTML |
+
+**Fingerprint field lesson (generalizable):** `"qdrant"` bare returns 189 hits but `"qdrant" port:6333` returns **0** — not a bug. Bare `"<term>"` matches Shodan's banner text (headers + initial response). On port 6333, Qdrant's REST root returns JSON without the literal word "qdrant" in headers, so banner match misses. The `http.html:` field parses response bodies and does catch it. Always try both `"<term>"` and `http.html:"<term>"`.
+
+**Path indexing:** Qdrant's `/telemetry`, `/snapshots`, and `/points/search` endpoints don't surface in Shodan at all — even the terms "telemetry", "points", "snapshots" paired with "qdrant" return 0 on every combination tested. These endpoints require live probing, not Shodan queries.
+
+**Deployment shift:** 922 of 949 Qdrant instances are no longer on port 6333 (80+443+proxies = ~90% of exposure). Same pattern as n8n and Flowise.
 
 ## Weaviate
 
