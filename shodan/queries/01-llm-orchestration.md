@@ -59,7 +59,14 @@ Low-code/no-code builders, agent runtimes, and chain orchestrators. These platfo
 
 | Shodan Query | Tier | Notes |
 |---|---|---|
-| `"PromptFlow" port:8080 "Microsoft"` | T3 | |
-| `"n8n" port:5678 "workflow"` | T2 | AI workflow automation, RCE history |
-| `"LangGraph" "studio" port:8123` | T3 | |
-| `"Rivet" port:4567` | T3 | Desktop app, server mode uncommon |
+| `product:"n8n"` | T1 | **77,102 hits** — canonical n8n fingerprint; RCE history (CVE-2024-25289 and successors), see n8n note below |
+| `"n8n"` | T2 | 4,966 hits — banner-only, narrower subset |
+| `http.title:"n8n"` | T2 | 360 hits — title-level match, often editor UI |
+| `http.html:"langgraph"` | T3 | 501 hits — LangGraph Studio / LangChain graph orchestrator |
+| `http.title:"LangGraph"` | T3 | 51 hits — title-level match |
+
+**n8n note:** n8n is by far the most-exposed workflow/orchestration platform observed in this catalogue — roughly 4× the count of Open WebUI and ~130× Flowise. The default-port fingerprint (`port:5678`) is obsolete as of April 2026; nearly all deployments sit behind reverse proxies, n8n.cloud, or containerized ingress. Prefer `product:"n8n"` as the canonical query. Given n8n's "execute code" and HTTP-request nodes, exposed editors with weak or default auth are direct RCE surface, not just workflow disclosure.
+
+**Dropped (verified dead April 2026):**
+- **PromptFlow** — Microsoft consolidated Prompt Flow into Azure AI Studio; standalone self-hosted instances are effectively gone (max 5 hits across all variants)
+- **Rivet (Ironclad)** — desktop-first LLM editor; `"Rivet"` collides with Rivet Networks NIC UIs and storage products; no clean fingerprint isolating the Ironclad app
