@@ -43,13 +43,14 @@ Low-code/no-code builders, agent runtimes, and chain orchestrators. These platfo
 | `http.favicon.hash:-1404538293` | 11 hits — LlamaIndex favicon |
 | `"LangChain" port:8000` | 6 hits — library fingerprint, app varies |
 | `http.title:"Create Llama App"` | 6 hits — LlamaIndex default UI (RAG starter) |
+| `http.html:"haystack"` | 3,341 hits — ⚠️ generic term, collides with search tools, monitoring, GDS frameworks |
+| `"zylon"` | 73 hits — PrivateGPT vendor; ⚠️ collides with anime/gaming names |
+| `http.html:"privategpt"` | 7 hits — PrivateGPT-specific HTML match |
+| `"Haystack" port:8000 "pipeline"` | 0 hits — original query; Haystack term too generic in April 2026 |
+| `"private gpt" port:8080 OR port:8001` | 0 hits — original PrivateGPT query (with grouping: also 0) |
+| `"text-generation-webui" port:7860` | 0 hits — oobabooga default port; best variant `http.html:"text-generation-webui"` = 8 |
 
 **Verified April 2026.** Deployment note: the "service + default port" pattern that dominated 2024 is largely dead — most platforms moved behind 443/80 reverse proxies. Queries below 10 hits are retained when they still identify the platform uniquely.
-
-**Dropped (verified 0 reliable hits across all variants tried):**
-- **Haystack** — `"Haystack"` is a generic term polluting every fingerprint (search tools, monitoring, GDS frameworks); no clean way to isolate deepset's RAG framework on Shodan in April 2026
-- **PrivateGPT** — strongest variants were `"zylon"` (73, noisy) and `http.html:"privategpt"` (7); not worth cataloguing
-- **text-generation-webui (oobabooga)** — 0 to 8 hits across every variant; covered incidentally by `http.title:"Gradio"` above
 
 **OpenClaw / Clawdbot:** This is not a passive reconnaissance target. A publicly reachable OpenClaw gateway is an agent with shell execution, browser automation, email send, and calendar write on whoever deployed it. Treat positive hits as live compromise surface, not data disclosure.
 
@@ -65,6 +66,12 @@ Low-code/no-code builders, agent runtimes, and chain orchestrators. These platfo
 
 **n8n note:** n8n is by far the most-exposed workflow/orchestration platform observed in this catalogue — roughly 4× the count of Open WebUI and ~130× Flowise. The default-port fingerprint (`port:5678`) is obsolete as of April 2026; nearly all deployments sit behind reverse proxies, n8n.cloud, or containerized ingress. Prefer `product:"n8n"` as the canonical query. Given n8n's "execute code" and HTTP-request nodes, exposed editors with weak or default auth are direct RCE surface, not just workflow disclosure.
 
-**Dropped (verified dead April 2026):**
-- **PromptFlow** — Microsoft consolidated Prompt Flow into Azure AI Studio; standalone self-hosted instances are effectively gone (max 5 hits across all variants)
-- **Rivet (Ironclad)** — desktop-first LLM editor; `"Rivet"` collides with Rivet Networks NIC UIs and storage products; no clean fingerprint isolating the Ironclad app
+| Shodan Query | Notes |
+|---|---|
+| `"PromptFlow" port:8080 "Microsoft"` | 0 hits — original query; Microsoft consolidated Prompt Flow into Azure AI Studio, self-hosted is rare |
+| `http.html:"promptflow"` | 5 hits — best PromptFlow variant found |
+| `http.title:"PromptFlow"` | 4 hits — title match |
+| `"Rivet" port:4567` | 0 hits — original query; Rivet desktop editor, server mode uncommon |
+| `"Rivet" "Ironclad"` | 0 hits — Ironclad attribution not in banner |
+| `http.title:"Rivet"` | 71 hits — ⚠️ polluted; "Rivet" collides with Rivet Networks NIC UIs, storage products |
+| `http.html:"rivet"` | 169 hits — ⚠️ same pollution concern |

@@ -42,9 +42,12 @@ The runtime layer that exposes models over HTTP. Most modern serving stacks emul
 | `"GPT4All"` | 1 hit — GPT4All desktop server banner |
 | `"NVIDIA NIM"` | 1 hit — NIM exact phrase (2026 deployments still sparse on public internet) |
 
-**Dropped (no reliable fingerprint on Shodan, April 2026):**
-- **Text Generation Inference (TGI)** — `"text-generation-inference"` bare = 0, `http.html:"text-generation-inference"` = 0. HuggingFace's TGI runs behind Inference Endpoints / TGI-specific routing and doesn't surface root-level banners.
-- **Aphrodite Engine** — `"Aphrodite Engine"` exact = 1 only; bare `"aphrodite"` at 362 is Greek-mythology noise, not the vLLM fork. No clean fingerprint.
+| `"TGI" "text-generation-inference" port:8080` | 0 hits — original query; HuggingFace TGI runs behind HF Inference Endpoints routing |
+| `"text-generation-inference"` | 0 hits — bare term |
+| `http.html:"text-generation-inference"` | 0 hits — HTML variant |
+| `"aphrodite" "engine" port:2242` | 0 hits — original Aphrodite Engine query |
+| `"Aphrodite Engine"` | 1 hit — exact phrase (specific-but-rare) |
+| `"aphrodite"` | 362 hits — ⚠️ bare term is Greek-mythology noise, not the vLLM fork |
 
 **Canonical query recommendation:** For OpenAI-compatible inference discovery, `http.html:"/v1/chat/completions"` (6,238) is the best single query — it catches every server emulating the OpenAI API surface regardless of underlying implementation. Pair with `http.html:"/v1/models"` for a narrow overlap.
 
