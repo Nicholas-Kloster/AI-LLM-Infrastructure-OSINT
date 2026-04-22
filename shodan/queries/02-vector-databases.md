@@ -117,20 +117,45 @@ What a T1 Chroma heartbeat response looks like. No auth, full API reachable.
 
 Vector databases are the search layer. Object storage is where the models, embeddings, raw documents, training datasets, and DB snapshots actually live on disk. Milvus, Weaviate, and most RAG pipelines back onto MinIO or S3 by default. A compromised bucket is typically a higher-impact finding than the index in front of it.
 
+### MinIO
+
 | Shodan Query | Tier | Notes |
 |---|---|---|
-| `"MinIO" port:9000` | T2 | S3-compatible store — default backing for Milvus/Weaviate/RAG |
-| `"Server: MinIO" OR title:"MinIO Browser" port:9000` | T1 | Console / browser UI — often zero auth |
-| `"MinIO" "bucket" OR "objects" port:9000` | T1 | Exposed bucket listing — models + vectors |
-| `"MinIO Console" port:9001` | T2 | |
-| `"MinIO" port:9000 -"auth"` | T1 | Public MinIO — object storage free-for-all |
-| `"Docker Registry" "/v2/" port:5000` | T1 | Anonymous catalog read = full image list |
-| `"registry/2.0" "/v2/_catalog" -"unauthorized"` | T1 | Open catalog, pull access typically follows |
-| `"harbor" port:80 OR port:443` | T2 | Harbor registry — enterprise AI model containers |
-| `http.title:"Harbor"` | T2 | |
-| `port:51000 OR port:55000 "Docker Registry"` | T2 | Non-default registry ports, same exposure class |
+| `"MinIO Console" port:9001` | T1 | **49,984 hits** — admin console on default port; largest exposure in this catalogue |
+| `"MinIO" port:9000` | T1 | 43,775 hits — S3-compatible data port; default backing for Milvus/Weaviate/RAG |
+| `"Server: MinIO" port:9000` | T1 | 42,799 hits — Server header leak, near-total overlap with above |
+| `http.title:"MinIO Browser" port:9000` | T1 | 2,711 hits — legacy browser UI (pre-console split) |
+| `"MinIO" ("bucket" OR "objects") port:9000` | T1 | 1,444 hits — bucket listing keywords in banner |
+
+**MinIO reality check:** The previously-listed `"MinIO" port:9000 -"auth"` is not a useful auth filter — `-"auth"` matches ~identical counts (43,778 vs 43,775) because "auth" is not a banner token for MinIO either way. Query dropped. Distinguishing authenticated vs open buckets requires live probing `/probe-bucket-sign/` or attempting anonymous `ListBuckets`.
+
+### Docker Registry
+
+| Shodan Query | Tier | Notes |
+|---|---|---|
+| `product:"Docker Registry"` | T1 | 15,656 hits — Shodan product facet, canonical fingerprint |
+| `"Docker Registry"` | T1 | 14,843 hits — banner-level match |
+| `"Docker-Distribution-Api-Version"` | T1 | 1,679 hits — HTTP response header leak (highly specific) |
+| `"registry/2.0"` | T1 | 1,675 hits — `www-authenticate` realm token leak |
+| `"Docker Registry" port:443` | T1 | 873 hits — TLS-fronted registries |
+| `"Docker Registry" port:51000` | T1 | 397 hits — non-default port, same exposure class |
+| `"Docker Registry" port:55000` | T1 | 291 hits — non-default port, same exposure class |
+| `"Docker Registry" port:5001` | T1 | 273 hits — alternate registry port |
+| `"Docker Registry" "/v2/" port:5000` | T1 | 131 hits — default port + v2 API token |
+| `"Docker Registry" port:80` | T2 | 100 hits — plaintext registries |
+| `"registry/2.0" port:5000` | T1 | 29 hits — realm token + default port |
+| `http.html:"/v2/_catalog"` | T3 | 14 hits — catalog path leaked into HTML |
+
+### Harbor
+
+| Shodan Query | Tier | Notes |
+|---|---|---|
+| `http.title:"Harbor"` | T2 | 22,555 hits — enterprise registry title |
+| `"harbor" (port:80 OR port:443)` | T2 | 14,607 hits — banner match with grouped OR (unparenthesized version silently breaks) |
 
 **Triage note:** Anonymous `/v2/_catalog` read ≠ anonymous push. But anonymous pull of internal images leaks entire codebases, build-time secrets in layer history, and the full supply chain of whatever ships from that registry. Rate severity on _read vs. push_ separately before escalating. See §12 for Docker daemon and container runtime exposure (distinct from the artifact store).
+
+**Scale callout:** MinIO (~50k console hits + ~44k data hits) and Docker Registry (~15k) together form the single largest AI-adjacent attack surface in this catalogue — bigger than any model-serving, vector-DB, or orchestration platform measured. When a Milvus or Weaviate colocates with an exposed MinIO, the storage layer is almost always the faster path to training data, DB snapshots, and raw vectors. Prioritize accordingly.
 
 ## Elasticsearch / OpenSearch
 
