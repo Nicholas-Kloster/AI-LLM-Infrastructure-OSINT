@@ -1,6 +1,6 @@
 # 2. Vector Databases
 
-_Section verified: April 22, 2026 11:10_
+_Section verified: April 22, 2026 11:30_
 
 The storage layer for RAG, embeddings, and long-term LLM memory. Many of these ship without authentication enabled by default — exposed instances often disclose collection names, schema, embedding model, and the LLM provider keys used to generate vectors.
 
@@ -209,13 +209,59 @@ Vector databases are the search layer. Object storage is where the models, embed
 
 ## PostgreSQL + pgvector
 
+### PostgreSQL base platform
+
 | Shodan Query | Tier | Notes |
 |---|---|---|
-| `"PostgreSQL" port:5432 "pgvector"` | T3 | Most installs auth-gated |
-| `"Supabase" port:5432` | T3 | Ships with pgvector |
-| `"pgAdmin" port:5050` | T2 | Often default creds |
-| `"Neon" "postgres" port:5432 "vector"` | T3 | |
-| `"Timescale" port:5432 "pgvector"` | T3 | |
+| `"PostgreSQL"` | T3 | 603,878 hits — banner match; largest base platform in catalogue. Most auth-gated on the wire protocol, not exploitable from Shodan banner alone |
+| `product:"PostgreSQL"` | T3 | 602,991 hits — Shodan product facet (near-total overlap with banner) |
+
+### pgvector
+
+| Shodan Query | Tier | Notes |
+|---|---|---|
+| `"pgvector"` | T2 | 125 hits — banner match; vanishingly small subset of PG instances fingerprint as vector DBs |
+| `http.html:"pgvector"` | T2 | 103 hits — pgvector mentioned in HTML body (dashboards, docs, admin UIs) |
+
+### Supabase
+
+| Shodan Query | Tier | Notes |
+|---|---|---|
+| `http.html:"supabase"` | T1 | **45,784 hits** — Supabase ships with pgvector by default; each of these is a candidate RAG backend |
+| `"supabase"` | T2 | 3,276 hits — banner-level match |
+| `"Supabase" port:8000` | T1 | 56 hits — Supabase Studio/API on default port, direct-exposure subset |
+| `http.title:"Supabase Studio"` | T1 | 1 hit — Studio admin UI title |
+
+### pgAdmin
+
+| Shodan Query | Tier | Notes |
+|---|---|---|
+| `http.html:"pgAdmin"` | T1 | 6,899 hits — HTML body match (largest admin-surface count) |
+| `http.title:"pgAdmin"` | T1 | 6,704 hits — admin UI title; default creds historically common |
+| `"pgAdmin" port:80` | T1 | 100 hits — plaintext-exposed admin UI |
+| `"pgAdmin"` | T2 | 892 hits — banner-level match |
+| `"pgAdmin" port:443` | T1 | 59 hits — TLS-fronted admin UI |
+
+### Timescale
+
+| Shodan Query | Tier | Notes |
+|---|---|---|
+| `"Timescale"` | T3 | 63 hits — banner-level match |
+| `http.html:"timescaledb"` | T3 | 56 hits — TimescaleDB mentioned in HTML; vector support via pgvector compatibility |
+
+### Neon
+
+| Shodan Query | Tier | Notes |
+|---|---|---|
+| `"neon.tech"` | T3 | 139 hits — Neon hostname in banner/TLS cert |
+| `http.html:"neon.tech"` | T3 | 7 hits — Neon domain in HTML body |
+| `"Neon" "postgres"` | T3 | 3 hits — Neon word collision is high; filter tightly |
+
+**Scale reality:** PostgreSQL at 603k+ is the largest base-platform count in this catalogue, but the vast majority are not AI-adjacent. The pgvector subset is 125 banner-match hits — three orders of magnitude smaller. **Supabase is the signal-to-noise winner here**: 45,784 Supabase HTML hits vs 125 raw pgvector hits, and Supabase ships pgvector by default. A reachable Supabase backend with open anon keys is a pgvector-backed RAG store with higher probability than probing a random `"PostgreSQL"` host.
+
+**Auth-state blind spot:** PostgreSQL uses a binary protocol on 5432; Shodan captures the startup error/version banner but not auth posture. `psql -h <ip> -U postgres` or explicit `SELECT` over a captured connection string is the only way to confirm anonymous vs authenticated access. The 603,878 banner hits are a visibility count, not a vulnerability count.
+
+**Original query failures:** All 5 originals combined narrow port (`5432`) + path-style strings (`"pgvector"`, `"vector"`) that don't coexist in the PG startup banner. `"PostgreSQL" port:5432 "pgvector"` = 0 because the startup error doesn't contain extension names. Use the replacements above.
 
 ## Redis Vector Search
 
