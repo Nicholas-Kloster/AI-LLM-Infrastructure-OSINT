@@ -8,8 +8,8 @@ Telemetry and management interfaces for the underlying compute. These surfaces d
 
 | Shodan Query | Tier | Notes |
 |---|---|---|
-| `"NVIDIA DCGM" port:9400 "/metrics"` | 🟧 T2 | |
-| `"nvidia-smi" port:8080` | 🟧 T2 | |
-| `"RunPod" port:8888` | 🟧 T2 | |
-| `"Vast.ai" port:8080` | 🟧 T2 | |
-| `"GPUStack" port:80` | 🟧 T2 | |
+| `"NVIDIA DCGM" port:9400 "/metrics"` | 🟧 | |
+| `"nvidia-smi" port:8080` | 🟧 | |
+| `"RunPod" port:8888` | 🟧 | |
+| `"Vast.ai" port:8080` | 🟧 | |
+| `"GPUStack" port:80` | 🟧 | |

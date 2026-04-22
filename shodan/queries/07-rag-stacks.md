@@ -8,15 +8,15 @@ Self-hosted RAG stacks accumulate enterprise document sets as part of normal use
 
 | Shodan Query | Tier | Notes |
 |---|---|---|
-| `"h2oGPT" port:7860` | 🟧 T2 | Self-hosted RAG, auth optional |
-| `"Verba" port:8000` | 🟧 T2 | Weaviate-backed RAG UI |
-| `"Danswer" OR "Onyx" port:3000` | 🟧 T2 | Enterprise search over connected sources |
-| `"Quivr" port:5050` | 🟧 T2 | Personal/team second-brain RAG |
-| `"Letta" OR "MemGPT" port:8283` | 🟧 T2 | Stateful agent with persistent memory |
-| `"Khoj" port:42110` | 🟧 T2 | Personal AI with email/calendar/notes ingestion |
-| `"RAGFlow" port:80 OR port:8080` | 🟧 T2 | Deep-document RAG engine |
-| `"FastGPT" port:3000 "fastgpt"` | 🟧 T2 | |
-| `"LibreChat" port:3080` | 🟧 T2 | Multi-provider chat UI, often unauth |
-| `"Open WebUI" "signup" port:3000` | 🟥 T1 | First-user-becomes-admin pattern |
+| `"h2oGPT" port:7860` | 🟧 | Self-hosted RAG, auth optional |
+| `"Verba" port:8000` | 🟧 | Weaviate-backed RAG UI |
+| `"Danswer" OR "Onyx" port:3000` | 🟧 | Enterprise search over connected sources |
+| `"Quivr" port:5050` | 🟧 | Personal/team second-brain RAG |
+| `"Letta" OR "MemGPT" port:8283` | 🟧 | Stateful agent with persistent memory |
+| `"Khoj" port:42110` | 🟧 | Personal AI with email/calendar/notes ingestion |
+| `"RAGFlow" port:80 OR port:8080` | 🟧 | Deep-document RAG engine |
+| `"FastGPT" port:3000 "fastgpt"` | 🟧 | |
+| `"LibreChat" port:3080` | 🟧 | Multi-provider chat UI, often unauth |
+| `"Open WebUI" "signup" port:3000` | 🟥 | First-user-becomes-admin pattern |
 
 **The signup-becomes-admin pattern** (Open WebUI, LibreChat, some Danswer deploys) means the first visitor to an exposed instance is promoted to admin of every subsequent user's conversations. Frequently unnoticed because the operator set a password on their own account and assumed the instance was protected.

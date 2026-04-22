@@ -8,11 +8,11 @@ Self-hosted code assistants index proprietary source code to produce completions
 
 | Shodan Query | Tier | Notes |
 |---|---|---|
-| `"Tabby" OR "TabbyML" port:8080` | 🟧 T2 | Self-hosted code completion, indexes private repos |
-| `http.title:"Tabby"` | 🟨 T3 | |
-| `"Cody" "sourcegraph" port:7080` | 🟧 T2 | Self-hosted Cody |
-| `"Continue" port:65432` | 🟨 T3 | Continue.dev server mode |
-| `"Refact" port:8008` | 🟧 T2 | |
-| `"FauxPilot" port:5000` | 🟧 T2 | |
-| `"LocalPilot" port:8080` | 🟧 T2 | |
-| `"bigcode" "/v2/models" port:8080` | 🟨 T3 | |
+| `"Tabby" OR "TabbyML" port:8080` | 🟧 | Self-hosted code completion, indexes private repos |
+| `http.title:"Tabby"` | 🟨 | |
+| `"Cody" "sourcegraph" port:7080` | 🟧 | Self-hosted Cody |
+| `"Continue" port:65432` | 🟨 | Continue.dev server mode |
+| `"Refact" port:8008` | 🟧 | |
+| `"FauxPilot" port:5000` | 🟧 | |
+| `"LocalPilot" port:8080` | 🟧 | |
+| `"bigcode" "/v2/models" port:8080` | 🟨 | |
