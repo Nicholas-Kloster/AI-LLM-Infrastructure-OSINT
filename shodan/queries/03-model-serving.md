@@ -66,10 +66,13 @@ Typical vLLM response on an exposed port. Model name reveals what's hosted; `/v1
 | `"Jina" "embeddings"` | 4 hits — Jina banner + term |
 | `"Jina" "embeddings" port:8080` | 2 hits — Jina on default port |
 | `"infinity" "embedding"` | 1 hit — Infinity embedding server |
+| `"Cohere" "rerank" port:8000` | 0 hits — Cohere rerank server on port 8000 |
+| `"Cohere" "rerank"` | 0 hits — no port filter |
+| `"Cohere"` | 1,603 hits — bare brand name, contaminated by SaaS references / unrelated docs |
 
 **Pollution flagged:** `http.html:"infinity"` alone returns **7,794 hits** — but `"infinity" "embedding"` collapses to 1 hit. "Infinity" is a generic English word polluting 7,793 unrelated hits. Do not use `http.html:"infinity"` as a fingerprint.
 
-**Dropped: Cohere rerank** — `"Cohere" "rerank"` = 0; `"Cohere"` bare = 1,603 but contaminated by the company-brand noise (SaaS references, mentions in unrelated docs). Cohere is API-only (cloud), not a self-hosted server — no point fingerprinting.
+**Cohere note:** Cohere's rerank is primarily a cloud API product; self-hosted rerank instances are rare on the public internet. Bare `"Cohere"` at 1,603 is brand-name noise, not server fingerprints — narrow before trusting.
 
 ## Audio / Speech / Vision Inference
 
