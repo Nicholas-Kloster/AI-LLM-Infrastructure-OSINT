@@ -1,6 +1,6 @@
 # 2. Vector Databases
 
-_Section verified: April 22, 2026 11:30_
+_Section verified: April 22, 2026 11:50_
 
 The storage layer for RAG, embeddings, and long-term LLM memory. Many of these ship without authentication enabled by default — exposed instances often disclose collection names, schema, embedding model, and the LLM provider keys used to generate vectors.
 
@@ -267,38 +267,76 @@ Vector databases are the search layer. Object storage is where the models, embed
 
 | Shodan Query | Tier | Notes |
 |---|---|---|
-| `"Redis" port:6379 "search" "FT.SEARCH"` | T2 | |
-| `"Redis Stack" port:6379` | T3 | |
-| `"RedisInsight" port:8001` | T2 | Web GUI, auth optional |
-| `"Redis" port:6379 -"AUTH" -"NOAUTH"` | T1 | No password set |
+| `product:"Redis"` | T2 | **245,566 hits** — Shodan product facet, canonical Redis fingerprint |
+| `"Redis" port:6379 -"AUTH" -"NOAUTH"` | T1 | 67,934 hits — no password set (filter narrows from 245k → 68k, meaningful) |
+| `"Redis Stack"` | T3 | 754 hits — Redis Stack bundle (includes RediSearch for vectors) |
+| `"Redis Stack" port:6379` | T3 | 726 hits — Redis Stack on default port |
+| `http.title:"RedisInsight"` | T2 | 295 hits — Redis GUI title |
+| `"RedisInsight"` | T2 | 57 hits — GUI banner match |
+| `"Redis" "FT.SEARCH"` | T3 | 1 hit — vector-search command in banner (extremely rare) |
+
+## MongoDB
+
+| Shodan Query | Tier | Notes |
+|---|---|---|
+| `port:27017 -"unauthorized"` | T1 | **568,835 hits** — broad MongoDB-port candidates not returning 401; not all are MongoDB but the default Mongo port dominates |
+| `product:"MongoDB"` | T2 | 197,308 hits — Shodan product facet |
+| `"MongoDB"` | T2 | 107,071 hits — banner-level match |
+| `"MongoDB" port:27017 -"auth"` | T1 | 89,942 hits — unauth-candidate subset (filter narrows ~17%) |
+| `"MongoDB" port:27017 "vector"` | T3 ⚠️ | 59,996 hits — "vector" likely pollutes; Atlas Vector Search is the AI feature but this token appears in more MongoDB banners than expected, sample before trusting |
+| `"mongo-express" port:8081` | T2 | 187 hits — web admin, default creds common |
+
+## ClickHouse
+
+| Shodan Query | Tier | Notes |
+|---|---|---|
+| `"clickhouse"` | T2 | 35,023 hits — banner |
+| `product:"ClickHouse"` | T2 | 32,152 hits — Shodan product facet |
+| `"clickhouse" port:8123 ("vector" OR "similarity")` | T3 | 1 hit — OLAP + vector hybrid in banner (rare, live-probe required) |
 
 ## Other Vector DBs
 
 | Shodan Query | Tier | Notes |
 |---|---|---|
-| `"Vespa" port:8080 "/document/v1"` | T2 | |
-| `"typesense" port:8108 "/collections"` | T3 | API key required |
-| `"typesense" port:8108 "/keys"` | T2 | API key enumeration attempt |
-| `"marqo" port:8882 "/indexes"` | T2 | |
-| `"lancedb" port:8000` | T3 | |
-| `"surrealdb" port:8000 "/sql"` | T2 | |
-| `"arangodb" port:8529 "/_api/collection"` | T2 | |
-| `http.title:"ArangoDB Web Interface"` | T3 | |
-| `"Zilliz" port:9091` | T3 | |
-| `"MongoDB" port:27017 "vector"` | T3 | |
-| `"MongoDB" port:27017 -"auth"` | T1 | Unauth MongoDB |
-| `"mongo-express" port:8081` | T2 | Web admin, default creds common |
-| `"clickhouse" port:8123 "vector" OR "similarity"` | T2 | ClickHouse OLAP + vector hybrid (analytics stacks) |
-| `"cassandra" port:9042 "vector"` | T3 | Apache Cassandra 5.x+ vector extensions |
-| `"txtai" port:8000` | T2 | Lightweight embeddings / semantic search DB |
+| `"arangodb"` | T2 | 641 hits — banner match |
+| `http.html:"arangodb"` | T2 | 555 hits — HTML body |
+| `http.title:"ArangoDB"` | T2 | 551 hits — broader than "ArangoDB Web Interface" |
+| `http.title:"ArangoDB Web Interface"` | T2 | 550 hits — specific admin UI title |
+| `"surrealdb"` | T2 | 480 hits — banner |
+| `"typesense"` | T3 | 341 hits — banner |
+| `http.html:"lancedb"` | T3 | 334 hits — HTML body (bare `"lancedb"` banner = 0) |
+| `"cassandra"` | T3 | 267 hits — banner; vector extensions in 5.x+ invisible to Shodan |
+| `http.html:"vespa"` | T3 | 238 hits — Vespa HTML |
+| `"Vespa"` | T3 | 232 hits — banner |
+| `http.html:"typesense"` | T3 | 202 hits — HTML body |
+| `"Vespa" "document"` | T3 | 67 hits — Vespa + document term (narrower) |
+| `http.html:"surrealdb"` | T3 | 12 hits — HTML body |
+| `"Zilliz"` | T3 | 8 hits — Milvus's hosted variant, sparse banner presence |
+| `"marqo"` | T3 | 7 hits — banner |
+| `"txtai"` | T3 | 3 hits — banner |
+
+**No product facet** on Shodan (verified 0) for: SurrealDB, ArangoDB, Marqo, LanceDB, Typesense, Vespa, Zilliz, Cassandra, txtai. Use banner/HTML variants.
 
 ## Graph Databases / Memory
 
 | Shodan Query | Tier | Notes |
 |---|---|---|
-| `"Neo4j" port:7474 "browser"` | T2 | Default creds neo4j/neo4j common |
-| `"neo4j" port:7474 "graph" OR "cypher"` | T2 | GraphRAG / knowledge graph workloads |
-| `"Dgraph" port:8080 "/admin"` | T2 | |
-| `"dgraph" "ratel" port:8000` | T2 | Web UI |
-| `"memgraph" "query" port:7687` | T3 | In-memory graph DB, common in agent memory |
-| `"Mem0" port:8000` | T2 | AI memory store |
+| `product:"Neo4j"` | T2 | 9,743 hits — Shodan product facet |
+| `"Neo4j"` | T2 | 6,101 hits — banner match |
+| `"Neo4j" port:7474 "browser"` | T2 | 5,225 hits — Neo4j Browser UI, default creds neo4j/neo4j historically common |
+| `"Dgraph"` | T2 | 185 hits — banner (case-insensitive) |
+| `"Mem0"` | T3 | 140 hits — AI memory store |
+| `http.title:"Ratel"` | T3 | 73 hits — Dgraph Ratel UI (cleaner than bare `"ratel"` which returns 156k of unrelated noise) |
+| `"memgraph"` | T3 | 51 hits — in-memory graph DB, agent memory workloads |
+| `"Memgraph Lab"` | T3 | 10 hits — Memgraph web UI |
+| `"Mem0" port:8000` | T3 | 9 hits — Mem0 on default port |
+
+**Ratel noise warning:** `"ratel"` bare returns 156,554 hits due to unrelated projects/products sharing the name. `http.title:"Ratel"` (73) is the clean version for Dgraph's UI specifically.
+
+**Auth-state takeaways from this section:**
+- Redis `-"AUTH" -"NOAUTH"` filter is **meaningful** (245k → 68k)
+- MongoDB `-"auth"` filter is **meaningful** (107k → 90k)
+- Contrast with ES `-"security_exception"` and MinIO `-"auth"` which are both no-ops
+- Rule: always verify negative-filter behavior against the unfiltered count before relying on it as T1
+
+**MongoDB `"vector"` anomaly ⚠️:** The `"MongoDB" port:27017 "vector"` query returns 59,996 hits — suspiciously large given MongoDB Atlas Vector Search is a 2023+ feature that runs on Atlas cloud (not typically self-hosted on open 27017). Likely contaminated by the word "vector" appearing in unrelated MongoDB banner/log content. Sample before trusting this as a RAG-backend fingerprint.
