@@ -62,14 +62,25 @@ What a T1 Chroma heartbeat response looks like. No auth, full API reachable.
 
 | Shodan Query | Tier | Notes |
 |---|---|---|
-| `"weaviate" port:8080 "/v1/schema"` | T1 | Anonymous access enabled by default |
-| `"weaviate" port:8080 "/v1/objects"` | T1 | |
-| `"weaviate" port:8080 "/v1/meta"` | T2 | Version + module disclosure |
-| `"weaviate" port:8080 "/v1/nodes"` | T2 | Cluster topology |
-| `"weaviate" port:8080 "/v1/backups"` | T2 | Backup enumeration |
-| `"weaviate" "modules" "text2vec-openai"` | T2 | Reveals OpenAI embedder configured (key stored server-side, not returned) |
-| `"weaviate" "modules" "generative-openai"` | T2 | LLM key configured server-side |
-| `http.title:"Weaviate Console"` | T3 | |
+| `http.html:"weaviate"` | T1 | 1,647 hits — canonical fingerprint |
+| `"weaviate"` | T1 | 1,326 hits — banner match, anonymous access by default |
+| `http.html:"weaviate" port:8080` | T1 | **899 hits** — ~55% of instances still on default port; direct unauth access likely |
+| `"weaviate" port:8080` | T1 | 564 hits — banner + default port |
+| `"weaviate" port:80` | T2 | 206 hits — plaintext proxy-fronted |
+| `"weaviate" port:443` | T2 | 118 hits — TLS-fronted |
+| `"weaviate" "meta"` | T2 | 19 hits — meta endpoint term in banner |
+| `http.title:"Weaviate"` | T3 | 10 hits — title match |
+| `http.title:"Weaviate Console"` | T3 | 3 hits — console UI title |
+| `http.html:"Weaviate Console"` | T3 | 3 hits — console UI HTML |
+| `"weaviate" "schema"` | T3 | 1 hit — schema term in banner |
+
+**Deployment anomaly:** Weaviate is the only vector DB verified so far that **did not** mass-migrate off its default port. 899 of 1,647 instances (~55%) remain directly exposed on 8080, vs Qdrant (3% on 6333) and Flowise (~0% on 3000). Likely explanation: Weaviate is more often run behind application backends rather than user-facing reverse proxies — the embedding service sits between an app and the data, not between a user and a UI. The practical impact: direct 8080 hits are higher-confidence "this is a real Weaviate API, no auth layer in front" signals.
+
+**Path indexing:** All 5 original `/v1/schema`, `/v1/objects`, `/v1/meta`, `/v1/nodes`, `/v1/backups` queries returned 0. Shodan doesn't crawl these paths. Live-probing the `/v1/meta` endpoint on confirmed Weaviate hosts is required to enumerate version + module config.
+
+**Module fingerprint gap:** `"text2vec-openai"` and `"generative-openai"` both return 0 alone and paired — module config is server-side metadata, not reflected in root banner or HTML. To detect OpenAI-key-backed Weaviate deployments, probe `/v1/meta` live on the 899 port:8080 hits.
+
+**Auth reality check:** Weaviate ships with anonymous access enabled unless `AUTHENTICATION_ANONYMOUS_ACCESS_ENABLED=false` is explicitly set. With 899 direct-exposure hits, assume most are unauthenticated absent contrary evidence.
 
 ## Milvus
 
