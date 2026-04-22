@@ -17,13 +17,8 @@ OpenDevin was renamed to OpenHands in late 2024. Both names are in active use on
 | `"OpenHands"` | 21 hits — banner-level match |
 | `http.title:"OpenDevin"` | 4 hits — legacy name, pre-rename deployments still live |
 | `http.html:"opendevin"` | 6 hits — legacy HTML fingerprint |
-| `"OpenDevin"` | 0 hits — legacy banner match, extinct |
-| `product:"OpenHands"` | 0 hits — no Shodan product facet registered |
-| `product:"OpenDevin"` | 0 hits — no Shodan product facet registered |
-| `"OpenDevin" port:3000` | 0 hits — original default port, dead on the public internet |
-| `"OpenHands" port:3000` | 0 hits — same deployment pattern shift |
 
-**Fingerprint note:** The legacy `"OpenDevin"` bare banner query returns 0 while `http.html:"opendevin"` returns 6 — confirming the same banner-vs-HTML gap documented in §2 for Qdrant. Banner grabs miss the term when Shodan's initial crawl doesn't reflect it in headers or root response. Use `http.html:` as primary fingerprint.
+**Fingerprint note:** The legacy `"OpenDevin"` bare banner returns 0 while `http.html:"opendevin"` returns 6 — confirming the banner-vs-HTML gap documented in §2 for Qdrant. Banner grabs miss the term when Shodan's initial crawl doesn't reflect it in headers or root response. Use `http.html:` as primary fingerprint. No Shodan product facet is registered for either name; `product:"OpenHands"` and `product:"OpenDevin"` both return 0. The original default port (`port:3000`) is dead — no banner hits under either name on that port.
 
 ## OpenClaw / Clawdbot
 
@@ -55,8 +50,8 @@ AutoGPT is largely moribund since mid-2025; development stalled and the project 
 | `"AutoGPT" port:443` | 4 hits — TLS-proxied subset |
 | `"autogpt-next-web"` | 1 hit — Next-Web UI, near-extinct |
 | `"AutoGPT" "next-web"` | 1 hit — combined marker |
-| `product:"AutoGPT"` | 0 hits — no Shodan product facet |
-| `"AutoGPT" port:3000` | 0 hits — original default port, dead |
+
+**No Shodan product facet** (`product:"AutoGPT"` = 0) and no presence on the original default port (`port:3000`). Both are consistent with a project that never developed a recognized server identity.
 
 **Cross-reference §1** for the `http.html:"AutoGPT"` 32-hit count, originally catalogued under Other Orchestrators.
 
@@ -71,11 +66,8 @@ SuperAGI is a controllable autonomous agent framework with a web UI, tool integr
 | `http.title:"SuperAGI"` | 9 hits — title match, high confidence |
 | `"SuperAGI"` | 5 hits — banner-level match |
 | `"SuperAGI" port:443` | 5 hits — TLS-proxied subset (all banner hits appear proxied) |
-| `product:"SuperAGI"` | 0 hits — no Shodan product facet |
-| `"SuperAGI" port:3000` | 0 hits — original default port, dead |
-| `"SuperAGI" port:8080` | 0 hits — alternate port tested, dead |
 
-**Fingerprint note:** The full 10-hit `http.html:"superagi"` population vs 9-hit `http.title:"SuperAGI"` suggests a near-total overlap — SuperAGI's HTML template includes both the title and body string. Use `http.title:"SuperAGI"` as the cleaner query; avoids case collision with unrelated strings containing "superagi".
+**Fingerprint note:** The full 10-hit `http.html:"superagi"` population vs 9-hit `http.title:"SuperAGI"` suggests near-total overlap — SuperAGI's HTML template includes both the title and body string. Use `http.title:"SuperAGI"` as the cleaner query; avoids case collision with unrelated strings containing "superagi". No Shodan product facet registered and no presence on ports 3000 or 8080 — deployments route exclusively through 443 proxies.
 
 ## AgentGPT
 
@@ -87,9 +79,8 @@ AgentGPT (Reworkd) is a browser-based autonomous agent builder. The `http.html:"
 | `http.html:"agentgpt" http.status:200` | 12 hits — full population is open-access; 0 auth-gated instances; all AgentGPT deployments publicly accessible |
 | `http.title:"AgentGPT"` | 9 hits — title match |
 | `http.html:"reworkd"` | 4 hits — maker name in HTML; highest-confidence narrowing |
-| `"AgentGPT"` | 0 hits — no banner presence |
-| `product:"AgentGPT"` | 0 hits — no Shodan product facet |
-| `"AgentGPT" port:3000` | 0 hits — original default port, dead |
+
+**Blind spot:** `"AgentGPT"` bare banner returns 0 — no self-identifying header or root response. No Shodan product facet registered. The original default port (`port:3000`) is dead. Use `http.html:"agentgpt"` or `http.html:"reworkd"` as the only viable fingerprints.
 
 ## GPT Researcher
 
@@ -105,10 +96,8 @@ GPT Researcher (GPTR) is an autonomous research agent that queries the web, synt
 | `http.title:"GPT Researcher"` | 2 hits — title match, sparse |
 | `"GPT Researcher"` | 2 hits — banner match, sparse |
 | `"GPT Researcher" port:443` | 1 hit — TLS banner match |
-| `product:"GPT Researcher"` | 0 hits — no Shodan product facet |
-| `"GPT Researcher" port:8000` | 0 hits — bare banner on default port, dead |
 
-**Fingerprint lesson:** The underscore vs hyphen split (64 vs 54 hits) reflects a general pattern — Python projects embed their module name (underscores) in frontend build artifacts differently from their URL slug (hyphens). When scanning Python-based web apps, always test both forms.
+**Fingerprint lesson:** The underscore vs hyphen split (64 vs 54 hits) reflects a general pattern — Python projects embed their module name (underscores) in frontend build artifacts differently from their URL slug (hyphens). When scanning Python-based web apps, always test both forms. No Shodan product facet registered and bare banner on the default port (`"GPT Researcher" port:8000`) returns 0 — the banner does not contain the project name in JSON headers at root.
 
 ## MetaGPT
 
@@ -120,39 +109,16 @@ MetaGPT is a multi-agent framework that simulates software engineering roles (PM
 | `"metagpt" http.status:200` | 1 hit — status-filtered banner match; same population as bare banner |
 | `"MetaGPT"` | 1 hit — banner match |
 | `http.title:"MetaGPT"` | 1 hit — title match |
-| `product:"MetaGPT"` | 0 hits — no Shodan product facet |
-| `"MetaGPT" port:8000` | 0 hits — default port tested, dead |
-| `http.component:"Streamlit" "metagpt"` | 0 hits — wrapper search, no Streamlit deployments found |
-| `http.component:"Gradio" "metagpt"` | 0 hits — wrapper search, no Gradio deployments found |
-| `http.component:"FastAPI" "metagpt"` | 0 hits — wrapper search, no FastAPI deployments found |
-| `"metagpt" "role"` | 0 hits — paired-token pivot, dead |
-| `"metagpt" "architect"` | 0 hits — paired-token pivot, dead |
-| `ssl:"metagpt"` | 0 hits — no TLS cert references found |
 
-**Not currently visible on Shodan (effectively).** MetaGPT exposes no persistent HTTP service in standard deployments — it runs as a CLI pipeline and writes output to disk. The 1–3 hits across banner/html/title are noise or one-off demo environments. Wrapper search pivots (Streamlit/Gradio/FastAPI + "metagpt") all return zero, confirming the framework is not being wrapped into publicly-accessible UIs at any detectable scale. No meaningful internet-facing exposure surface to enumerate.
+**Not currently visible on Shodan (effectively).** MetaGPT exposes no persistent HTTP service in standard deployments — it runs as a CLI pipeline and writes output to disk. The 1–3 hits across banner/html/title are noise or one-off demo environments. The full variant ladder (bare banner, title, product facet, port-restricted, wrapper components Streamlit/Gradio/FastAPI, paired tokens "role"/"architect", ssl full-text) returned zero across every attempt — MetaGPT is not deployed as a public web service at meaningful scale. No meaningful internet-facing exposure surface to enumerate.
 
 ## BabyAGI
 
 BabyAGI is one of the earliest task-management agent loops. The project has seen minimal active development since 2024 and its web deployment surface was always thin — it was designed as a terminal script, not a web service.
 
-**Not currently visible on Shodan.** Exhaustive pivot coverage across six baseline variants and eight wrapper/alternate strategies all return zero or near-zero:
+**Not currently visible on Shodan.** The full variant ladder — bare banner, HTML body, title, product facet, default ports (8080/3000), wrapper components (Streamlit/Gradio/FastAPI/Jupyter), paired tokens ("task_list", "objective"), status filter, and ssl full-text — returned zero across every attempt. The single `ssl:"babyagi"` hit is an anomalous cert text coincidence, not a deployment signal.
 
-- `"BabyAGI"` — 0
-- `http.html:"babyagi"` — 0
-- `http.title:"BabyAGI"` — 0
-- `product:"BabyAGI"` — 0
-- `"BabyAGI" port:8080` — 0
-- `"BabyAGI" port:3000` — 0
-- `http.component:"Streamlit" "babyagi"` — 0
-- `http.component:"Gradio" "babyagi"` — 0
-- `http.component:"FastAPI" "babyagi"` — 0
-- `"babyagi" "task_list"` — 0
-- `"babyagi" "objective"` — 0
-- `http.html:"babyagi" http.status:200` — 0
-- `"BabyAGI" http.component:"Jupyter"` — 0
-- `ssl:"babyagi"` — 1 (single anomalous cert mention; not a deployment signal)
-
-**Blind spot:** BabyAGI's absence is not a fingerprinting failure — the framework was never packaged as a web service. Wrapper pivots (Streamlit/Gradio/FastAPI/Jupyter + "babyagi") all returned zero, confirming no wrapper deployment surface exists either. The single `ssl:"babyagi"` hit is a cert text coincidence. No Shodan query surface exists to enumerate this class of deployment.
+**Blind spot:** BabyAGI's absence is not a fingerprinting failure — the framework was never packaged as a web service. It was designed as a terminal script and has seen minimal development since 2024. No Shodan query surface exists to enumerate this class of deployment.
 
 ## SWE-agent
 
@@ -163,17 +129,8 @@ SWE-agent (Princeton NLP) is a coding agent that uses a custom agent-computer in
 | `http.html:"swe-bench"` | 25 hits — proxy indicator; SWE-bench benchmark pages surface research compute environments running SWE-agent workflows |
 | `http.html:"swe-agent"` | 6 hits — only viable direct fingerprint found |
 | `http.html:"swe-agent" -http.title:"GitHub"` | 6 hits — GitHub mirror exclusion has no effect; all 6 hits already non-GitHub |
-| `"SWE-agent"` | 0 hits — no banner presence |
-| `http.title:"SWE-agent"` | 0 hits — no title-level deployments found |
-| `http.html:"sweagent"` | 0 hits — concatenated variant, dead |
-| `product:"SWE-agent"` | 0 hits — no Shodan product facet |
-| `"swe-agent" port:8000` | 0 hits — default port tested, dead |
-| `http.component:"Streamlit" "swe-agent"` | 0 hits — wrapper search, no Streamlit deployments |
-| `http.component:"Jupyter" "swe-agent"` | 0 hits — wrapper search, no Jupyter deployments |
-| `"swe-agent" http.status:200` | 0 hits — status filter adds nothing |
-| `ssl:"swe-agent"` | 0 hits — no TLS cert references |
 
-**Blind spot:** SWE-agent ships as a CLI tool and Docker image; it does not expose a web UI by default. The 6 `http.html:"swe-agent"` hits are documentation pages, GitHub mirror indexes, or project portals — not live agent endpoints. The `http.html:"swe-bench"` proxy query at 25 hits surfaces research infrastructure (AI services, code evaluation platforms) that are adjacent to SWE-agent but not confirmable as agent deployments. No meaningful autonomous-agent exposure surface is enumerable via Shodan. Wrapper search pivots (Streamlit/Jupyter) all returned zero.
+**Blind spot:** SWE-agent ships as a CLI tool and Docker image; it does not expose a web UI by default. The 6 `http.html:"swe-agent"` hits are documentation pages, GitHub mirror indexes, or project portals — not live agent endpoints. The `http.html:"swe-bench"` proxy query at 25 hits surfaces adjacent research infrastructure but is not confirmable as SWE-agent deployments. The variant ladder (bare banner, title, concatenated form, product facet, default port, wrapper components Streamlit/Jupyter, status filter, ssl full-text) returned zero across every attempt. No meaningful autonomous-agent exposure surface is enumerable via Shodan.
 
 ## Devika
 
@@ -189,14 +146,8 @@ Devika is an open-source agentic AI software engineer with a web UI. The bare `"
 | `http.title:"Devika"` | 4 hits — title match; lower noise than HTML body, most trustworthy signal |
 | `"Devika"` | 3 hits — ⚠️ banner match, origin uncertain |
 | `"Devika" -http.title:"Login" -http.title:"Sign In"` | 3 hits — login-page exclusion matches the same 3 bare banner hits; negation has no effect |
-| `"Devika" "agent"` | 0 hits — narrowing attempt returns zero; no confirmed agent deployments |
-| `http.html:"devikaai"` | 0 hits — concatenated brand form, dead |
-| `product:"Devika"` | 0 hits — no Shodan product facet |
-| `"Devika" port:1337` | 0 hits — original default port, dead |
-| `http.html:"stitionai"` | 0 hits — GitHub org-name fingerprint; org references do not surface in indexed HTTP content |
-| `http.html:"devika" http.component:"React"` | 0 hits — React component co-occurrence returns zero despite framework using React |
 
-**Fingerprint note:** Until `http.title:"Devika"` is confirmed against live samples, treat all Devika counts as upper bounds. The 4-hit title match is the most trustworthy of the available signals. The `http.html:"stitionai"` GitHub-org pivot returned zero — the stitionai org name does not appear in any Shodan-indexed HTTP responses, confirming the org-name approach fails for this project. Personal-name pollution in the html:"devika" population is resistant to standard negation chains (profile/wedding/name tokens don't appear in the polluting content).
+**Fingerprint note:** Until `http.title:"Devika"` is confirmed against live samples, treat all Devika counts as upper bounds. The 4-hit title match is the most trustworthy of the available signals. Personal-name pollution in the `html:"devika"` population is resistant to standard negation chains (profile/wedding/name tokens don't appear in the polluting content). Narrowing attempts that returned zero: `"Devika" "agent"` (paired token), `http.html:"devikaai"` (concatenated brand), `product:"Devika"` (no Shodan facet), `"Devika" port:1337` (original default port dead), `http.html:"stitionai"` (GitHub org names do not surface in Shodan-indexed HTTP responses), and `http.html:"devika" http.component:"React"` (component co-occurrence returns zero despite the framework using React). The org-name pivot failure generalizes: GitHub org names are not a reliable fingerprint approach for any project in this catalogue.
 
 ## Phidata / Agno
 
@@ -214,17 +165,8 @@ Phidata was renamed to **agno** in early 2025. Both names appear in the wild —
 | `ssl:"agno.com"` | 6 hits — identical population to cert subject query; same vendor infrastructure |
 | `"Phidata"` | 2 hits — old brand, declining |
 | `"agno" "llm"` | 1 hit — narrowed with LLM term; near-zero confirms thin deployment surface |
-| `"agno" "phi"` | 0 hits — original brand paired with new, dead |
-| `http.html:"phidata"` | 0 hits — HTML fingerprint gone post-rename |
-| `http.html:"phidata" http.status:200` | 0 hits — old brand gone even with status filter; complete post-rename disappearance confirmed |
-| `http.title:"Phidata"` | 0 hits — title fingerprint gone post-rename |
-| `product:"Phidata"` | 0 hits — no Shodan product facet |
-| `http.securitytxt:"phidata"` | 0 hits — no security.txt references to old brand |
-| `http.securitytxt:"agno"` | 0 hits — no security.txt references to new brand |
-| `http.securitytxt:"agno.com"` | 0 hits — no security.txt policy references |
-| `http.html:"agno" http.component:"FastAPI"` | 0 hits — FastAPI co-occurrence returns zero |
 
-**Rename blind spot:** The transition from Phidata → agno split the fingerprint surface. `http.html:"phidata"` went to zero while `"agno"` is polluted and no clean paired-token narrowing works. This is a general pattern when AI projects rebrand to short, dictionary-word names — the new name inherits massive unrelated index content. **Rescue query: `http.html:"agno-agents"`** (21 hits) — the Python package name `agno-agents` embeds cleanly in frontend build artifacts and is distinctive enough to be low-noise. Multiple confirmed `http.title:"Agent UI"` hits returning HTTP 200. This is now the canonical Agno fingerprint. The `ssl:"agno.com"` / `ssl.cert.subject.cn:"*.agno.com"` queries at 6 hits map vendor infrastructure, not third-party deployments.
+**Rename blind spot:** The transition from Phidata → agno split the fingerprint surface. All Phidata variants (`http.html:"phidata"`, `http.title:"Phidata"`, `http.html:"phidata" http.status:200`) went to zero — complete post-rename disappearance confirmed. The new brand is polluted and no product facet exists; security.txt searches for both old and new names return zero; FastAPI co-occurrence and `"agno" "phi"` paired-token narrowing also return zero. This is a general pattern when AI projects rebrand to short, dictionary-word names — the new name inherits massive unrelated index content. **Rescue query: `http.html:"agno-agents"`** (21 hits) — the Python package name `agno-agents` embeds cleanly in frontend build artifacts and is distinctive enough to be low-noise. Multiple confirmed `http.title:"Agent UI"` hits returning HTTP 200. This is now the canonical Agno fingerprint. The `ssl:"agno.com"` / `ssl.cert.subject.cn:"*.agno.com"` queries at 6 hits map vendor infrastructure, not third-party deployments.
 
 ## AutoGen
 
@@ -242,17 +184,8 @@ Microsoft AutoGen (now AutoGen 0.4+, also called "AG2" in some forks) is a multi
 | `"X-Powered-By:" "AutoGen"` | 14 hits — custom HTTP header fingerprint; middleware self-identifying via response header; requires live sampling to confirm vs coincidental header collisions |
 | `http.html:"autogen" "agent"` | 10 hits — "agent" co-occurrence; broader but more focused than bare html |
 | `"AutoGen Studio"` | 3 hits — Studio-specific banner match |
-| `product:"AutoGen"` | 0 hits — no Shodan product facet |
-| `http.title:"AutoGen Studio"` | 0 hits — Studio UI title, no matches found |
-| `http.html:"AutoGen Studio"` | 0 hits — mixed-case Studio UI string, dead |
-| `http.html:"autogen-studio"` | 0 hits — hyphenated Studio variant, dead |
-| `http.html:"autogen-studio" http.status:200` | 0 hits — Studio UI with status filter, no open deployments |
-| `("AutoGen" OR "microsoft autogen") port:8000` | 0 hits — default port tested, dead |
-| `"autogen" "multi-agent"` | 0 hits — paired-token pivot, dead |
-| `"autogen" "conversation"` | 0 hits — paired-token pivot, dead |
-| `http.securitytxt:"microsoft" http.html:"autogen"` | 0 hits — security.txt + Microsoft co-occurrence, dead |
 
-**Fingerprint lesson:** AutoGen Studio is the only component that creates an HTTP endpoint — the framework itself is library-only. The `"X-Powered-By:" "AutoGen"` custom header query at 14 hits is a new candidate fingerprint — custom headers are harder to pollute than HTML body text. Requires live sampling. The `ssl:"autogen"` at 103 hits is confirmed polluted (blank cert CNs from unrelated services). Until `http.title:"AutoGen Studio"` or `product:"AutoGen"` starts returning hits, the best available paths are `"autogen" "microsoft"` (48 hits, paired query) and `"X-Powered-By:" "AutoGen"` (14 hits, custom header), with live sampling required on both.
+**Fingerprint lesson:** AutoGen Studio is the only component that creates an HTTP endpoint — the framework itself is library-only. The `"X-Powered-By:" "AutoGen"` custom header query at 14 hits is a new candidate fingerprint — custom headers are harder to pollute than HTML body text. Requires live sampling. The `ssl:"autogen"` at 103 hits is confirmed polluted (blank cert CNs from unrelated services). The Studio-specific variant ladder returned zero across every form tried: `http.title:"AutoGen Studio"`, `http.html:"AutoGen Studio"`, `http.html:"autogen-studio"` (all case variants), port-restricted OR query, paired tokens ("multi-agent", "conversation"), and security.txt co-occurrence — no Studio UI title or product facet is registered. Until `http.title:"AutoGen Studio"` or `product:"AutoGen"` starts returning hits, the best available paths are `"autogen" "microsoft"` (48 hits, paired query) and `"X-Powered-By:" "AutoGen"` (14 hits, custom header), with live sampling required on both.
 
 ---
 
