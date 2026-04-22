@@ -4,21 +4,21 @@ _Section verified: April 2026_
 
 Low-code/no-code builders, agent runtimes, and chain orchestrators. These platforms typically expose a web UI that, when unauthenticated, grants direct access to flow editors, API keys stored in nodes, and execution endpoints.
 
-> Tier legend: **T1** unauthenticated by default · **T2** auth often misconfigured / known bypasses · **T3** recon / fingerprint only. See [shodan/README.md](../README.md#how-to-read-the-tables).
+> Tier legend: 🟥 **T1** unauthenticated by default · 🟧 **T2** auth often misconfigured / known bypasses · 🟨 **T3** recon / fingerprint only. See [shodan/README.md](../README.md#how-to-read-the-tables).
 
 ## Flowise
 
 | Shodan Query | Tier | Notes |
 |---|---|---|
-| `title:"Flowise" port:443` | T3 | 586 hits — title fingerprint, mixed auth |
-| `product:"Flowise"` | T2 | 576 hits — Shodan product facet, canonical fingerprint |
-| `http.html:"Low-code LLM apps builder"` | T3 | 572 hits — HTML title fingerprint |
-| `"Flowise"` | T3 | 170 hits — broad banner match |
-| `"Flowise" http.status:200` | T2 | 26 hits — 200-response subset, likely reachable |
-| `"Flowise" "chatflows"` | T3 | 9 hits — banner + API term |
-| `"Flowise" "Express"` | T3 | 6 hits — Express-fronted subset |
-| `"X-Powered-By: Express" "Flowise"` | T3 | 6 hits — header + banner intersect |
-| `"Flowise" http.status:401` | T3 | 4 hits — auth-enabled subset |
+| `title:"Flowise" port:443` | 🟨 T3 | 586 hits — title fingerprint, mixed auth |
+| `product:"Flowise"` | 🟧 T2 | 576 hits — Shodan product facet, canonical fingerprint |
+| `http.html:"Low-code LLM apps builder"` | 🟨 T3 | 572 hits — HTML title fingerprint |
+| `"Flowise"` | 🟨 T3 | 170 hits — broad banner match |
+| `"Flowise" http.status:200` | 🟧 T2 | 26 hits — 200-response subset, likely reachable |
+| `"Flowise" "chatflows"` | 🟨 T3 | 9 hits — banner + API term |
+| `"Flowise" "Express"` | 🟨 T3 | 6 hits — Express-fronted subset |
+| `"X-Powered-By: Express" "Flowise"` | 🟨 T3 | 6 hits — header + banner intersect |
+| `"Flowise" http.status:401` | 🟨 T3 | 4 hits — auth-enabled subset |
 
 **Deployment note:** As of April 2026, `port:3000` (Flowise default) is effectively dead on the public internet — production deployments now sit behind 443 reverse proxies almost universally. Prefer `product:"Flowise"` as the canonical fingerprint.
 
@@ -28,23 +28,23 @@ Low-code/no-code builders, agent runtimes, and chain orchestrators. These platfo
 
 | Shodan Query | Tier | Notes |
 |---|---|---|
-| `http.title:"Open WebUI"` | T2 | 18,736 hits — largest AI UI fingerprint on the internet; Ollama frontend |
-| `http.html:"dify"` | T3 | 8,750 hits — broad Dify HTML fingerprint |
-| `http.title:"LiteLLM"` | T2 | 5,076 hits — LLM proxy, master key often leaked in env |
-| `"Jan" port:1337` | T3 | 4,624 hits — desktop app in server mode |
-| `http.title:"Dify"` | T3 | 2,614 hits — tighter Dify title fingerprint |
-| `http.title:"Clawdbot Control"` | T1 | 1,770 hits ⚠️ `http.title:` is tokenized — sample before trusting, may include false positives |
-| `http.html:"Chainlit"` | T2 | 1,144 hits — conversational UI layer on LangChain |
-| `http.title:"Langflow"` | T2 | 844 hits — flow builder, often deployed unauth |
-| `"AnythingLLM" port:3001` | T2 | 366 hits — known auth bypass history |
-| `http.title:"Gradio"` | T3 | 225 hits — generic Gradio wrapper (covers oobabooga, demos, custom AI apps) |
-| `port:18789 ("openclaw" OR "clawdbot")` | T1 | 165 hits — OpenClaw gateway (grouped OR required; unparenthesized breaks Shodan precedence) |
-| `"LocalAI" port:8080` | T1 | 95 hits — no auth by default |
-| `"Ollama" port:11434` | T1 | 37 hits — no auth support; exposure = full access |
-| `http.html:"AutoGPT"` | T3 | 32 hits — project moribund since 2025, retained for completeness |
-| `http.favicon.hash:-1404538293` | T3 | 11 hits — LlamaIndex favicon |
-| `"LangChain" port:8000` | T3 | 6 hits — library fingerprint, app varies |
-| `http.title:"Create Llama App"` | T2 | 6 hits — LlamaIndex default UI (RAG starter) |
+| `http.title:"Open WebUI"` | 🟧 T2 | 18,736 hits — largest AI UI fingerprint on the internet; Ollama frontend |
+| `http.html:"dify"` | 🟨 T3 | 8,750 hits — broad Dify HTML fingerprint |
+| `http.title:"LiteLLM"` | 🟧 T2 | 5,076 hits — LLM proxy, master key often leaked in env |
+| `"Jan" port:1337` | 🟨 T3 | 4,624 hits — desktop app in server mode |
+| `http.title:"Dify"` | 🟨 T3 | 2,614 hits — tighter Dify title fingerprint |
+| `http.title:"Clawdbot Control"` | 🟥 T1 | 1,770 hits ⚠️ `http.title:` is tokenized — sample before trusting, may include false positives |
+| `http.html:"Chainlit"` | 🟧 T2 | 1,144 hits — conversational UI layer on LangChain |
+| `http.title:"Langflow"` | 🟧 T2 | 844 hits — flow builder, often deployed unauth |
+| `"AnythingLLM" port:3001` | 🟧 T2 | 366 hits — known auth bypass history |
+| `http.title:"Gradio"` | 🟨 T3 | 225 hits — generic Gradio wrapper (covers oobabooga, demos, custom AI apps) |
+| `port:18789 ("openclaw" OR "clawdbot")` | 🟥 T1 | 165 hits — OpenClaw gateway (grouped OR required; unparenthesized breaks Shodan precedence) |
+| `"LocalAI" port:8080` | 🟥 T1 | 95 hits — no auth by default |
+| `"Ollama" port:11434` | 🟥 T1 | 37 hits — no auth support; exposure = full access |
+| `http.html:"AutoGPT"` | 🟨 T3 | 32 hits — project moribund since 2025, retained for completeness |
+| `http.favicon.hash:-1404538293` | 🟨 T3 | 11 hits — LlamaIndex favicon |
+| `"LangChain" port:8000` | 🟨 T3 | 6 hits — library fingerprint, app varies |
+| `http.title:"Create Llama App"` | 🟧 T2 | 6 hits — LlamaIndex default UI (RAG starter) |
 
 **Verified April 2026.** Deployment note: the "service + default port" pattern that dominated 2024 is largely dead — most platforms moved behind 443/80 reverse proxies. Queries below 10 hits are retained when they still identify the platform uniquely.
 
@@ -59,11 +59,11 @@ Low-code/no-code builders, agent runtimes, and chain orchestrators. These platfo
 
 | Shodan Query | Tier | Notes |
 |---|---|---|
-| `product:"n8n"` | T1 | **77,102 hits** — canonical n8n fingerprint; RCE history (CVE-2024-25289 and successors), see n8n note below |
-| `"n8n"` | T2 | 4,966 hits — banner-only, narrower subset |
-| `http.title:"n8n"` | T2 | 360 hits — title-level match, often editor UI |
-| `http.html:"langgraph"` | T3 | 501 hits — LangGraph Studio / LangChain graph orchestrator |
-| `http.title:"LangGraph"` | T3 | 51 hits — title-level match |
+| `product:"n8n"` | 🟥 T1 | **77,102 hits** — canonical n8n fingerprint; RCE history (CVE-2024-25289 and successors), see n8n note below |
+| `"n8n"` | 🟧 T2 | 4,966 hits — banner-only, narrower subset |
+| `http.title:"n8n"` | 🟧 T2 | 360 hits — title-level match, often editor UI |
+| `http.html:"langgraph"` | 🟨 T3 | 501 hits — LangGraph Studio / LangChain graph orchestrator |
+| `http.title:"LangGraph"` | 🟨 T3 | 51 hits — title-level match |
 
 **n8n note:** n8n is by far the most-exposed workflow/orchestration platform observed in this catalogue — roughly 4× the count of Open WebUI and ~130× Flowise. The default-port fingerprint (`port:5678`) is obsolete as of April 2026; nearly all deployments sit behind reverse proxies, n8n.cloud, or containerized ingress. Prefer `product:"n8n"` as the canonical query. Given n8n's "execute code" and HTTP-request nodes, exposed editors with weak or default auth are direct RCE surface, not just workflow disclosure.
 
