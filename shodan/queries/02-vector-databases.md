@@ -1,6 +1,6 @@
 # 2. Vector Databases
 
-_Section verified: April 2026_
+_Section verified: April 22, 2026 11:10_
 
 The storage layer for RAG, embeddings, and long-term LLM memory. Many of these ship without authentication enabled by default — exposed instances often disclose collection names, schema, embedding model, and the LLM provider keys used to generate vectors.
 
@@ -166,15 +166,46 @@ Vector databases are the search layer. Object storage is where the models, embed
 
 ## Elasticsearch / OpenSearch
 
+### Elasticsearch
+
 | Shodan Query | Tier | Notes |
 |---|---|---|
-| `"elasticsearch" port:9200 "/_cat/indices" "vector"` | T2 | |
-| `"elasticsearch" "8." port:9200 "dense_vector"` | T3 | v8+ native vector |
-| `"elasticsearch" "knn" port:9200` | T3 | |
-| `"elasticsearch" port:9200 "/_cluster/health"` | T1 | Cluster discovery |
-| `"kibana" port:5601 "embeddings"` | T2 | |
-| `"opensearch" port:9200 "knn"` | T3 | |
-| `"opensearch-dashboards" port:5601` | T2 | |
+| `product:"Elastic"` | T1 | **92,587 hits** — Shodan product facet; note Shodan uses "Elastic", not "Elasticsearch" |
+| `"elasticsearch"` | T1 | 77,771 hits — banner-level match |
+| `"elasticsearch" "lucene_version"` | T1 | 60,294 hits — JSON root response leak (highly specific) |
+| `"elasticsearch" port:9200` | T1 | 7,075 hits — banner + default HTTP port |
+| `"elasticsearch" "8."` | T2 | 3,728 hits — v8.x subset, has native dense_vector support |
+| `"elasticsearch" port:9200 "cluster_name"` | T1 | 109 hits — cluster_name JSON field leaked |
+| `"elasticsearch" port:9200 "You Know, for Search"` | T1 | 94 hits — official tagline leak |
+| `http.html:"/_cluster/health"` | T3 | 3 hits — cluster health path in HTML (rare) |
+
+### Kibana
+
+| Shodan Query | Tier | Notes |
+|---|---|---|
+| `"kibana"` | T2 | 17,368 hits — banner match |
+| `"kibana" port:5601` | T2 | 5,253 hits — Kibana default port |
+| `http.title:"Kibana"` | T2 | 2,230 hits — UI title |
+| `"kibana" "server is not ready"` | T3 | 3 hits — bootstrap state, often unauth window |
+
+### OpenSearch
+
+| Shodan Query | Tier | Notes |
+|---|---|---|
+| `"opensearch"` | T1 | 63,832 hits — banner match; browser-plugin pollution tested as minimal |
+| `http.html:"opensearch"` | T1 | 22,846 hits — HTML body match |
+| `http.title:"OpenSearch Dashboards"` | T2 | 7,843 hits — dashboards UI title (clean) |
+| `"opensearch" port:9200` | T1 | 934 hits — data node default port |
+| `"opensearch-dashboards"` | T2 | 269 hits — dashboards banner |
+| `"opensearch-dashboards" port:5601` | T2 | 78 hits — dashboards default port |
+
+**AI-extension blind spot (important):** The vector-search features that make Elasticsearch/OpenSearch relevant to AI (dense_vector field, knn plugin, embeddings, number_of_shards, index mappings) are **invisible to Shodan**. Every query containing `"dense_vector"`, `"knn"`, `"embeddings"`, or `"number_of_shards"` returns 0 — even alone, even in html fields. These tokens live in per-index API responses (`/_mapping`, `/_cat/indices`), which Shodan does not crawl. You cannot distinguish "ES running a RAG vector store" from "ES storing web logs" via Shodan alone — requires live probing.
+
+**Auth-state blind spot:** `"elasticsearch" -"security_exception"` matches the same 77k as unfiltered (literally 77,772 vs 77,771). X-Pack auth errors don't appear in Shodan banners either. Distinguishing open clusters from auth-gated ones requires live `/` or `/_cluster/health` probes with no auth header.
+
+**Browser plugin pollution tested — not a concern:** `http.html:"opensearch" -"opensearchdescription"` = 22,845 hits (removes 1 from 22,846). The W3C OpenSearch browser plugin spec is not meaningfully contaminating OpenSearch DB counts.
+
+**Scale note:** With `product:"Elastic"` at 92,587, Elasticsearch is the **single most-exposed platform in this entire catalogue** — larger than MinIO Console (49,984) and n8n (77,102). Most of these run for observability/logs, not vectors — but a non-trivial fraction of the 3,728 v8.x instances serve RAG workloads whose vector indexes cannot be separated from log indexes without live probing.
 
 ## PostgreSQL + pgvector
 
