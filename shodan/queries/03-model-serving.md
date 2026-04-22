@@ -41,13 +41,8 @@ The runtime layer that exposes models over HTTP. Most modern serving stacks emul
 | `"llama" "completion"` | 2 hits — llama completion term combo (no port) |
 | `"GPT4All"` | 1 hit — GPT4All desktop server banner |
 | `"NVIDIA NIM"` | 1 hit — NIM exact phrase (2026 deployments still sparse on public internet) |
-
-| `"TGI" "text-generation-inference" port:8080` | 0 hits — original query; HuggingFace TGI runs behind HF Inference Endpoints routing |
-| `"text-generation-inference"` | 0 hits — bare term |
-| `http.html:"text-generation-inference"` | 0 hits — HTML variant |
-| `"aphrodite" "engine" port:2242` | 0 hits — original Aphrodite Engine query |
-| `"Aphrodite Engine"` | 1 hit — exact phrase (specific-but-rare) |
 | `"aphrodite"` | 362 hits — ⚠️ bare term is Greek-mythology noise, not the vLLM fork |
+| `"Aphrodite Engine"` | 1 hit — exact phrase (specific-but-rare) |
 
 **Canonical query recommendation:** For OpenAI-compatible inference discovery, `http.html:"/v1/chat/completions"` (6,238) is the best single query — it catches every server emulating the OpenAI API surface regardless of underlying implementation. Pair with `http.html:"/v1/models"` for a narrow overlap.
 
@@ -69,8 +64,6 @@ Typical vLLM response on an exposed port. Model name reveals what's hosted; `/v1
 | `"Jina" "embeddings"` | 4 hits — Jina banner + term |
 | `"Jina" "embeddings" port:8080` | 2 hits — Jina on default port |
 | `"infinity" "embedding"` | 1 hit — Infinity embedding server |
-| `"Cohere" "rerank" port:8000` | 0 hits — Cohere rerank server on port 8000 |
-| `"Cohere" "rerank"` | 0 hits — no port filter |
 | `"Cohere"` | 1,603 hits — bare brand name, contaminated by SaaS references / unrelated docs |
 
 **Pollution flagged:** `http.html:"infinity"` alone returns **7,794 hits** — but `"infinity" "embedding"` collapses to 1 hit. "Infinity" is a generic English word polluting 7,793 unrelated hits. Do not use `http.html:"infinity"` as a fingerprint.

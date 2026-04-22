@@ -46,9 +46,6 @@ Low-code/no-code builders, agent runtimes, and chain orchestrators. These platfo
 | `http.html:"haystack"` | 3,341 hits — ⚠️ generic term, collides with search tools, monitoring, GDS frameworks |
 | `"zylon"` | 73 hits — PrivateGPT vendor; ⚠️ collides with anime/gaming names |
 | `http.html:"privategpt"` | 7 hits — PrivateGPT-specific HTML match |
-| `"Haystack" port:8000 "pipeline"` | 0 hits — original query; Haystack term too generic in April 2026 |
-| `"private gpt" port:8080 OR port:8001` | 0 hits — original PrivateGPT query (with grouping: also 0) |
-| `"text-generation-webui" port:7860` | 0 hits — oobabooga default port; best variant `http.html:"text-generation-webui"` = 8 |
 
 **Verified April 2026.** Deployment note: the "service + default port" pattern that dominated 2024 is largely dead — most platforms moved behind 443/80 reverse proxies. Queries below 10 hits are retained when they still identify the platform uniquely.
 
@@ -62,16 +59,10 @@ Low-code/no-code builders, agent runtimes, and chain orchestrators. These platfo
 | `"n8n"` | 4,966 hits — banner-only, narrower subset |
 | `http.title:"n8n"` | 360 hits — title-level match, often editor UI |
 | `http.html:"langgraph"` | 501 hits — LangGraph Studio / LangChain graph orchestrator |
+| `http.html:"rivet"` | 169 hits — ⚠️ polluted; "Rivet" collides with Rivet Networks NIC UIs, storage products |
+| `http.title:"Rivet"` | 71 hits — ⚠️ same pollution concern |
 | `http.title:"LangGraph"` | 51 hits — title-level match |
-
-**n8n note:** n8n is by far the most-exposed workflow/orchestration platform observed in this catalogue — roughly 4× the count of Open WebUI and ~130× Flowise. The default-port fingerprint (`port:5678`) is obsolete as of April 2026; nearly all deployments sit behind reverse proxies, n8n.cloud, or containerized ingress. Prefer `product:"n8n"` as the canonical query. Given n8n's "execute code" and HTTP-request nodes, exposed editors with weak or default auth are direct RCE surface, not just workflow disclosure.
-
-| Shodan Query | Notes |
-|---|---|
-| `"PromptFlow" port:8080 "Microsoft"` | 0 hits — original query; Microsoft consolidated Prompt Flow into Azure AI Studio, self-hosted is rare |
 | `http.html:"promptflow"` | 5 hits — best PromptFlow variant found |
 | `http.title:"PromptFlow"` | 4 hits — title match |
-| `"Rivet" port:4567` | 0 hits — original query; Rivet desktop editor, server mode uncommon |
-| `"Rivet" "Ironclad"` | 0 hits — Ironclad attribution not in banner |
-| `http.title:"Rivet"` | 71 hits — ⚠️ polluted; "Rivet" collides with Rivet Networks NIC UIs, storage products |
-| `http.html:"rivet"` | 169 hits — ⚠️ same pollution concern |
+
+**n8n note:** n8n is by far the most-exposed workflow/orchestration platform observed in this catalogue — roughly 4× the count of Open WebUI and ~130× Flowise. The default-port fingerprint (`port:5678`) is obsolete as of April 2026; nearly all deployments sit behind reverse proxies, n8n.cloud, or containerized ingress. Prefer `product:"n8n"` as the canonical query. Given n8n's "execute code" and HTTP-request nodes, exposed editors with weak or default auth are direct RCE surface, not just workflow disclosure.
