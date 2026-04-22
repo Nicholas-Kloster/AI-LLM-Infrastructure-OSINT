@@ -24,14 +24,22 @@ The runtime layer that exposes models over HTTP. Most modern serving stacks emul
 | `("koboldcpp" OR "koboldai")` | 47 hits — grouped OR catches AI Horde workers (unparenthesized breaks) |
 | `"koboldai"` | 46 hits — KoboldAI web UI |
 | `"Seldon"` | 33 hits — Seldon Core model deployment (k8s) |
-| `"LM Studio"` | 12 hits — LM Studio local inference |
+| `http.html:"lm studio"` | 173 hits — LM Studio in HTML body (best LM Studio fingerprint) |
+| `port:1234 "model"` | 71 hits — LM Studio default port with model term |
+| `http.html:"sglang"` | 74 hits — SGLang in HTML body |
+| `http.html:"seldon"` | 20 hits — Seldon in HTML body |
+| `http.title:"Seldon"` | 10 hits — Seldon title match |
+| `"LM Studio"` | 12 hits — LM Studio banner match |
 | `http.html:"nvidia nim"` | 12 hits — NVIDIA NIM microservices in HTML |
+| `http.html:"/v1/embeddings"` | 90 hits — embeddings path in HTML |
 | `"/v1/embeddings"` | 8 hits — embeddings path banner leak |
 | `"Triton Inference Server"` | 7 hits — NVIDIA Triton (use exact phrase; bare "Triton" returns 1,809 polluted) |
 | `"lmdeploy"` | 5 hits — InternLM LMDeploy engine |
 | `"vLLM" port:8000` | 2 hits — vLLM on default port |
 | `port:8000 "openai" "model"` | 1 hit — OpenAI-compat on 8000 with model list |
-| `"GPT4All"` | 1 hit — GPT4All desktop server |
+| `http.html:"GPT4All"` | 2 hits — GPT4All in HTML body |
+| `"llama" "completion"` | 2 hits — llama completion term combo (no port) |
+| `"GPT4All"` | 1 hit — GPT4All desktop server banner |
 | `"NVIDIA NIM"` | 1 hit — NIM exact phrase (2026 deployments still sparse on public internet) |
 
 **Dropped (no reliable fingerprint on Shodan, April 2026):**
@@ -50,11 +58,16 @@ Typical vLLM response on an exposed port. Model name reveals what's hosted; `/v1
 
 | Shodan Query | Notes |
 |---|---|
-| `"text-embeddings-inference"` | 5 hits — HuggingFace TEI |
-| `"sentence-transformers"` | 5 hits — sentence-transformers-based servers |
-| `"Jina" "embeddings"` | 4 hits — Jina embeddings |
+| `http.html:"TEI"` | 332 hits — TEI in HTML (best TEI fingerprint) |
+| `http.html:"jina"` | 83 hits — Jina in HTML |
+| `http.html:"sentence-transformers"` | 31 hits — sentence-transformers in HTML |
+| `"text-embeddings-inference"` | 5 hits — TEI banner match |
+| `"sentence-transformers"` | 5 hits — banner match |
+| `"Jina" "embeddings"` | 4 hits — Jina banner + term |
 | `"Jina" "embeddings" port:8080` | 2 hits — Jina on default port |
 | `"infinity" "embedding"` | 1 hit — Infinity embedding server |
+
+**Pollution flagged:** `http.html:"infinity"` alone returns **7,794 hits** — but `"infinity" "embedding"` collapses to 1 hit. "Infinity" is a generic English word polluting 7,793 unrelated hits. Do not use `http.html:"infinity"` as a fingerprint.
 
 **Dropped: Cohere rerank** — `"Cohere" "rerank"` = 0; `"Cohere"` bare = 1,603 but contaminated by the company-brand noise (SaaS references, mentions in unrelated docs). Cohere is API-only (cloud), not a self-hosted server — no point fingerprinting.
 
@@ -63,11 +76,15 @@ Typical vLLM response on an exposed port. Model name reveals what's hosted; `/v1
 | Shodan Query | Notes |
 |---|---|
 | `http.title:"Whisper"` | 444 hits — Whisper ASR web UI |
+| `http.html:"faster-whisper"` | 190 hits — faster-whisper in HTML |
 | `http.title:"Bark"` | 120 hits — Suno Bark text-to-audio |
-| `"faster-whisper"` | 32 hits — faster-whisper CTranslate2 servers |
+| `http.title:"Piper"` | 103 hits — Piper TTS title |
+| `http.html:"coqui"` | 55 hits — Coqui in HTML |
+| `"faster-whisper"` | 32 hits — faster-whisper banner |
 | `"PaddleOCR"` | 28 hits — PaddleOCR service (banner form) |
 | `"whisper.cpp" "/inference"` | 16 hits — whisper.cpp HTTP server, free ASR compute |
-| `"coqui" "tts"` | 13 hits — Coqui TTS |
+| `"coqui" "tts"` | 13 hits — Coqui TTS banner + term |
 | `"piper" "tts"` | 8 hits — Piper neural TTS (RPi/edge) |
 | `"vocode"` | 4 hits — Vocode voice-agent framework |
+| `http.html:"vocode"` | 2 hits — Vocode in HTML |
 | `"paddleocr" port:8080` | 1 hit — PaddleOCR (default port, narrow) |
