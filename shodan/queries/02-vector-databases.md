@@ -10,13 +10,25 @@ The storage layer for RAG, embeddings, and long-term LLM memory. Many of these s
 
 | Shodan Query | Tier | Notes |
 |---|---|---|
-| `"chroma" port:8000 "api/v1"` | T1 | Pre-0.5 versions default to no auth |
-| `"/api/v1/heartbeat" "nanosecond"` | T1 | Most reliable Chroma fingerprint |
-| `"chroma" "0.4" port:8000` | T1 | Pre-auth default era |
-| `"chromadb" "/api/v2" port:8000` | T2 | Newer multi-tenant, auth optional |
-| `"/api/v1/collections" "ChromaDB" -401` | T1 | No auth confirmed |
-| `"chroma" "/openapi.json" port:8000` | T2 | Full API spec exposed |
-| `"Server: uvicorn" "/api/v1/collections"` | T3 | ChromaDB fingerprint |
+| `"chroma"` | T3 | 2,311 hits — ⚠️ noisy; "chroma" collides with chroma-subsampling, color-correction UIs, Razer Chroma; use as last resort |
+| `product:"Chroma"` | T1 | 1,838 hits — canonical product facet; sampled hits on 8000/8100 confirm vector DB |
+| `product:"Chroma" port:8000` | T1 | 1,139 hits — traditional default port |
+| `product:"Chroma" "uvicorn"` | T1 | 353 hits — highest-confidence: Chroma ASGI server + product facet |
+| `"chroma" "uvicorn" port:8000` | T1 | 230 hits — same intent, no product-facet dependency |
+| `http.title:"Chroma"` | T2 | 94 hits — title match, some non-DB Chroma products mixed in |
+| `http.html:"chromadb"` | T2 | 76 hits — name-specific HTML body match |
+| `"chromadb"` | T2 | 47 hits — name-specific banner match |
+| `http.html:"/api/v1/heartbeat"` | T1 | 22 hits — heartbeat path leaked into HTML response |
+| `"chroma" port:8100` | T3 | 13 hits — post-0.5 default port |
+| `product:"Chroma" port:8100` | T3 | 13 hits — product facet on new default |
+| `"chroma" "0.6"` | T3 | 12 hits — current version era |
+| `"chromadb" port:8000` | T3 | 5 hits — narrow |
+| `"chroma" "0.5"` | T3 | 2 hits — transitional auth-optional era |
+| `"chroma" "0.4"` | T3 | 1 hit — pre-auth legacy era, nearly extinct |
+
+**Fingerprint note:** Shodan does **not** index arbitrary HTTP endpoint paths (`/api/v1/heartbeat`, `/api/v1/collections`, `/openapi.json`) in the root banner — it crawls `/` and headers only. Path-based fingerprints only work when the path string appears inside HTML response bodies (see `http.html:"/api/v1/heartbeat"` above). This is a general lesson applicable across the catalogue.
+
+**Status-code caveat:** Chroma returns 404 at `/` regardless of auth configuration (no root handler registered), so `http.status:200` and `http.status:401` both return 0 for `product:"Chroma"`. Auth-enabled vs unauth cannot be distinguished from Shodan banner data alone — probe `/api/v1/heartbeat` live to tell them apart.
 
 ```
 {"nanosecond heartbeat": 1713384722842816000}
