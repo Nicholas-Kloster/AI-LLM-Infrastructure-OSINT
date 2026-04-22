@@ -135,16 +135,23 @@ Vector databases are the search layer. Object storage is where the models, embed
 |---|---|---|
 | `product:"Docker Registry"` | T1 | 15,656 hits — Shodan product facet, canonical fingerprint |
 | `"Docker Registry"` | T1 | 14,843 hits — banner-level match |
+| `"Docker Registry" -"unauthorized"` | T1 | **9,161 hits** — registries NOT returning 401 at root; anonymous-readable subset |
+| `"Docker Registry" "unauthorized"` | T2 | 5,683 hits — auth-enabled subset (returns 401 at root) |
 | `"Docker-Distribution-Api-Version"` | T1 | 1,679 hits — HTTP response header leak (highly specific) |
 | `"registry/2.0"` | T1 | 1,675 hits — `www-authenticate` realm token leak |
+| `"registry/2.0" "unauthorized"` | T2 | 1,030 hits — registry realm with 401 enforced |
 | `"Docker Registry" port:443` | T1 | 873 hits — TLS-fronted registries |
+| `"registry/2.0" -"unauthorized"` | T1 | 646 hits — realm token + no 401 = anonymous read candidate |
 | `"Docker Registry" port:51000` | T1 | 397 hits — non-default port, same exposure class |
 | `"Docker Registry" port:55000` | T1 | 291 hits — non-default port, same exposure class |
 | `"Docker Registry" port:5001` | T1 | 273 hits — alternate registry port |
 | `"Docker Registry" "/v2/" port:5000` | T1 | 131 hits — default port + v2 API token |
 | `"Docker Registry" port:80` | T2 | 100 hits — plaintext registries |
+| `http.html:"_catalog"` | T3 | 32 hits — catalog path leaked into HTML body |
 | `"registry/2.0" port:5000` | T1 | 29 hits — realm token + default port |
-| `http.html:"/v2/_catalog"` | T3 | 14 hits — catalog path leaked into HTML |
+| `"_catalog"` | T3 | 20 hits — catalog token in banner |
+| `http.html:"/v2/_catalog"` | T3 | 14 hits — exact catalog path in HTML |
+| `"/v2/_catalog"` | T3 | 2 hits — literal path in banner (rare) |
 
 ### Harbor
 
