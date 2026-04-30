@@ -1,6 +1,6 @@
 # 1. LLM Orchestration Platforms
 
-_Section verified: April 22, 2026 11:38_
+_Section verified: April 30, 2026_
 
 Low-code/no-code builders, agent runtimes, and chain orchestrators. These platforms typically expose a web UI that, when unauthenticated, grants direct access to flow editors, API keys stored in nodes, and execution endpoints.
 
@@ -26,7 +26,9 @@ Low-code/no-code builders, agent runtimes, and chain orchestrators. These platfo
 
 | Shodan Query | Notes |
 |---|---|
+| `http.html:"open-webui"` | 19,549 hits (2026-04-30) — package/asset string in HTML body; broader than title-only match, catches builds where the title was customized |
 | `http.title:"Open WebUI"` | 18,736 hits — largest AI UI fingerprint on the internet; Ollama frontend |
+| `http.title:"Open WebUI" port:8080` | 2,842 hits (2026-04-30) — direct default-port subset; first-user-admin = effectively unauth, treat as T1 |
 | `http.html:"dify"` | 8,750 hits — broad Dify HTML fingerprint |
 | `http.title:"LiteLLM"` | 5,076 hits — LLM proxy, master key often leaked in env |
 | `"Jan" port:1337` | 4,624 hits — desktop app in server mode |
@@ -38,7 +40,9 @@ Low-code/no-code builders, agent runtimes, and chain orchestrators. These platfo
 | `http.title:"Gradio"` | 225 hits — generic Gradio wrapper (covers oobabooga, demos, custom AI apps) |
 | `port:18789 ("openclaw" OR "clawdbot")` | 165 hits — OpenClaw gateway (grouped OR required; unparenthesized breaks Shodan precedence) |
 | `"LocalAI" port:8080` | 95 hits — no auth by default |
-| `"Ollama" port:11434` | 37 hits — no auth support; exposure = full access |
+| `http.html:"Ollama is running" -port:443` | 26,580 hits (2026-04-30) — canonical root-response string; `-port:443` drops TLS-fronted noise; T1 — Ollama has no auth support, exposure = full model access |
+| `product:Ollama port:11434` | 21,067 hits (2026-04-30) — Shodan product facet on default port; direct-exposure subset, T1 |
+| `"Ollama" port:11434` | 37 hits — banner-only fallback; the two queries above are the canonical fingerprints |
 | `http.html:"AutoGPT"` | 32 hits — project moribund since 2025, retained for completeness |
 | `http.favicon.hash:-1404538293` | 11 hits — LlamaIndex favicon |
 | `"LangChain" port:8000` | 6 hits — library fingerprint, app varies |
@@ -57,7 +61,10 @@ Low-code/no-code builders, agent runtimes, and chain orchestrators. These platfo
 |---|---|
 | `product:"n8n"` | **77,102 hits** — canonical n8n fingerprint; RCE history (CVE-2024-25289 and successors), see n8n note below |
 | `"n8n"` | 4,966 hits — banner-only, narrower subset |
-| `http.title:"n8n"` | 360 hits — title-level match, often editor UI |
+| `http.title:"n8n"` | 370 hits (2026-04-30) — title-level match, often editor UI; basicauth optional and frequently skipped, lean T1 |
+| `http.html:"/rest/login"` | 162 hits (2026-04-30) — n8n REST login path leaked into HTML body; tighter than title-only when present |
+| `"x-powered-by: Express" port:5678` | 134 hits (2026-04-30) — Express header on n8n's default port; direct-exposure subset bypassing reverse-proxy fronting |
+| `http.title:"n8n - Workflow Automation"` | 24 hits (2026-04-30) — verbose default title; high-confidence editor UI subset |
 | `http.html:"langgraph"` | 501 hits — LangGraph Studio / LangChain graph orchestrator |
 | `http.html:"rivet"` | 169 hits — ⚠️ polluted; "Rivet" collides with Rivet Networks NIC UIs, storage products |
 | `http.title:"Rivet"` | 71 hits — ⚠️ same pollution concern |

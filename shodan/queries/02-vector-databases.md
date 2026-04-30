@@ -1,6 +1,6 @@
 # 2. Vector Databases
 
-_Section verified: April 22, 2026 11:38_
+_Section verified: April 30, 2026_
 
 The storage layer for RAG, embeddings, and long-term LLM memory. Many of these ship without authentication enabled by default — exposed instances often disclose collection names, schema, embedding model, and the LLM provider keys used to generate vectors.
 
@@ -15,7 +15,8 @@ The storage layer for RAG, embeddings, and long-term LLM memory. Many of these s
 | `"chroma" "uvicorn" port:8000` | 230 hits — same intent, no product-facet dependency |
 | `http.title:"Chroma"` | 94 hits — title match, some non-DB Chroma products mixed in |
 | `http.html:"chromadb"` | 76 hits — name-specific HTML body match |
-| `"chromadb"` | 47 hits — name-specific banner match |
+| `"chromadb"` | 47 hits — name-specific banner match (46 on 2026-04-30 reverify) |
+| `"server: uvicorn" "/api/v2"` | 39 hits (2026-04-30) — Chroma 0.6+ ASGI fingerprint; v2 API path + uvicorn header narrows to current-era unauth-by-default deployments |
 | `http.html:"/api/v1/heartbeat"` | 22 hits — heartbeat path leaked into HTML response |
 | `"chroma" port:8100` | 13 hits — post-0.5 default port |
 | `product:"Chroma" port:8100` | 13 hits — product facet on new default |
