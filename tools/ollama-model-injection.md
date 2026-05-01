@@ -2,8 +2,9 @@
 
 **Discovered:** 2026-05-01  
 **Severity:** HIGH  
-**Affected versions:** All Ollama versions (no auth on /api/create)  
-**CVE:** None assigned
+**Affected versions:** All Ollama versions (no auth on /api/create in any release)  
+**Confirmed on:** v0.17.5, v0.21.2, v0.22.0 (live internet targets); v0.22.1 verified unpatched via release notes  
+**CVE:** None assigned — coordinated disclosure initiated 2026-05-01
 
 ---
 

@@ -127,7 +127,7 @@ needed, bind Ollama to localhost and proxy through an authenticated gateway.
 
 ## Scale
 
-As of 2026-05-01, Shodan reports **226,582** hosts responding on port 11434.
+As of 2026-05-01, Shodan reports **227,715** hosts responding on port 11434.
 Cloud-proxy instances (`:cloud` model suffix) represent a subset — exact count
 depends on scan depth. `ollama-recon.py` auto-detects and hunts these on
 every run.
@@ -141,6 +141,10 @@ every run.
 | `ip225.ip-51-77-188.eu` | 5.196.194.231 (OVH) | SHA256:... | 26 (all :cloud — GLM, Kimi, DeepSeek, MiniMax) | **TAKEN** — claimed via signin_url |
 | `D09S18` | 93.123.109.107 (Neterra BG) | SHA256:gQhUc4nFhi4656+rCXubQ9ddP9/78apeRC9BA2jis2A | deepseek-v4-pro:cloud | UNLINKED |
 | `ks-convert-hls` | 173.208.210.16 | SHA256:PU1kduIfSCqhV73EA7ShLxrM2DHOUf2c8upQpq1A5nM | deepseek-v4-pro:cloud, minimax-m2.7:cloud | UNLINKED |
+| `hestiacp.vgweb.co` | 50.2.108.194 (Eonix) | SHA256:... | cloud models | UNLINKED |
+| `ab5fd50bf1a5` | 135.181.137.238 (Hetzner) | SHA256:... | cloud models | UNLINKED |
+| `f4d82c28845d` | 5.75.212.243 (Hetzner) | SHA256:... | cloud models | UNLINKED |
+| `shfz-assembly-server-792a` | 139.9.211.98 (Huawei Cloud) | SHA256:... | cloud models | UNLINKED |
 
 **Operator profile — `ks-convert-hls`:** Machine name suggests HLS (HTTP Live Streaming) media processing. Models include `nilechat_egy:latest` (Egyptian Arabic dialect converter with explicit Cairo/Giza system prompt) and `aiden_lu/peach-9b-8k-roleplay:latest`. Arabic-language AI service layered onto a media infrastructure host.
 
