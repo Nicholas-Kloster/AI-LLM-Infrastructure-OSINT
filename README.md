@@ -8,6 +8,7 @@
 [![Research: Authorized Only](https://img.shields.io/badge/Research-Authorized%20Only-red.svg)](DISCLAIMER.md)
 [![Maintained by NuClide](https://img.shields.io/badge/Maintained%20by-NuClide-purple.svg)](#about)
 [![Reference: v2.1](https://img.shields.io/badge/Reference-v2.1%20%C2%B7%20Apr%202026-teal.svg)](shodan/Shodan_AI_Reference.pdf)
+[![Disclosure: Ollama](https://img.shields.io/badge/Disclosure-Ollama%20Unauth%20Injection-critical)](case-studies/ollama-enterprise-exposures.md)
 
 ---
 
@@ -52,22 +53,33 @@ This repository is a living catalogue of **fingerprints, queries, exposure patte
 │       ├── 04-training-experiments.md
 │       ├── 05-gateways-monitoring.md
 │       ├── 06-agent-frameworks.md
-│       ├── 07-rag-stacks.md        # new in v2
-│       ├── 08-image-generation.md  # new in v2
-│       ├── 09-code-assistants.md   # new in v2
-│       ├── 10-mcp-servers.md       # new in v2
+│       ├── 07-rag-stacks.md
+│       ├── 08-image-generation.md
+│       ├── 09-code-assistants.md
+│       ├── 10-mcp-servers.md
 │       ├── 11-credential-leaks.md
-│       ├── 12-containers.md        # expanded in v2
+│       ├── 12-containers.md
 │       ├── 13-backup-snapshot.md
 │       ├── 14-gpu-compute.md
 │       ├── 15-fingerprinting.md
-│       └── appendix-cve.md         # new in v2
+│       └── appendix-cve.md
+├── tools/                          # Attack surface research & PoC tooling
+│   ├── ollama-model-injection.md   # Unauthenticated /api/create injection (all versions)
+│   ├── ollama-ssrf.md              # SSRF via /api/pull private registry URLs
+│   ├── ollama-connect-takeover.md  # Cloud account takeover via leaked signin_url
+│   ├── hexstrike-ai-chain.md       # Model injection → RCE chain (HexStrike AI)
+│   ├── ollama-recon-findings.md    # Recon methodology & scan findings
+│   ├── ollama-recon.py             # Scanner: enumerate, inject-test, cloud hunt
+│   └── bypass-prompts.json         # System prompt bypass corpus
+├── data/                           # Scan outputs (gitignored sensitive fields)
+│   └── ollama-findings.md          # Human-readable scan findings
+├── case-studies/                   # Real-world exposure writeups
+│   └── ollama-enterprise-exposures.md  # Enterprise/critical-infra targets (2026-05-01)
 ├── censys/                         # Censys equivalents (planned)
 ├── fofa/                           # FOFA queries (planned)
 ├── zoomeye/                        # ZoomEye queries (planned)
 ├── dorks/                          # Google / GitHub dorks (planned)
 ├── nuclei-templates/               # Detection templates (planned)
-├── case-studies/                   # Anonymized exposure writeups (planned)
 ├── DISCLAIMER.md
 ├── CONTRIBUTING.md
 └── LICENSE
@@ -80,6 +92,12 @@ This repository is a living catalogue of **fingerprints, queries, exposure patte
 - [Common AI/LLM Ports Reference](reference/ports.md)
 - [AI/ML Terminology Primer](reference/terminology.md)
 - [Download the polished PDF reference (v2.1)](shodan/Shodan_AI_Reference.pdf)
+
+**Active research:**
+- [Ollama Enterprise Exposures — Case Study](case-studies/ollama-enterprise-exposures.md) — 11 enterprise/critical-infra targets confirmed vulnerable (2026-05-01)
+- [Ollama Unauthenticated Model Injection](tools/ollama-model-injection.md) — all versions, no patch
+- [Ollama Connect Account Takeover](tools/ollama-connect-takeover.md) — cloud subscription hijacking via leaked signin_url
+- [HexStrike AI → RCE Chain](tools/hexstrike-ai-chain.md) — model injection → shell execution via trust confusion
 
 **Search across all queries:**
 ```bash
@@ -99,20 +117,71 @@ Every query in v2.x is tagged with an exposure tier:
 
 See [shodan/README.md](shodan/README.md#how-to-read-the-tables) for the full legend.
 
-## Roadmap
+## Active Disclosure
 
-- [x] Shodan reference (v1) — 9 categories, ~120 queries
-- [x] Common AI/LLM ports reference
-- [x] **Shodan reference (v2)** — 15 categories + CVE appendix, exposure tiers, RAG/Image-gen/Code-assistants/MCP added
-- [x] **Shodan reference (v2.1)** — Object Storage subsection, GPT4All / NVIDIA NIM / AutoGen, ClickHouse / Cassandra / txtai, Feast / Tecton, terminology primer
-- [x] MCP server exposure research
-- [ ] Censys query equivalents
-- [ ] FOFA / ZoomEye / Hunter.how queries
-- [ ] GitHub dorks for leaked AI keys (`OPENAI_API_KEY`, `ANTHROPIC_API_KEY`, `HF_TOKEN`, `GROQ_API_KEY`)
-- [ ] Nuclei templates for unauth detection (ChromaDB, Qdrant, Ollama, vLLM, ComfyUI, MCP/SSE)
-- [ ] Local model server fingerprinting expansion (LM Studio, Jan, GPT4All)
-- [ ] Anonymized case studies of real exposures
-- [ ] Defensive hardening guides per category
+**Ollama Unauthenticated Model Injection** — coordinated disclosure initiated 2026-05-01.
+
+- **Affected:** All Ollama versions (no authentication on `/api/create` in any release)
+- **CVE-2025-63389** — filed 2025-12-18, scoped ≤v0.13.5. Scope is incorrect: confirmed live on v0.13.5 → v0.22.0. `first_patched_version: null`.
+- **Scale:** 227,715 exposed instances on Shodan as of 2026-05-01
+- **Enterprise targets confirmed:** Electric utility (Northcentral Electric Power Association), Oracle Corporation infra, Azure IBM Granite RAG pipelines, GCP autonomous agent deployment, OVH cybersecurity product company, AWS managed instances
+- **Public disclosure:** 2026-07-30 (90-day window)
+- **Contact:** nicholas@nuclide-research.com
+
+Secondary findings in coordinated disclosure:
+- SSRF via `/api/pull` (CVE-2026-5530) — OOB DNS + internal port detection
+- Ollama Connect account takeover — cloud subscription hijacking via leaked `signin_url`
+- HexStrike AI RCE chain — model injection → trust confusion → Flask `/api/command` shell exec
+
+---
+
+## Use with Claude Code
+
+This repo is designed to work as a live context source for Claude Code. Drop the following prompt into any Claude Code session to turn it into a guided AI infrastructure OSINT analyst — it'll use the queries, findings, and tooling here as its working reference.
+
+**Copy-paste starter prompt:**
+
+```
+You are an AI/LLM infrastructure security analyst. I've cloned the AI-LLM-Infrastructure-OSINT
+repository at ~/AI-LLM-Infrastructure-OSINT/. Use it as your primary reference.
+
+Read the following files to orient yourself:
+- README.md — repo overview and active disclosure status
+- shodan/queries/ — query catalog by category
+- tools/ollama-model-injection.md — active vulnerability (all Ollama versions)
+- case-studies/ollama-enterprise-exposures.md — confirmed enterprise targets
+
+My objective: [describe your target or task here]
+
+Start by reading the relevant reference files, then help me build a query or probe strategy.
+Use the tier system (T1/T2/T3) from the Shodan reference to prioritize.
+```
+
+**For Ollama-specific recon:**
+
+```
+I'm investigating an exposed Ollama instance at [IP]:11434.
+Read tools/ollama-model-injection.md and tools/ollama-connect-takeover.md in my
+AI-LLM-Infrastructure-OSINT repo, then help me:
+1. Enumerate loaded models and detect cloud proxy access
+2. Check for injectable system prompts
+3. Test for the SSRF primitive via /api/pull
+4. Assess if this matches any enterprise profiles in case-studies/
+Tell me what you find and what to do next.
+```
+
+**For defender asset discovery:**
+
+```
+I need to find our org's exposed AI infrastructure before someone else does.
+Read README.md in AI-LLM-Infrastructure-OSINT to understand the scope, then:
+1. Help me build Shodan queries targeting our ASN or IP range
+2. Identify which T1 (unauth-by-default) services I should prioritize checking
+3. Generate a checklist of exposure patterns to verify internally
+Focus on services that require no authentication by default.
+```
+
+---
 
 ## Contributing
 
@@ -134,4 +203,4 @@ CISA disclosures: [CVE-2025-4364](https://nvd.nist.gov/vuln/detail/CVE-2025-4364
 
 Companion tooling: [aimap](https://github.com/Nicholas-Kloster/aimap) — AI/ML infrastructure scanner that defenders can run against their own networks.
 
-Contact: [@Nicholas-Kloster](https://github.com/Nicholas-Kloster)
+Contact: nicholas@nuclide-research.com · [@Nicholas-Kloster](https://github.com/Nicholas-Kloster)
