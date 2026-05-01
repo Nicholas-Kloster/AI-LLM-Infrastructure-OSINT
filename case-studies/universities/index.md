@@ -21,6 +21,8 @@ Example: `US-CA-ucsb.md` = United States, California, UC Santa Barbara
 | [US-NC-duke.md](US-NC-duke.md) | Duke University | US · NC | HIGH | Agent model with file inspection tools, function-calling, injection surface |
 | [US-IN-purdue-northwest.md](US-IN-purdue-northwest.md) | Purdue University Northwest | US · IN | CRITICAL | **3 cloud proxies live (200 OK)**: qwen3-coder-next, gemma4:31b, gpt-oss:20b |
 | [JP-Keio.md](JP-Keio.md) | Keio University | Japan | HIGH | Dual DeepSeek cloud proxy, qwen3.5:122b (75GB) accessible without auth |
+| [TH-Chulalongkorn.md](TH-Chulalongkorn.md) | Chulalongkorn University | Thailand | HIGH | 3 cloud proxies (DeepSeek, Kimi K2.6, Qwen), cred leak (user: llm) |
+| [GR-tech-crete-ntua.md](GR-tech-crete-ntua.md) | Tech Univ. Crete + NTUA | Greece | HIGH | TechCrete: MiniMax cred leak (user: arian); NTUA: 236B model open |
 | [CA-ON-western-ontario.md](CA-ON-western-ontario.md) | University of Western Ontario | Canada · ON | HIGH | Cloud proxy (deepseek-v4-pro), 9 models including vision-language |
 
 ---
