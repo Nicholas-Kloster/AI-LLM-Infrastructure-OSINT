@@ -91,7 +91,41 @@ When an operator runs Open WebUI + Ollama with cloud proxy models and leaves por
 
 ---
 
-## Scale Estimate
+## University + Education Scale (2026-05-01)
+
+Ollama with `:cloud` models confirmed at universities across 10+ countries:
+
+| Institution | Country | Cloud Proxies | Live (200 OK) | Notes |
+|-------------|---------|---------------|---------------|-------|
+| Purdue University Northwest | US-IN | 4 | **3 CONFIRMED** | qwen3-coder-next, gemma4:31b, gpt-oss:20b |
+| SUNY Buffalo | US-NY | 1 | **1 CONFIRMED** | gemma4:31b-cloud |
+| POSTECH | South Korea | 18 | unconfirmed | Includes kimi-k2:1t-cloud (1T params) |
+| Shiv Nadar University | India | 18 | unconfirmed | 3-node cluster, 671B local model |
+| Hanoi University | Vietnam | 18 | unconfirmed | Docker container ID in cred leak |
+| Chulalongkorn University | Thailand | 3 | unconfirmed | Kimi K2.6, DeepSeek, Qwen; cred leak (user: llm) |
+| KTH Royal Institute of Tech | Sweden | 2 | unconfirmed | Dual-node, abliterated model as root |
+| Columbia University | US-NY | 1 | unconfirmed | cred leak (user: seascvn066) |
+| Keio University | Japan | 2 | unconfirmed | qwen3.5:122b local accessible |
+| Tech Univ. of Crete | Greece | 1 | unconfirmed | cred leak (user: arian) |
+| NTUA Athens | Greece | 0 | N/A | deepseek-coder-v2:236b open locally |
+| Univ. of Western Ontario | Canada | 1 | unconfirmed | ECE department |
+| City of Cartersville | US-GA | 1 | unconfirmed | Local government, Windows, cred leak (WIN-QAHP18EJH8I) |
+| DVRC / hts.k12.nj.us | US-NJ | 5 | **2 CONFIRMED** | K-12; minimax-m2.1 288 tokens |
+| Meriwether Lewis Elec. Coop | US-TN | 0 | N/A | Electric utility, 235B model |
+| Thailand Ministry of Public Health | Thailand | 0 | N/A | Healthcare gov, vision model |
+
+**Free-tier cloud proxy models** (return 200 OK without credentials):
+- `gemma4:XX-cloud` (Google Gemma)
+- `gpt-oss:XX-cloud` (OpenAI GPT-OSS)
+- `qwen3-coder-next:cloud` (Alibaba Qwen)
+- `minimax-m2.1:cloud`, `minimax-m2.5:cloud` (MiniMax free tier)
+
+**Paid-tier (return 401)**:
+- `deepseek-v4-pro:cloud`, `kimi-k2.6:cloud`, `deepseek-v3.1:671b-cloud`, `qwen3.5:397b-cloud`, most premium models
+
+---
+
+## Global Scale Estimate
 
 | Metric | Value |
 |--------|-------|
@@ -100,6 +134,9 @@ When an operator runs Open WebUI + Ollama with cloud proxy models and leaves por
 | Estimated bypass-exposed instances | **~2,400** |
 | Auth disabled entirely | ~1–5% |
 | Instances with cloud proxy models | ~15–20% of Ollama-open set |
+| University Ollama instances | **225** |
+| University Open WebUI instances | **84** |
+| Universities with cloud proxy models | ~20% of university Ollama set |
 
 ---
 
