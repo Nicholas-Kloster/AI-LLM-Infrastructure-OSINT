@@ -81,3 +81,13 @@ systemctl restart ollama
 
 - **Discovered:** 2026-05-01
 - **Status:** Pending outreach to UNIZA IT / SK-CERT
+
+---
+
+## Second Node: IIKT Main Server (158.193.146.185)
+
+A second University of Žilina machine from the Institute of Information and Communication Technologies (IIKT) has 27 local models and **no cloud proxies** — large reasoning and coding models accessible without authentication:
+
+Key models: `Qwen3-30B` (17GB), `Qwen3-coder-30B` (20GB), `gemma3n:e4b` (7GB), `phi4-reasoning:plus` (10GB), `qwen3:30b` (17GB), 22 additional models.
+
+Both the student laptop (158.193.144.224) and the institutional IIKT server (158.193.146.185) have Ollama bound to 0.0.0.0. The laptop carries the critical cloud proxy exposure; the IIKT server carries the large local model inventory.

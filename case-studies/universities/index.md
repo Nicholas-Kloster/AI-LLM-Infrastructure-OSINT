@@ -44,6 +44,7 @@ Example: `US-CA-ucsb.md` = United States, California, UC Santa Barbara
 | [KR-yonsei.md](KR-yonsei.md) | Yonsei University | South Korea | CRITICAL | 17 cloud subs on port 5004, minimax-m2.1 **200 OK**, 75GB + 65GB local models |
 | [US-NY-syracuse.md](US-NY-syracuse.md) | Syracuse University | US · NY | CRITICAL | IST R640 server, gemma4:31b-cloud **200 OK** on port 12345 |
 | [US-NY-suny-stony-brook.md](US-NY-suny-stony-brook.md) | SUNY Stony Brook | US · NY | HIGH | Biology dept, OLMo-3 research stack, gpt-oss cloud proxy |
+| [GR-u-crete-medical.md](GR-u-crete-medical.md) | University of Crete Medical Center | Greece | HIGH | Dual-embedding RAG pipeline (mxbai + nomic-embed) on medical server |
 
 ---
 
