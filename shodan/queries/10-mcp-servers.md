@@ -15,6 +15,44 @@ Model Context Protocol servers expose tool surfaces — filesystem read, shell, 
 | `"FastMCP" "uvicorn" port:8000` | Python MCP server framework |
 | `"mcp-proxy" port:8080` | stdio-to-HTTP bridge, extends exposure surface |
 
+## Open WebUI — Adjacent MCP Surface
+
+Open WebUI v0.6.0+ ships native MCP server integration. When an operator wires MCP tools into Open WebUI (filesystem, shell, browser, database, cloud APIs), those tools are callable by any connected AI model during inference.
+
+**Shodan queries (7,273 instances as of 2026-05-01):**
+
+| Shodan Query | Notes |
+|---|---|
+| `http.html:"Open WebUI" port:3000` | **7,273 instances** — default port |
+| `http.html:"open-webui" "uvicorn"` | Python ASGI stack fingerprint |
+| `http.title:"Open WebUI"` | Title-based, broader |
+
+**Probe for auth bypass (Open WebUI auth + raw Ollama port):**
+```bash
+# Check Open WebUI version + auth status
+curl http://TARGET:3000/api/config | jq '{version, auth: .features.auth}'
+
+# Auth bypass: direct Ollama port regardless of Open WebUI auth setting
+curl http://TARGET:11434/api/tags
+
+# Check for cloud proxy models (quota hijack)
+curl http://TARGET:11434/api/tags | jq '[.models[].name | select(endswith(":cloud"))]'
+```
+
+**33% of Open WebUI instances** have raw Ollama port 11434 also exposed (sampled 42/7,273). Extrapolated: **~2,400 instances** with auth bypass.
+
+**Compound chain (MCP-capable instances — v0.6.0+):**
+1. Inject Ollama model via port 11434 (unauthenticated)
+2. User interacts with model through authenticated Open WebUI
+3. Injected model generates MCP tool calls per attacker instructions
+4. Open WebUI executes tool calls — filesystem, shell, cloud APIs — trusting model output
+
+See `tools/open-webui-ollama-bypass.md` and `tools/open-webui-cloud-proxy-hijack.md`.
+
+**Live finding:** `hts.k12.nj.us` (NJ K-12) — Open WebUI v0.8.8, Ollama v0.17.5, 5 cloud proxy subs (Gemini, DeepSeek, MiniMax x3). See `case-studies/hts-k12-nj-open-webui.md`.
+
+---
+
 **MCP over HTTP is the 2026 wave.** The protocol was designed for stdio (in-process transport) but the ecosystem pushed toward HTTP/SSE for remote access. Operators wiring internal tools — shell, database, filesystem — into an MCP server and exposing it without auth is the same failure pattern as unauthenticated RPC from the 1990s, with a new label.
 
 ## HexStrike AI — Ollama-Backed Offensive MCP Platform
