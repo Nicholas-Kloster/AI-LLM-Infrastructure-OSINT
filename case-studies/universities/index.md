@@ -19,6 +19,8 @@ Example: `US-CA-ucsb.md` = United States, California, UC Santa Barbara
 | [US-CA-ucsb.md](US-CA-ucsb.md) | UC Santa Barbara | US · CA | CRITICAL | Auth **disabled**, open inference, "AI Lab", macOS user `marcos` leaked |
 | [US-NY-suny-buffalo.md](US-NY-suny-buffalo.md) | SUNY Buffalo | US · NY | CRITICAL | Cloud proxy **200 OK** confirmed, 26 models, RAG pipeline components |
 | [US-NC-duke.md](US-NC-duke.md) | Duke University | US · NC | HIGH | Agent model with file inspection tools, function-calling, injection surface |
+| [US-IN-purdue-northwest.md](US-IN-purdue-northwest.md) | Purdue University Northwest | US · IN | CRITICAL | **3 cloud proxies live (200 OK)**: qwen3-coder-next, gemma4:31b, gpt-oss:20b |
+| [JP-Keio.md](JP-Keio.md) | Keio University | Japan | HIGH | Dual DeepSeek cloud proxy, qwen3.5:122b (75GB) accessible without auth |
 | [CA-ON-western-ontario.md](CA-ON-western-ontario.md) | University of Western Ontario | Canada · ON | HIGH | Cloud proxy (deepseek-v4-pro), 9 models including vision-language |
 
 ---
