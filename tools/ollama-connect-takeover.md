@@ -134,6 +134,18 @@ every run.
 
 ---
 
+## Confirmed Cases (2026-05-01 Scan)
+
+| Machine Name | IP | Pubkey Fingerprint | Cloud Models | Status |
+|---|---|---|---|---|
+| `ip225.ip-51-77-188.eu` | 5.196.194.231 (OVH) | SHA256:... | 26 (all :cloud — GLM, Kimi, DeepSeek, MiniMax) | **TAKEN** — claimed via signin_url |
+| `D09S18` | 93.123.109.107 (Neterra BG) | SHA256:gQhUc4nFhi4656+rCXubQ9ddP9/78apeRC9BA2jis2A | deepseek-v4-pro:cloud | UNLINKED |
+| `ks-convert-hls` | 173.208.210.16 | SHA256:PU1kduIfSCqhV73EA7ShLxrM2DHOUf2c8upQpq1A5nM | deepseek-v4-pro:cloud, minimax-m2.7:cloud | UNLINKED |
+
+**Operator profile — `ks-convert-hls`:** Machine name suggests HLS (HTTP Live Streaming) media processing. Models include `nilechat_egy:latest` (Egyptian Arabic dialect converter with explicit Cairo/Giza system prompt) and `aiden_lu/peach-9b-8k-roleplay:latest`. Arabic-language AI service layered onto a media infrastructure host.
+
+---
+
 ## References
 
 - [Ollama Connect documentation](https://ollama.com/blog/ollama-connect)

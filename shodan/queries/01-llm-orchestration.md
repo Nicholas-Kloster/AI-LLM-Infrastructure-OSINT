@@ -43,6 +43,10 @@ Low-code/no-code builders, agent runtimes, and chain orchestrators. These platfo
 | `http.html:"Ollama is running" -port:443` | 26,580 hits (2026-04-30) — canonical root-response string; `-port:443` drops TLS-fronted noise; T1 — Ollama has no auth support, exposure = full model access |
 | `product:Ollama port:11434` | 21,067 hits (2026-04-30) — Shodan product facet on default port; direct-exposure subset, T1 |
 | `"Ollama" port:11434` | 37 hits — banner-only fallback; the two queries above are the canonical fingerprints |
+| `"hexstrike-ai" port:11434` | Ollama with HexStrike AI offensive orchestrator loaded — 47 MCP tools, unrestricted shell exec when Flask server running |
+| `"qwen3.5-abliterated" port:11434` | Refusal-stripped 35B MoE Qwen model — no safety guardrails |
+| `"huihui_ai" port:11434` | huihui-ai abliterated model family (qwen3/qwen3.5 variants) |
+| `"abliterated" port:11434` | Broad match for refusal-removed models on exposed Ollama instances |
 | `http.html:"AutoGPT"` | 32 hits — project moribund since 2025, retained for completeness |
 | `http.favicon.hash:-1404538293` | 11 hits — LlamaIndex favicon |
 | `"LangChain" port:8000` | 6 hits — library fingerprint, app varies |
