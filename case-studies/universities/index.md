@@ -28,6 +28,7 @@ Example: `US-CA-ucsb.md` = United States, California, UC Santa Barbara
 | [SE-KTH.md](SE-KTH.md) | KTH Royal Institute of Technology | Sweden | HIGH | Dual-node DeepSeek cloud, abliterated Gemma running as root |
 | [GR-tech-crete-ntua.md](GR-tech-crete-ntua.md) | Tech Univ. Crete + NTUA | Greece | HIGH | TechCrete: MiniMax cred leak (user: arian); NTUA: 236B model open |
 | [CA-ON-western-ontario.md](CA-ON-western-ontario.md) | University of Western Ontario | Canada · ON | HIGH | Cloud proxy (deepseek-v4-pro), 9 models including vision-language |
+| [AU-newcastle.md](AU-newcastle.md) | University of Newcastle | Australia | HIGH | DeepSeek cloud proxy, RAG pipeline (mxbai-embed) |
 
 ---
 
