@@ -74,6 +74,17 @@ This repository is a living catalogue of **fingerprints, queries, exposure patte
 ├── data/                           # Scan outputs (gitignored sensitive fields)
 │   └── ollama-findings.md          # Human-readable scan findings
 ├── case-studies/                   # Real-world exposure writeups
+│   ├── universities/               # University AI infrastructure exposures
+│   │   ├── index.md                # Index + discovery methodology
+│   │   ├── US-NY-columbia.md       # Columbia — cloud proxy + cred leak
+│   │   ├── US-CA-ucsb.md           # UCSB — auth disabled, open inference
+│   │   └── US-NC-duke.md           # Duke — agent model + file inspection tools
+│   ├── critical-infra/             # Critical infrastructure exposures
+│   │   ├── US-GA-cartersville-city.md  # City of Cartersville — Windows, cloud proxy
+│   │   └── US-TN-meriwether-lewis-ec.md  # Electric cooperative — 235B model
+│   ├── k12/                        # K-12 school district exposures
+│   │   └── US-NJ-hts-k12-dvrc.md  # NJ school district (DVRC) — 5 cloud proxies
+│   ├── hts-k12-nj-open-webui.md   # (legacy path — see k12/)
 │   └── ollama-enterprise-exposures.md  # Enterprise/critical-infra targets (2026-05-01)
 ├── censys/                         # Censys equivalents (planned)
 ├── fofa/                           # FOFA queries (planned)
@@ -95,6 +106,12 @@ This repository is a living catalogue of **fingerprints, queries, exposure patte
 
 **Active research:**
 - [Ollama Enterprise Exposures — Case Study](case-studies/ollama-enterprise-exposures.md) — 11 enterprise/critical-infra targets confirmed vulnerable (2026-05-01)
+- [University AI Exposures](case-studies/universities/index.md) — 225+ university Ollama instances; confirmed at Columbia, UCSB, Duke (2026-05-01)
+- [K-12 Education — NJ DVRC](case-studies/k12/US-NJ-hts-k12-dvrc.md) — Open WebUI bypass, 5 cloud proxy subscriptions, student data at risk
+- [Critical Infrastructure — City of Cartersville](case-studies/critical-infra/US-GA-cartersville-city.md) — local government, Windows, DeepSeek cloud proxy
+- [Critical Infrastructure — Meriwether Lewis Electric](case-studies/critical-infra/US-TN-meriwether-lewis-ec.md) — rural electric coop, 235B model, unauthenticated
+- [Open WebUI Auth Bypass](tools/open-webui-ollama-bypass.md) — UI auth on port 3000 does not protect Ollama port 11434
+- [Cloud Proxy Quota Hijacking](tools/open-webui-cloud-proxy-hijack.md) — operator API subscriptions drained via unauthenticated inference
 - [Ollama Unauthenticated Model Injection](tools/ollama-model-injection.md) — all versions, no patch
 - [Ollama Connect Account Takeover](tools/ollama-connect-takeover.md) — cloud subscription hijacking via leaked signin_url
 - [HexStrike AI → RCE Chain](tools/hexstrike-ai-chain.md) — model injection → shell execution via trust confusion
