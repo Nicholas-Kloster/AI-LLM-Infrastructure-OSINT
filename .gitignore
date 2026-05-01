@@ -23,3 +23,6 @@ venv/
 
 # Node
 node_modules/
+
+# Live recon data (IPs, findings — not for public repo)
+data/
