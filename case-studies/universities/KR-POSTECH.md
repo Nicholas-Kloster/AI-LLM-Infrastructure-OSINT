@@ -1,4 +1,4 @@
-# POSTECH — 18 Cloud Subscriptions Including 1-Trillion-Parameter Model
+# POSTECH — 5-Node BSP Cluster, 18 Cloud Subscriptions, 4 Credential Leaks
 
 _NuClide Research · 2026-05-01_
 
@@ -6,7 +6,21 @@ _NuClide Research · 2026-05-01_
 
 ## Summary
 
-Pohang University of Science and Technology (POSTECH), South Korea's top STEM research university, is running a 31-model Ollama instance with 18 active cloud proxy subscriptions — including `kimi-k2:1t-cloud` (Kimi K2 Thinking, 1 trillion parameters) and `deepseek-v3.1:671b-cloud`. Raw Ollama port publicly accessible, no authentication. All 31 models injectable via CVE-2025-63389.
+Pohang University of Science and Technology (POSTECH) has a 5-node BSP (Brain Science Platform) cluster with Ollama exposed on all nodes. The primary server has 18 active cloud proxy subscriptions including `kimi-k2:1t-cloud` (1 trillion parameters). Four satellite nodes each leak separate Ollama Connect SSH keypairs in 401 responses. All nodes publicly accessible, no authentication.
+
+---
+
+## Cluster Topology
+
+| Node | IP | Hostname | Ollama Account | SSH Pubkey (truncated) |
+|---|---|---|---|---|
+| Main DGX | 141.223.84.47 | astros.postech.ac.kr | (18 cloud subs) | — |
+| bsp-server-2 | 141.223.121.58 | siren.postech.ac.kr | `bsp-server-2` | `AAAAID0hdi+...` |
+| bsp-server-6 | 141.223.121.73 | dragons.postech.ac.kr | `bsp-server-6` | `AAAAIHcp6+...` |
+| bsp-server-10 | 141.223.121.77 | astros2.postech.ac.kr | `bsp-server-10` | `AAAAIIgasJ...` |
+| bsp-server-12 | 141.223.121.80 | padres.postech.ac.kr | `bsp-server-12` | `AAAAIPY8Ib...` |
+
+Naming pattern `bsp-server-N` (N = 2, 6, 10, 12) suggests the cluster has at least 12 nodes. Gaps in numbering indicate additional nodes not yet discovered.
 
 ---
 
@@ -14,10 +28,11 @@ Pohang University of Science and Technology (POSTECH), South Korea's top STEM re
 
 | Field | Value |
 |---|---|
-| IP | 141.223.84.47 |
+| Primary IP | 141.223.84.47 |
+| Cluster subnet | 141.223.121.0/24 (multiple nodes) |
 | Org | Pohang University of Science and Technology |
 | Country | South Korea |
-| Open ports | 11434 (Ollama — **public**) |
+| Open ports | 11434 (Ollama — **public on all nodes**) |
 
 ---
 
@@ -54,16 +69,35 @@ Pohang University of Science and Technology (POSTECH), South Korea's top STEM re
 
 ### F1 — 18 Cloud Subscriptions Exposed (CRITICAL)
 
-All 18 cloud proxy subscriptions are accessible on the unauthenticated port. Any internet actor can:
+All 18 cloud proxy subscriptions are accessible on the unauthenticated primary node. Any internet actor can:
 - Enumerate all cloud subscriptions via `/api/tags`
 - Inject system prompts into cloud proxy models via CVE-2025-63389
 - Drain operator API quotas through the exposed port
 
 The subscription portfolio includes frontier models: Kimi K2 (1T), DeepSeek V3.1 (671B), Qwen3-Coder (480B).
 
-### F2 — Model Injection on Research Infrastructure (CRITICAL)
+### F2 — 4 Credential Leaks Across Cluster Nodes (CRITICAL)
 
-All 31 models injectable. POSTECH researchers using these models receive outputs shaped by injected system prompts.
+Four satellite nodes each leak a separate Ollama Connect SSH keypair in their 401 response body:
+
+```json
+// bsp-server-2 (141.223.121.58)
+{"error":"unauthorized","signin_url":"https://ollama.com/connect?name=bsp-server-2&key=..."}
+// SSH: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAID0hdi+zn5fILlZ0zkL0N9J7wgFntb4IweWnfJzCoOtq
+
+// bsp-server-6 (141.223.121.73)
+// SSH: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIHcp6+jJK6HzmVIhHwgMhzsL/t0n5NsbasdZQ4U/DDDj
+
+// bsp-server-10 (141.223.121.77)
+// SSH: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIIgasJHMoumP9WevsQIsU2MCe3MVOotb7ppZT6gyCdJi
+
+// bsp-server-12 (141.223.121.80)
+// SSH: ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIPY8IbSqSueyuZ2kfRoffgayA7ErdbnYnVKTvG+0twg4
+```
+
+### F3 — Model Injection on Research Infrastructure (CRITICAL)
+
+All models on all nodes injectable. POSTECH researchers using these models receive outputs shaped by injected system prompts.
 
 ---
 

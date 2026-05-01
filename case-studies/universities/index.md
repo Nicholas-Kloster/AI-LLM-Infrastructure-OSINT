@@ -31,6 +31,19 @@ Example: `US-CA-ucsb.md` = United States, California, UC Santa Barbara
 | [US-NY-rit.md](US-NY-rit.md) | Rochester Institute of Technology | US · NY | CRITICAL | 4 nodes: DGX w/ 18 cloud subs, student machine w/ 2 abliterated QwQ-32B |
 | [AU-newcastle.md](AU-newcastle.md) | University of Newcastle | Australia | HIGH | DeepSeek cloud proxy, RAG pipeline (mxbai-embed) |
 | [AM-armenian-academy.md](AM-armenian-academy.md) | IIAP NAS Armenia | Armenia | HIGH | Dual cloud proxy, Docker container ID cred leak |
+| [KE-JKUAT.md](KE-JKUAT.md) | Jomo Kenyatta University | Kenya | HIGH | Cloud proxy (minimax-m2.7), unauthenticated inference |
+| [SK-zilina.md](SK-zilina.md) | University of Žilina | Slovakia | CRITICAL | Student laptop, **3 free-tier cloud proxies 200 OK**: devstral-2:123b, deepseek-v3.1:671b, qwen3-coder:480b |
+| [CZ-brno-vutbr.md](CZ-brno-vutbr.md) | Brno University of Technology | Czech Republic | HIGH | Abliterated Gemma3-27B, Bulgarian GPT, RAG pipeline |
+| [GB-hertfordshire.md](GB-hertfordshire.md) | University of Hertfordshire | UK | CRITICAL | RobotHouse dev server, gpt-oss:latest **200 OK confirmed** |
+| [RU-itmo.md](RU-itmo.md) | ITMO University | Russia | HIGH | 24 models incl. Kimi-Dev-72B, Llama4, gpt-oss:20b/120b |
+| [VN-vnu-hanoi.md](VN-vnu-hanoi.md) | VNU Ha Noi | Vietnam | HIGH | Domain-specific models: legal, biomedical, financial QA |
+| [VN-vnu-hcmc.md](VN-vnu-hcmc.md) | VNU Ho Chi Minh City | Vietnam | HIGH | final-exploit-v1 cloud proxy, gpt-oss |
+| [CA-MB-u-manitoba.md](CA-MB-u-manitoba.md) | University of Manitoba | Canada · MB | HIGH | CS GPU server, DeepSeek-R1:70B, Llama 3.3 |
+| [SE-umea.md](SE-umea.md) | Umeå University | Sweden | HIGH | gpuhost02 CS cluster, qwen3.6:35b |
+| [US-CA-ucdavis.md](US-CA-ucdavis.md) | UC Davis | US · CA | HIGH | 75GB MoE model, Claude 4.6 Opus-distilled model |
+| [KR-yonsei.md](KR-yonsei.md) | Yonsei University | South Korea | CRITICAL | 17 cloud subs on port 5004, minimax-m2.1 **200 OK**, 75GB + 65GB local models |
+| [US-NY-syracuse.md](US-NY-syracuse.md) | Syracuse University | US · NY | CRITICAL | IST R640 server, gemma4:31b-cloud **200 OK** on port 12345 |
+| [US-NY-suny-stony-brook.md](US-NY-suny-stony-brook.md) | SUNY Stony Brook | US · NY | HIGH | Biology dept, OLMo-3 research stack, gpt-oss cloud proxy |
 
 ---
 
