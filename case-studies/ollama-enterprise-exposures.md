@@ -28,7 +28,7 @@ The injection primitive: a single `POST /api/create` replaces or poisons any loa
 | 51.222.157.76 | OVH Canada (NVIDIA NCP) | 0.22.0 | **Developer AI Service** | deepseek-coder:6.7b, nomic-embed-text | No | Latest Ollama version; coding assistant + RAG search pipeline |
 | 20.109.51.171 | Azure | 0.21.1 | **Enterprise AI Stack** | qwen2.5:7b + 9 others | No | 10 loaded models; enterprise multi-model deployment |
 | 40.120.91.15 | Azure | 0.3.13 | **Security Research / Test Env** | my-Hacktest-model:latest | No | Active security testing environment; injection affects researcher workflows |
-| **104.153.247.87** | Northcentral Electric | **0.21.0** | **⚡ Critical Infrastructure — Electric Utility** | gemma-4-4b-32k, deepseek-v4-pro:cloud, mixtral:8x7b, deepseek-coder:6.7b | Yes | Northcentral Electric Power Association (WI/MN utility co-op); 4 models including cloud proxy |
+| **[REDACTED]** | US Electric Utility Co-op | **0.21.0** | **⚡ Critical Infrastructure — Electric Utility** | [REDACTED — CISA notification pending] | Yes | WI/MN electric utility cooperative; CISA notified 2026-05-01 — details withheld pending remediation |
 | 121.52.212.11 | Beijing Topnew Info&Tech | 0.15.2 | **Commercial AI Developer — CN** | devstral-2:123b-cloud, deepseek-v3.1:671b-cloud, all-minilm:22m + 6 others | Yes | 9 models; Mistral devstral-2 (123B code model) + RAG pipeline |
 | 140.245.116.11 | Oracle Corporation | 0.21.2 | **Cloud Provider Infrastructure** | qwen3.5:4b | No | Oracle Corporation ASN — direct cloud provider exposure |
 | 18.136.196.142 | Amazon Data Services (SG) | 0.1.34 | **AWS Singapore — Managed** | codellama:13b, openchat:7b, llama3, qwen2.5 | No | ec2-18-136-196-142.ap-southeast-1.compute.amazonaws.com; very old version |
@@ -38,21 +38,21 @@ The injection primitive: a single `POST /api/create` replaces or poisons any loa
 
 ## Notable Cases
 
-### ⚡ Northcentral Electric Power Association — `104.153.247.87`
+### ⚡ US Electric Utility Cooperative — [REDACTED]
 
 **Classification:** Critical Infrastructure — Electric Utility Cooperative  
-**Org (Shodan):** Northcentral Electric Power Association  
-**State/Region:** WI/MN service area (US)  
+**Org:** WI/MN service area (US) — identity withheld pending remediation  
 **Ollama Version:** 0.21.0  
-**Models loaded:** `gemma-4-4b-32k:latest`, `deepseek-v4-pro:cloud`, `mixtral:8x7b`, `deepseek-coder:6.7b`
+**Models loaded:** [REDACTED — CISA notification pending]
 
-An electric power co-op running Ollama with cloud proxy models and a coding assistant (deepseek-coder) exposed on the public internet. The presence of `deepseek-coder` suggests internal automation tooling or IT/OT scripting workflows. Model injection here would:
+An electric power co-op running Ollama with cloud proxy models and a coding assistant exposed on the public internet. Model injection here would:
 
 - Poison any AI-assisted code or automation scripts
 - Redirect cloud quota to attacker
 - Insert attacker-controlled instructions into engineering/IT workflows
 
-**Injection cost:** 1 HTTP request, 512 bytes written, zero bandwidth consumed.
+**CISA notified:** 2026-05-01. Full details withheld until remediation confirmed or public disclosure date (2026-07-30).  
+**Injection cost:** 1 HTTP request, 512 bytes written, zero credentials.
 
 ---
 
@@ -121,9 +121,9 @@ Standard Ollama injection affects one operator. These factors amplify impact to 
 | **Multi-tenant shared Ollama** | Multi-user orgs | One injection affects all users |
 | **RAG pipelines** | IBM Azure, OVH Developer, Beijing Topnew | Poisoned responses surface through retrieval results |
 | **Autonomous agents** | OpenClaw GCP | Injected prompt controls every autonomous action |
-| **Cloud proxy models** | Northcentral Electric, OVH Canada, Beijing Topnew | Quota hijacking + cloud subscription hijacking |
+| **Cloud proxy models** | US Electric Utility [REDACTED], OVH Canada, Beijing Topnew | Quota hijacking + cloud subscription hijacking |
 | **AI backend for security product** | OVH GRC Company | Customers' security intelligence is attacker-controlled |
-| **Critical infrastructure operator** | Northcentral Electric | OT/IT automation workflows affected |
+| **Critical infrastructure operator** | US Electric Utility [REDACTED] | OT/IT automation workflows affected |
 | **MCP-connected clients** | Any Claude Desktop / Cursor user | Every connected AI client in the org inherits injection |
 
 ---

@@ -124,7 +124,7 @@ See [shodan/README.md](shodan/README.md#how-to-read-the-tables) for the full leg
 - **Affected:** All Ollama versions (no authentication on `/api/create` in any release)
 - **CVE-2025-63389** — filed 2025-12-18, scoped ≤v0.13.5. Scope is incorrect: confirmed live on v0.13.5 → v0.22.0. `first_patched_version: null`.
 - **Scale:** 227,715 exposed instances on Shodan as of 2026-05-01
-- **Enterprise targets confirmed:** Electric utility (Northcentral Electric Power Association), Oracle Corporation infra, Azure IBM Granite RAG pipelines, GCP autonomous agent deployment, OVH cybersecurity product company, AWS managed instances
+- **Enterprise targets confirmed:** US electric utility co-op [CISA notified — identity withheld], Oracle Corporation infra, Azure IBM Granite RAG pipelines, GCP autonomous agent deployment, OVH cybersecurity product company, AWS managed instances
 - **Public disclosure:** 2026-07-30 (90-day window)
 - **Contact:** nicholas@nuclide-research.com
 
