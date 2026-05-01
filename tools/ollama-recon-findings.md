@@ -134,3 +134,27 @@ no system prompt.
 2. **Enable Ollama authentication** (v0.20+): set `OLLAMA_TOKEN` environment variable.
 3. **Monitor ollama.com Connect** for unexpected account re-linking.
 4. **Operator system prompts are not security controls** — they are bypassed by framing attacks. Use an external content filter if enforcement is required.
+
+---
+
+### F7 — Uncensored Model Open to Internet (Comcast Residential, Florida)
+
+**Severity:** HIGH  
+**Target:** Redacted (Comcast IP Services, Florida residential)  
+**Hostname:** `*.hsd1.fl.comcast.net`
+
+`dolphin-mistral:latest` (Eric Hartford uncensored series) running on a residential Comcast IP with port 11434 open to the internet. Zero authentication. No operator system prompt beyond the model default ("You are Dolphin, a helpful AI assistant.").
+
+**Model responds directly to:**
+- Reverse shell generation (Python, direct IP/port — no framing required)
+- Network port scanning scripts
+- Any offensive security request
+
+No bypass techniques required — the model's safety alignment was removed at fine-tune time. Any internet-reachable user gets a compliant, uncensored code generator.
+
+**Active usage signals:**
+- `qwen2.5:7b` was loaded in VRAM at scan time (pulled same day)
+- `dolphin-mistral` and `mistral` installed mid-2025 — persistent personal setup
+- Port-forwarded home machine, actively maintained
+
+**Remediation:** Bind Ollama to `127.0.0.1`. Do not expose uncensored models to the internet under any circumstances — no auth mechanism compensates for a model with no safety layer.
