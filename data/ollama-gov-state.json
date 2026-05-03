@@ -1,0 +1,615 @@
+{
+  "103.55.254.253": {
+    "ip": "103.55.254.253",
+    "org": "Departemen Kesehatan",
+    "hostnames": [
+      "-D6_6B_YHNA.kemkes.go.id"
+    ],
+    "status": "dead",
+    "first_seen": "2026-05-02T23:09:11.408769+00:00",
+    "last_probed": "2026-05-03T00:32:43.911851+00:00",
+    "version": null,
+    "models": [],
+    "running": [],
+    "system_prompts": {},
+    "probes": {},
+    "cloud_proxy": false,
+    "creds": [],
+    "signin_url": null,
+    "account_takeover": false,
+    "cred_hunted": false,
+    "institution": null,
+    "webui": null
+  },
+  "201.147.242.116": {
+    "ip": "201.147.242.116",
+    "org": "Gesti\u00f3n de direccionamiento UniNet",
+    "hostnames": [
+      "correo.saludbcs.gob.mx"
+    ],
+    "status": "dead",
+    "first_seen": "2026-05-02T23:09:11.540696+00:00",
+    "last_probed": "2026-05-03T00:32:44.044783+00:00",
+    "version": null,
+    "models": [],
+    "running": [],
+    "system_prompts": {},
+    "probes": {},
+    "cloud_proxy": false,
+    "creds": [],
+    "signin_url": null,
+    "account_takeover": false,
+    "cred_hunted": false,
+    "institution": null,
+    "webui": null
+  },
+  "45.171.50.63": {
+    "ip": "45.171.50.63",
+    "org": "INFRAERO - EMPRESA BRASILEIRA DE INFRA-ESTRUTURA",
+    "hostnames": [
+      "mail1.infraero.gov.br"
+    ],
+    "status": "dead",
+    "first_seen": "2026-05-02T23:09:11.638263+00:00",
+    "last_probed": "2026-05-03T00:32:44.154102+00:00",
+    "version": null,
+    "models": [],
+    "running": [],
+    "system_prompts": {},
+    "probes": {},
+    "cloud_proxy": false,
+    "creds": [],
+    "signin_url": null,
+    "account_takeover": false,
+    "cred_hunted": false,
+    "institution": null,
+    "webui": null
+  },
+  "45.171.51.63": {
+    "ip": "45.171.51.63",
+    "org": "INFRAERO - EMPRESA BRASILEIRA DE INFRA-ESTRUTURA",
+    "hostnames": [
+      "mail1.infraero.gov.br"
+    ],
+    "status": "dead",
+    "first_seen": "2026-05-02T23:09:11.671474+00:00",
+    "last_probed": "2026-05-03T00:32:44.172435+00:00",
+    "version": null,
+    "models": [],
+    "running": [],
+    "system_prompts": {},
+    "probes": {},
+    "cloud_proxy": false,
+    "creds": [],
+    "signin_url": null,
+    "account_takeover": false,
+    "cred_hunted": false,
+    "institution": null,
+    "webui": null
+  },
+  "210.241.95.6": {
+    "ip": "210.241.95.6",
+    "org": "Government Service Network (GSN)",
+    "hostnames": [
+      "lawmanager.moa.gov.tw"
+    ],
+    "status": "dead",
+    "first_seen": "2026-05-02T23:09:11.784980+00:00",
+    "last_probed": "2026-05-03T00:32:44.292918+00:00",
+    "version": null,
+    "models": [],
+    "running": [],
+    "system_prompts": {},
+    "probes": {},
+    "cloud_proxy": false,
+    "creds": [],
+    "signin_url": null,
+    "account_takeover": false,
+    "cred_hunted": false,
+    "institution": null,
+    "webui": null
+  },
+  "210.241.95.19": {
+    "ip": "210.241.95.19",
+    "org": "Government Service Network (GSN)",
+    "hostnames": [
+      "vtm.moa.gov.tw",
+      "ytu.coa.gov.tw",
+      "ytum.coa.gov.tw",
+      "vtmo.moa.gov.tw",
+      "video.moa.gov.tw"
+    ],
+    "status": "dead",
+    "first_seen": "2026-05-02T23:09:11.791602+00:00",
+    "last_probed": "2026-05-03T00:32:44.293556+00:00",
+    "version": null,
+    "models": [],
+    "running": [],
+    "system_prompts": {},
+    "probes": {},
+    "cloud_proxy": false,
+    "creds": [],
+    "signin_url": null,
+    "account_takeover": false,
+    "cred_hunted": false,
+    "institution": null,
+    "webui": null
+  },
+  "210.241.95.97": {
+    "ip": "210.241.95.97",
+    "org": "Government Service Network (GSN)",
+    "hostnames": [
+      "taftland.coa.gov.tw"
+    ],
+    "status": "dead",
+    "first_seen": "2026-05-02T23:09:11.803184+00:00",
+    "last_probed": "2026-05-03T00:32:44.293571+00:00",
+    "version": null,
+    "models": [],
+    "running": [],
+    "system_prompts": {},
+    "probes": {},
+    "cloud_proxy": false,
+    "creds": [],
+    "signin_url": null,
+    "account_takeover": false,
+    "cred_hunted": false,
+    "institution": null,
+    "webui": null
+  },
+  "103.247.5.19": {
+    "ip": "103.247.5.19",
+    "org": "RailTel Corporation is an Internet Service Provider.",
+    "hostnames": [
+      "rw-0019-5.247.103.rcil.gov.in"
+    ],
+    "status": "dead",
+    "first_seen": "2026-05-02T23:09:11.909065+00:00",
+    "last_probed": "2026-05-03T00:32:44.390483+00:00",
+    "version": null,
+    "models": [],
+    "running": [],
+    "system_prompts": {},
+    "probes": {},
+    "cloud_proxy": false,
+    "creds": [],
+    "signin_url": null,
+    "account_takeover": false,
+    "cred_hunted": false,
+    "institution": null,
+    "webui": null
+  },
+  "118.97.55.105": {
+    "ip": "118.97.55.105",
+    "org": "PT Telekomunikasi Indonesia",
+    "hostnames": [
+      "mailcp25.kejaksaan.go.id"
+    ],
+    "status": "dead",
+    "first_seen": "2026-05-02T23:09:11.912449+00:00",
+    "last_probed": "2026-05-03T00:32:44.390511+00:00",
+    "version": null,
+    "models": [],
+    "running": [],
+    "system_prompts": {},
+    "probes": {},
+    "cloud_proxy": false,
+    "creds": [],
+    "signin_url": null,
+    "account_takeover": false,
+    "cred_hunted": false,
+    "institution": null,
+    "webui": null
+  },
+  "45.171.50.43": {
+    "ip": "45.171.50.43",
+    "org": "INFRAERO - EMPRESA BRASILEIRA DE INFRA-ESTRUTURA",
+    "hostnames": [
+      "inframail.infraero.gov.br"
+    ],
+    "status": "dead",
+    "first_seen": "2026-05-02T23:09:11.978874+00:00",
+    "last_probed": "2026-05-03T00:32:44.515568+00:00",
+    "version": null,
+    "models": [],
+    "running": [],
+    "system_prompts": {},
+    "probes": {},
+    "cloud_proxy": false,
+    "creds": [],
+    "signin_url": null,
+    "account_takeover": false,
+    "cred_hunted": false,
+    "institution": null,
+    "webui": null
+  },
+  "177.222.248.52": {
+    "ip": "177.222.248.52",
+    "org": "Municipio de Timoteo",
+    "hostnames": [
+      "internet2.timoteo.mg.gov.br"
+    ],
+    "status": "dead",
+    "first_seen": "2026-05-02T23:09:12.135652+00:00",
+    "last_probed": "2026-05-03T00:32:44.628055+00:00",
+    "version": null,
+    "models": [],
+    "running": [],
+    "system_prompts": {},
+    "probes": {},
+    "cloud_proxy": false,
+    "creds": [],
+    "signin_url": null,
+    "account_takeover": false,
+    "cred_hunted": false,
+    "institution": null,
+    "webui": null
+  },
+  "133.243.224.2": {
+    "ip": "133.243.224.2",
+    "org": "Japan Network Information Center",
+    "hostnames": [
+      "dev.nict.go.jp"
+    ],
+    "status": "dead",
+    "first_seen": "2026-05-02T23:09:13.179636+00:00",
+    "last_probed": "2026-05-03T00:32:45.676320+00:00",
+    "version": null,
+    "models": [],
+    "running": [],
+    "system_prompts": {},
+    "probes": {},
+    "cloud_proxy": false,
+    "creds": [],
+    "signin_url": null,
+    "account_takeover": false,
+    "cred_hunted": false,
+    "institution": null,
+    "webui": null
+  },
+  "18.252.26.5": {
+    "ip": "18.252.26.5",
+    "org": "Amazon Technologies Inc.",
+    "hostnames": [
+      "ec2-18-252-26-5.us-gov-east-1.compute.amazonaws.com"
+    ],
+    "status": "dead",
+    "first_seen": "2026-05-02T23:09:15.322203+00:00",
+    "last_probed": "2026-05-03T00:32:47.822141+00:00",
+    "version": null,
+    "models": [],
+    "running": [],
+    "system_prompts": {},
+    "probes": {},
+    "cloud_proxy": false,
+    "creds": [],
+    "signin_url": null,
+    "account_takeover": false,
+    "cred_hunted": false,
+    "institution": null,
+    "webui": null
+  },
+  "103.212.211.216": {
+    "ip": "103.212.211.216",
+    "org": "Pemerintah Kabupaten Cirebon",
+    "hostnames": [
+      "ip-211-216.cirebonkab.go.id"
+    ],
+    "status": "dead",
+    "first_seen": "2026-05-02T23:09:15.324119+00:00",
+    "last_probed": "2026-05-03T00:32:47.825085+00:00",
+    "version": null,
+    "models": [],
+    "running": [],
+    "system_prompts": {},
+    "probes": {},
+    "cloud_proxy": false,
+    "creds": [],
+    "signin_url": null,
+    "account_takeover": false,
+    "cred_hunted": false,
+    "institution": null,
+    "webui": null
+  },
+  "190.75.179.135": {
+    "ip": "190.75.179.135",
+    "org": "CANTV Servicios, Venezuela",
+    "hostnames": [
+      "190-75-179-135-mil-01-p70.cantv.net"
+    ],
+    "status": "dead",
+    "first_seen": "2026-05-02T23:09:15.326044+00:00",
+    "last_probed": "2026-05-03T00:32:47.830093+00:00",
+    "version": null,
+    "models": [],
+    "running": [],
+    "system_prompts": {},
+    "probes": {},
+    "cloud_proxy": false,
+    "creds": [],
+    "signin_url": null,
+    "account_takeover": false,
+    "cred_hunted": false,
+    "institution": null,
+    "webui": null
+  },
+  "190.205.248.255": {
+    "ip": "190.205.248.255",
+    "org": "CANTV Servicios, Venezuela",
+    "hostnames": [
+      "190-205-248-255-mil-06-p66.cantv.net"
+    ],
+    "status": "dead",
+    "first_seen": "2026-05-02T23:09:15.326266+00:00",
+    "last_probed": "2026-05-03T00:32:47.827062+00:00",
+    "version": null,
+    "models": [],
+    "running": [],
+    "system_prompts": {},
+    "probes": {},
+    "cloud_proxy": false,
+    "creds": [],
+    "signin_url": null,
+    "account_takeover": false,
+    "cred_hunted": false,
+    "institution": null,
+    "webui": null
+  },
+  "16.64.116.67": {
+    "ip": "16.64.116.67",
+    "org": "Amazon.com, Inc.",
+    "hostnames": [
+      "ec2-16-64-116-67.us-gov-east-1.compute.amazonaws.com"
+    ],
+    "status": "live",
+    "first_seen": "2026-05-02T23:09:22.637998+00:00",
+    "last_probed": "2026-05-03T00:32:43.931291+00:00",
+    "version": "0.21.2",
+    "models": [
+      "deepseek-v4-pro:cloud",
+      "llama3:latest",
+      "llama3.1:8b",
+      "qwen3.6:35b",
+      "minimax-m2.7:cloud",
+      "smollm2:135m",
+      "goekdenizguelmez/JOSIE:latest",
+      "llama3.2:3b",
+      "gemma3:4b",
+      "gemma3:27b"
+    ],
+    "running": [],
+    "system_prompts": {
+      "deepseek-v4-pro:cloud": null,
+      "llama3:latest": null,
+      "llama3.1:8b": null,
+      "qwen3.6:35b": null,
+      "minimax-m2.7:cloud": null,
+      "smollm2:135m": "You are a helpful AI assistant named SmolLM, trained by Hugging Face",
+      "goekdenizguelmez/JOSIE:latest": "You are **J.O.S.I.E.** (**Just One Super Intelligent Entity**), a super-intelligent AI Assistant created by **G\u00f6kdeniz G\u00fclmez**.",
+      "llama3.2:3b": null,
+      "gemma3:4b": null,
+      "gemma3:27b": null
+    },
+    "probes": {
+      "system_prompt": "{\"error\": \"unauthorized\"}",
+      "what_are_you": "{\"error\": \"unauthorized\"}",
+      "who_deployed": "{\"error\": \"unauthorized\"}",
+      "tools_access": "{\"error\": \"unauthorized\"}"
+    },
+    "cloud_proxy": true,
+    "creds": [],
+    "signin_url": null,
+    "account_takeover": false,
+    "cred_hunted": true,
+    "institution": null,
+    "webui": {
+      "present": false,
+      "auth_disabled": false
+    },
+    "gov_tier": "US GovCloud (AWS)",
+    "gov_tld_cc": "us"
+  },
+  "103.136.182.113": {
+    "ip": "103.136.182.113",
+    "org": "Pemerintah Kabupaten Banjar",
+    "hostnames": [
+      "tpposyandu.banjarkab.go.id"
+    ],
+    "status": "live",
+    "first_seen": "2026-05-02T23:09:30.225157+00:00",
+    "last_probed": "2026-05-03T00:32:44.424623+00:00",
+    "version": "0.21.0",
+    "models": [
+      "deepseek-v4-pro:cloud"
+    ],
+    "running": [],
+    "system_prompts": {
+      "deepseek-v4-pro:cloud": null
+    },
+    "probes": {
+      "system_prompt": "{\"error\": \"unauthorized\"}",
+      "what_are_you": "{\"error\": \"unauthorized\"}",
+      "who_deployed": "{\"error\": \"unauthorized\"}",
+      "tools_access": "{\"error\": \"unauthorized\"}"
+    },
+    "cloud_proxy": true,
+    "creds": [],
+    "signin_url": null,
+    "account_takeover": false,
+    "cred_hunted": true,
+    "institution": null,
+    "webui": {
+      "present": false,
+      "auth_disabled": false
+    },
+    "gov_tier": "local/regency government",
+    "gov_tld_cc": "id"
+  },
+  "103.107.245.11": {
+    "ip": "103.107.245.11",
+    "org": "DINAS KOMINFO PROV. JAWA TENGAH",
+    "hostnames": [
+      "sijoli-11-245-107.jatengprov.go.id"
+    ],
+    "status": "live",
+    "first_seen": "2026-05-02T23:09:35.400594+00:00",
+    "last_probed": "2026-05-03T00:32:44.405020+00:00",
+    "version": "0.13.2",
+    "models": [
+      "minimax-m2.7:cloud",
+      "bge-m3:latest",
+      "qwen3:14b",
+      "llama3.2:3b",
+      "smollm2:135m"
+    ],
+    "running": [],
+    "system_prompts": {
+      "minimax-m2.7:cloud": null,
+      "bge-m3:latest": null,
+      "qwen3:14b": null,
+      "llama3.2:3b": null,
+      "smollm2:135m": "You are a helpful AI assistant named SmolLM, trained by Hugging Face"
+    },
+    "probes": {
+      "system_prompt": "{\"error\":\"unauthorized\",\"signin_url\":\"https://ollama.com/connect?name=da298cd9ca86\\u0026key=c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUVkMTl2WEo1ODZoMW5QZ3hTdVJWaWZqNlhBdHVCbmZkS082SDdmTjJWN2M\"}",
+      "what_are_you": "{\"error\":\"unauthorized\",\"signin_url\":\"https://ollama.com/connect?name=da298cd9ca86\\u0026key=c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUVkMTl2WEo1ODZoMW5QZ3hTdVJWaWZqNlhBdHVCbmZkS082SDdmTjJWN2M\"}",
+      "who_deployed": "{\"error\":\"unauthorized\",\"signin_url\":\"https://ollama.com/connect?name=da298cd9ca86\\u0026key=c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUVkMTl2WEo1ODZoMW5QZ3hTdVJWaWZqNlhBdHVCbmZkS082SDdmTjJWN2M\"}",
+      "tools_access": "{\"error\":\"unauthorized\",\"signin_url\":\"https://ollama.com/connect?name=da298cd9ca86\\u0026key=c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUVkMTl2WEo1ODZoMW5QZ3hTdVJWaWZqNlhBdHVCbmZkS082SDdmTjJWN2M\"}"
+    },
+    "cloud_proxy": true,
+    "creds": [
+      {
+        "label": "Ollama Connect signin URL",
+        "value": "\"signin_url\":\"https://ollama.com/connect?name=da298cd9ca86\\u0026key=c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUVkMTl2WEo1ODZoMW5QZ3hTdVJWaWZqNlhBdHVCbmZkS082SDdmTjJWN2M\"",
+        "source": "prompt:config_dump"
+      },
+      {
+        "label": "Ollama Connect URL",
+        "value": "https://ollama.com/connect?name=da298cd9ca86\\u0026key=c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUVkMTl2WEo1ODZoMW5QZ3hTdVJWaWZqNlhBdHVCbmZkS082SDdmTjJWN2M",
+        "source": "prompt:config_dump"
+      },
+      {
+        "label": "Ollama Connect signin URL",
+        "value": "https://ollama.com/connect?name=da298cd9ca86\\u0026key=c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUVkMTl2WEo1ODZoMW5QZ3hTdVJWaWZqNlhBdHVCbmZkS082SDdmTjJWN2M",
+        "source": "prompt:config_dump"
+      }
+    ],
+    "signin_url": "https://ollama.com/connect?name=da298cd9ca86\\u0026key=c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUVkMTl2WEo1ODZoMW5QZ3hTdVJWaWZqNlhBdHVCbmZkS082SDdmTjJWN2M",
+    "account_takeover": true,
+    "cred_hunted": true,
+    "institution": null,
+    "webui": {
+      "present": false,
+      "auth_disabled": false
+    },
+    "gov_tier": "provincial government",
+    "gov_tld_cc": "id",
+    "remote_hosts": {
+      "minimax-m2.7:cloud": "https://ollama.com:443"
+    }
+  },
+  "103.156.110.80": {
+    "ip": "103.156.110.80",
+    "org": "Pemerintah Provinsi Kalimantan Utara",
+    "hostnames": [
+      "ip-103-156-110-80.kaltaraprov.go.id"
+    ],
+    "status": "live",
+    "first_seen": "2026-05-02T23:09:42.650427+00:00",
+    "last_probed": "2026-05-03T00:32:44.416562+00:00",
+    "version": "0.13.4",
+    "models": [
+      "deepseek-v4-pro:cloud",
+      "aliafshar/gemma3-it-qat-tools:27b",
+      "hf.co/Jackrong/Qwen3.5-27B-Claude-4.6-Opus-Reasoning-Distilled-GGUF:Q3_K_M",
+      "minimax-m2.7:cloud",
+      "llama3.2:3b",
+      "smollm2:135m"
+    ],
+    "running": [],
+    "system_prompts": {
+      "deepseek-v4-pro:cloud": null,
+      "aliafshar/gemma3-it-qat-tools:27b": null,
+      "hf.co/Jackrong/Qwen3.5-27B-Claude-4.6-Opus-Reasoning-Distilled-GGUF:Q3_K_M": null,
+      "minimax-m2.7:cloud": null,
+      "llama3.2:3b": null,
+      "smollm2:135m": "You are a helpful AI assistant named SmolLM, trained by Hugging Face"
+    },
+    "probes": {
+      "system_prompt": "{\"error\":\"unauthorized\",\"signin_url\":\"https://ollama.com/connect?name=7a3686b3df54\\u0026key=c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUxtVU5uR2U1aGNWcC85ZjhuVG9sQU40OUcrczFSYk5NTjV1WW0xWmZjOHk\"}",
+      "what_are_you": "{\"error\":\"unauthorized\",\"signin_url\":\"https://ollama.com/connect?name=7a3686b3df54\\u0026key=c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUxtVU5uR2U1aGNWcC85ZjhuVG9sQU40OUcrczFSYk5NTjV1WW0xWmZjOHk\"}",
+      "who_deployed": "{\"error\":\"unauthorized\",\"signin_url\":\"https://ollama.com/connect?name=7a3686b3df54\\u0026key=c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUxtVU5uR2U1aGNWcC85ZjhuVG9sQU40OUcrczFSYk5NTjV1WW0xWmZjOHk\"}",
+      "tools_access": "{\"error\":\"unauthorized\",\"signin_url\":\"https://ollama.com/connect?name=7a3686b3df54\\u0026key=c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUxtVU5uR2U1aGNWcC85ZjhuVG9sQU40OUcrczFSYk5NTjV1WW0xWmZjOHk\"}"
+    },
+    "cloud_proxy": true,
+    "creds": [
+      {
+        "label": "Ollama Connect signin URL",
+        "value": "\"signin_url\":\"https://ollama.com/connect?name=7a3686b3df54\\u0026key=c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUxtVU5uR2U1aGNWcC85ZjhuVG9sQU40OUcrczFSYk5NTjV1WW0xWmZjOHk\"",
+        "source": "prompt:config_dump"
+      },
+      {
+        "label": "Ollama Connect URL",
+        "value": "https://ollama.com/connect?name=7a3686b3df54\\u0026key=c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUxtVU5uR2U1aGNWcC85ZjhuVG9sQU40OUcrczFSYk5NTjV1WW0xWmZjOHk",
+        "source": "prompt:config_dump"
+      },
+      {
+        "label": "Ollama Connect signin URL",
+        "value": "https://ollama.com/connect?name=7a3686b3df54\\u0026key=c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUxtVU5uR2U1aGNWcC85ZjhuVG9sQU40OUcrczFSYk5NTjV1WW0xWmZjOHk",
+        "source": "prompt:config_dump"
+      }
+    ],
+    "signin_url": "https://ollama.com/connect?name=7a3686b3df54\\u0026key=c3NoLWVkMjU1MTkgQUFBQUMzTnphQzFsWkRJMU5URTVBQUFBSUxtVU5uR2U1aGNWcC85ZjhuVG9sQU40OUcrczFSYk5NTjV1WW0xWmZjOHk",
+    "account_takeover": true,
+    "cred_hunted": true,
+    "institution": null,
+    "webui": {
+      "present": false,
+      "auth_disabled": false
+    },
+    "gov_tier": "provincial government",
+    "gov_tld_cc": "id",
+    "remote_hosts": {
+      "deepseek-v4-pro:cloud": "https://ollama.com:443",
+      "minimax-m2.7:cloud": "https://ollama.com:443"
+    }
+  },
+  "103.123.25.197": {
+    "ip": "103.123.25.197",
+    "org": "PEMERINTAH PROVINSI KALIMANTAN TENGAH",
+    "hostnames": [
+      "mail.kalteng.go.id"
+    ],
+    "status": "live",
+    "first_seen": "2026-05-02T23:10:05.815046+00:00",
+    "last_probed": "2026-05-03T00:32:44.422107+00:00",
+    "version": "0.9.2",
+    "models": [
+      "llama3.2:3b",
+      "deepseek-r1:1.5b"
+    ],
+    "running": [],
+    "system_prompts": {
+      "llama3.2:3b": null,
+      "deepseek-r1:1.5b": null
+    },
+    "probes": {
+      "system_prompt": "NONE",
+      "what_are_you": "I'm an artificial intelligence model known as Llama. Llama stands for \"Large Language Model Meta AI.\"",
+      "who_deployed": "I was developed by Meta, a technology company that operates several well-known platforms such as Facebook, Instagram, and WhatsApp. My primary purpose is to assist users with general information and tasks, and to provide entertainment and education through conversation.",
+      "tools_access": "I can be used in a variety of ways, from helping you plan a vacation to creating art. I'm here to assist you in finding the help or information you need. My strengths include answering questions, generating text and images and even just chatting with you."
+    },
+    "cloud_proxy": false,
+    "creds": [],
+    "signin_url": null,
+    "account_takeover": false,
+    "cred_hunted": false,
+    "institution": null,
+    "webui": {
+      "present": false,
+      "auth_disabled": false
+    },
+    "gov_tier": "government",
+    "gov_tld_cc": "id"
+  }
+}
