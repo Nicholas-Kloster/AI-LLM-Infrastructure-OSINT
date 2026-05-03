@@ -611,5 +611,49 @@
     },
     "gov_tier": "government",
     "gov_tld_cc": "id"
+  },
+  "182.30.61.200": {
+    "ip": "182.30.61.200",
+    "org": "Amazon Data Services NoVa",
+    "hostnames": [
+      "ec2-182-30-61-200.us-gov-east-1.compute.amazonaws.com"
+    ],
+    "status": "dead",
+    "first_seen": "2026-05-03T03:16:55.442177+00:00",
+    "last_probed": "2026-05-03T03:16:55.442190+00:00",
+    "version": null,
+    "models": [],
+    "running": [],
+    "system_prompts": {},
+    "probes": {},
+    "cloud_proxy": false,
+    "creds": [],
+    "signin_url": null,
+    "account_takeover": false,
+    "cred_hunted": false,
+    "institution": null,
+    "webui": null
+  },
+  "16.64.64.182": {
+    "ip": "16.64.64.182",
+    "org": "Amazon.com, Inc.",
+    "hostnames": [
+      "ec2-16-64-64-182.us-gov-east-1.compute.amazonaws.com"
+    ],
+    "status": "dead",
+    "first_seen": "2026-05-03T03:16:55.442290+00:00",
+    "last_probed": "2026-05-03T03:16:55.442292+00:00",
+    "version": null,
+    "models": [],
+    "running": [],
+    "system_prompts": {},
+    "probes": {},
+    "cloud_proxy": false,
+    "creds": [],
+    "signin_url": null,
+    "account_takeover": false,
+    "cred_hunted": false,
+    "institution": null,
+    "webui": null
   }
 }
